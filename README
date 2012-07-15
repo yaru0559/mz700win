@@ -1,0 +1,8 @@
+mz700win version 0.55a
+Specifically, please visit there.
+http://retropc.net/mz-memories/mz700/
+
+- To build this project, Please use Visual Studio 2010.
+- "Fullscreen" is disabled. Because I can't found 'ddraw.lib" on VS2010.
+
+code by Marukun, Youkan
