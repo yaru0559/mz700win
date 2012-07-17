@@ -111,6 +111,8 @@ int read_ptr;
 int low,high;
 
 int wav_bits = 8;
+int wav_sample = 0;
+double wav_secpersample;
 
 int cp;																	// コードページ
 
@@ -122,8 +124,13 @@ int opt_w;																// タイミング(Default=7)
 int opt_w_cmd;															// タイミング(Default=7)
 int opt_s;																// スタートビットタイミング
 int opt_m;																// バッファメモリ
+int opt_a[10];
+int opt_a_index;
+int opt_a_count;
 
 int bitlength[256];
+
+int framingerror;
 
 // 録音中にエラーが起きて終了
 void die(char *mes)
@@ -160,7 +167,9 @@ void usage(void)
 		  "      -b\t\tビットデータを表示する\n"\
 		  "      -v\t\tダンプデータを表示する\n"\
 		  "      -dn[1~127]\t入力レベルしきい値(Default=32)\n"\
-		  "      -wn[1~100] \tデータ読み取り単位時間\n");
+		  "      -wn[1~100] \tデータ読み取り単位時間\n"\
+		  "      -a[0000~FFFF[,0000~FFFF[,...]]] \t追加データブロックのサイズ\n"
+		);
 	}
 	else
 	{
@@ -271,7 +280,7 @@ int getwave(void)
 		if ( pos+1024 <= ftell(ifp) )
 		{
 			pos = ftell(ifp);
-			printf( "%d \r", pos );
+			fprintf(stderr, "%d \r", pos );
 		}
 		r = fgetc(ifp);
 		if (r == EOF)
@@ -292,6 +301,7 @@ int getwave(void)
 			r &= 0xffffff;
 			r >>= 16;
 		}
+		wav_sample++;
 		
 		if (kbhit())
 		{
@@ -417,6 +427,8 @@ int edge2a(void)
 
 	waitstart();
 
+	if (opt_b) printf("\n");
+
 	return (hr << 16)|lr;
 }
 
@@ -449,9 +461,22 @@ int getbyte(void)
 	}
 	
 	edge2();
-	wait320();
+	f = wait320();
 
 	if (opt_v) printf("[%02X]\n",dat);
+
+	if (opt_b) {
+		printf("\n");
+	}
+	if (!framingerror && !f) {
+		int min, sec;
+		framingerror = 1;
+		min = (int)(wav_secpersample * wav_sample / 60.0);
+		sec = (int)(wav_secpersample * wav_sample - (double)min*60);
+		fprintf(stderr, "\nframing error at %dmin %dsec %02d\n", min, sec,
+			(int)((wav_secpersample * wav_sample - (double)(int)(wav_secpersample * wav_sample)) * 100.0));
+	}
+
 	return dat;
 }
 
@@ -505,6 +530,7 @@ int getblock(unsigned char *dataptr,int length,int header)
 			}
 			else
 			{
+//fprintf(stderr,"Ignore checksum...\n");break;
 				fprintf(stderr,"Retry\n");
 			}
 		}
@@ -538,6 +564,7 @@ void findtone(int header)
 	}
 	while(!done);
 	fprintf(stderr,"done gapck\n");
+	if (opt_b) printf("\n---done gapck\n");
 	
 	/* this loop corresponds to `tmark' in ROM */
 	do
@@ -567,6 +594,7 @@ void findtone(int header)
 	}
 	while(!done);
 	fprintf(stderr,"done tmark\n");
+	if (opt_b) printf("\n---done tmark\n");
 	edge2();
 	wait320();
 }
@@ -666,7 +694,7 @@ int wav_free(void)
 
 	}
 	
-	printf("low=0x%02X high=0x%02X\n",low,high);
+	fprintf(stderr,"low=0x%02X high=0x%02X\n",low,high);
 	if ( opt_v )
 	{
 		int i;
@@ -733,17 +761,20 @@ void file_input_setup(void)
 			}
 
 			// WAVファイル周波数チェック
-			printf("wfmt.nSamplesPerSec=%d\n",wfmt.nSamplesPerSec);
+			fprintf(stderr, "wfmt.nSamplesPerSec=%d\n",wfmt.nSamplesPerSec);
 			switch (wfmt.nSamplesPerSec)
 			{
 			  case 48000:
 				opt_w = default_wait_48k;
+				wav_secpersample = 1.0/48000;
 				break;
 			  case 44100:
 				opt_w = default_wait_44k;
+				wav_secpersample = 1.0/44100;
 				break;
 			  case 22050:
 				opt_w = default_wait_22k;
+				wav_secpersample = 1.0/22050;
 				break;
 			  default:
 				debug((cp == CP_JAPAN) ? "warning:WAVファイルの周波数が44.1KHzではありません。\n" :
@@ -757,11 +788,11 @@ void file_input_setup(void)
 			}
 			else
 			{
-				printf("set -w%d as default.\n", opt_w );
+				fprintf(stderr, "set -w%d as default.\n", opt_w );
 			}
 
 			// WAVファイルビット数チェック
-			printf("wfmt.wBitsPerSample=%d\n",wfmt.wBitsPerSample);
+			fprintf(stderr, "wfmt.wBitsPerSample=%d\n",wfmt.wBitsPerSample);
 			wav_bits = wfmt.wBitsPerSample;
 		}
 		else
@@ -784,17 +815,54 @@ void file_input_setup(void)
 
 }
 
+int hexatoi(char *p, int *rp) {
+	int r = 0, cnt = 0;
+	char c;
+	while ((c = *p++) != 0) {
+		if (c >= '0' && c <= '9') {
+			r <<= 4;
+			r += (int)(c - '0');
+			continue;
+		}
+		if (c >= 'A' && c <= 'F') {
+			r <<= 4;
+			r += (int)(c - 'A' + 10);
+			continue;
+		}
+		if (c >= 'a' && c <= 'f') {
+			r <<= 4;
+			r += (int)(c - 'a' + 10);
+			continue;
+		}
+		if (c == ' ' || c == '\t') break;
+		if (c == ',') {
+			*rp++ = r;
+			cnt++;
+			r = 0;
+			continue;
+		}
+		return 0;
+	}
+	*rp++ = r;
+	cnt++;
+	return cnt;
+}
+
+
 int main(int argc,char *argv[])
 {
 	FILE *out;
-	int a,i;
+	int a,i,j;
 	int mode,start,len,exec;
+	int infoblock_cnt = 0, datablock_cnt = 0;
+	int carrylab_mode = 0;
 
     char full_path[ _MAX_PATH ];
     char drive[ _MAX_DRIVE ];
     char dir[ _MAX_DIR ];
     char fname[ _MAX_FNAME ];
     char ext[ _MAX_EXT ];
+    char ofn[ _MAX_FNAME ];
 
 
 	opt_d = default_depth;
@@ -873,6 +941,22 @@ int main(int argc,char *argv[])
 			   if (a=='j' || a=='J') cp=CP_JAPAN;
 			   break;
 			   
+		   case 'a':
+			   opt_a_count = hexatoi(argv[i]+2, &opt_a[0]);
+			   for (j=0; j<opt_a_count; j++) {
+				    if (opt_a[j] < 0 || opt_a[j] > 0xFFFF) opt_a_count = 0;
+			   }
+			   if (opt_a_count == 0)
+			   {
+				   debug((cp == CP_JAPAN) ? "パラメータの値が範囲外です\n" : "Out of range.\n");
+				   exit(1);
+			   }
+			   break;
+		   case 'c':
+			   opt_w_cmd = atoi(argv[i]+2);
+			   if (opt_w_cmd == 0) opt_w_cmd = 12;
+			   carrylab_mode = 1;
+			   break;
 		   case '?':
 			   usage();
 		   default:
@@ -921,11 +1005,12 @@ int main(int argc,char *argv[])
 		if (ifp == NULL) return 1;
 	}
 
+read_infoblock:
 	/* ロード開始 */
 	debug("Now Searching...\n");
 
 	/* read header */
-	if(getblock(filedata,0x80,1)==-1)
+	if(getblock(filedata,carrylab_mode ? 0x20 : 0x80,1)==-1)
 		die("Bad header.\n");
 
 	mode =filedata[0x00];
@@ -937,27 +1022,46 @@ int main(int argc,char *argv[])
 
 	fprintf(stderr,"mode:%02X start:%04X len:%04X exec:%04X\n",mode,start,len,exec);
 
-	out=fopen("header.dat","wb");
+	if (!infoblock_cnt) {
+		sprintf(ofn, "header.dat");
+	} else {
+		sprintf(ofn, "header%d.dat", infoblock_cnt);
+	}
+	infoblock_cnt++;
+	out=fopen(ofn,"wb");
 	if(out==NULL)
 		die("Couldn't open output file.\n");
 
-	fwrite(filedata,1,0x80,out);
+	fwrite(filedata,1,carrylab_mode ? 0x20 : 0x80,out);
 	fclose(out);
 
-	fprintf(stderr,"'header.dat' Created.\n");
+	fprintf(stderr,"'%s' Created.\n", ofn);
 
+read_datablock:
 	getblock(filedata,len,0);
 
 	fprintf(stderr,"\n");
 
 	fprintf(stderr,"ok!\n");
 
-	out=fopen("out.dat","wb");
+	if (!datablock_cnt) {
+		sprintf(ofn, "out.dat");
+	} else {
+		sprintf(ofn, "out%d.dat", datablock_cnt);
+	}
+	datablock_cnt++;
+	out=fopen(ofn,"wb");
 	if(out==NULL)
 		die("Couldn't open output file.\n");
 	fwrite(filedata,1,len,out);
 	fclose(out);
-	fprintf(stderr,"'out.dat' Created.\n");
+	fprintf(stderr,"'%s' Created.\n", ofn);
+
+	if (opt_a_index < opt_a_count) {
+		len = opt_a[opt_a_index++];
+		if (len == 0) goto read_infoblock;
+		goto read_datablock;
+	}
 
 	wav_free();
 
