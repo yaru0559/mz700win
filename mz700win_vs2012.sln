@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mz700win_vs2012", "mz700win_vs2012.vcxproj", "{9FA94AF6-272F-4258-A871-7EFBA4B538BE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|ARM = Debug|ARM
+		Debug|Win32 = Debug|Win32
+		Release|ARM = Release|ARM
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9FA94AF6-272F-4258-A871-7EFBA4B538BE}.Debug|ARM.ActiveCfg = Debug|ARM
+		{9FA94AF6-272F-4258-A871-7EFBA4B538BE}.Debug|ARM.Build.0 = Debug|ARM
+		{9FA94AF6-272F-4258-A871-7EFBA4B538BE}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9FA94AF6-272F-4258-A871-7EFBA4B538BE}.Debug|Win32.Build.0 = Debug|Win32
+		{9FA94AF6-272F-4258-A871-7EFBA4B538BE}.Release|ARM.ActiveCfg = Release|ARM
+		{9FA94AF6-272F-4258-A871-7EFBA4B538BE}.Release|ARM.Build.0 = Release|ARM
+		{9FA94AF6-272F-4258-A871-7EFBA4B538BE}.Release|Win32.ActiveCfg = Release|Win32
+		{9FA94AF6-272F-4258-A871-7EFBA4B538BE}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
