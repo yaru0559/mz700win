@@ -785,23 +785,10 @@ void mouse_cursor(BOOL sw)
 
 };
 
-/*----------------------------------------------------------------------------*\
-|   AppPaint(hwnd, hdc)                                                        |
-|                                                                              |
-|   Description:                                                               |
-|       The paint function.                                                    |
-|                                                                              |
-|   Arguments:                                                                 |
-|       hwnd             window painting into                                  |
-|       hdc              display context to paint to                           |
-|                                                                              |
-\*----------------------------------------------------------------------------*/
-BOOL AppPaint (HWND hwnd, HDC hdc)
+//
+void DrawScreen(HDC hdc, int mode)
 {
-	SelectPalette(hdc, hpalApp, FALSE);
-	RealizePalette(hdc);
-
-	switch (menu.screen)
+	switch (mode)
 	{
 		/* 1:1 */
 	case 0:
@@ -823,6 +810,25 @@ BOOL AppPaint (HWND hwnd, HDC hdc)
 				   Buffer,0,0,FORMWIDTH,FORMHEIGHT,SRCCOPY);
 		break;
 	}				
+}
+
+/*----------------------------------------------------------------------------*\
+|   AppPaint(hwnd, hdc)                                                        |
+|                                                                              |
+|   Description:                                                               |
+|       The paint function.                                                    |
+|                                                                              |
+|   Arguments:                                                                 |
+|       hwnd             window painting into                                  |
+|       hdc              display context to paint to                           |
+|                                                                              |
+\*----------------------------------------------------------------------------*/
+BOOL AppPaint (HWND hwnd, HDC hdc)
+{
+	SelectPalette(hdc, hpalApp, FALSE);
+	RealizePalette(hdc);
+
+	DrawScreen(hdc, menu.screen);
 
 	return TRUE;
 }

@@ -97,6 +97,8 @@ BOOL add_menu_bmp(HMENU hmenu,UINT id,UINT);
 BOOL AppPaint(HWND, HDC);
 BOOL SystemTask(void);
 
+void DrawScreen(HDC,int);
+
 void update_winscr(void);
 
 void mz_exit(int);
