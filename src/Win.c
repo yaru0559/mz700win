@@ -710,7 +710,7 @@ void set_screen_menu(int m)
 	ybak = win_ypos;
 
 	/* スクリーンサイズにチェックマーク付ける */
-	set_select_chk(MENU_SCREEN_1_1,2,m);								// screen
+	set_select_chk(MENU_SCREEN_1_1, 4, m);								// screen
 
 	/* ウィンドウサイズの変更 */
 	get_window_size(m);
@@ -809,7 +809,17 @@ BOOL AppPaint (HWND hwnd, HDC hdc)
 		break;
 		/* 2:2 */
 	case 1:
-		StretchBlt(hdc,0,0,FORMWIDTH<<1,FORMHEIGHT<<1,
+		StretchBlt(hdc,0,0,FORMWIDTH*2,FORMHEIGHT*2,
+				   Buffer,0,0,FORMWIDTH,FORMHEIGHT,SRCCOPY);
+		break;
+		/* 3:3 */
+	case 2:
+		StretchBlt(hdc,0,0,FORMWIDTH*3,FORMHEIGHT*3,
+				   Buffer,0,0,FORMWIDTH,FORMHEIGHT,SRCCOPY);
+		break;
+		/* 4:4 */
+	case 3:
+		StretchBlt(hdc,0,0,FORMWIDTH*4,FORMHEIGHT*4,
 				   Buffer,0,0,FORMWIDTH,FORMHEIGHT,SRCCOPY);
 		break;
 	}				
@@ -1304,6 +1314,8 @@ LONG AppCommand (HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 		/* Screen */
 	case MENU_SCREEN_1_1:
 	case MENU_SCREEN_2_2:
+	case MENU_SCREEN_3_3:
+	case MENU_SCREEN_4_4:
 		i=LOWORD(wParam)-MENU_SCREEN_1_1;
 		if (i != menu.screen)
 		{

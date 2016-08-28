@@ -16,13 +16,11 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// 日本語 resources
+// 日本語 (日本) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_JPN)
-#ifdef _WIN32
 LANGUAGE LANG_JAPANESE, SUBLANG_DEFAULT
 #pragma code_page(932)
-#endif //_WIN32
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -47,7 +45,7 @@ IDC_CURSOR1             CURSOR                  "cursor1.cur"
 // Accelerator
 //
 
-APPMENU ACCELERATORS 
+APPMENU ACCELERATORS
 BEGIN
     VK_F11,         MENU_PCG700,            VIRTKEY, NOINVERT
     VK_F12,         MENU_RESET,             VIRTKEY, NOINVERT
@@ -61,7 +59,7 @@ END
 // Menu
 //
 
-APPMENU MENU 
+APPMENU MENU
 BEGIN
     POPUP "&File"
     BEGIN
@@ -85,6 +83,8 @@ BEGIN
         BEGIN
             MENUITEM "1:1",                         MENU_SCREEN_1_1
             MENUITEM "2:2",                         MENU_SCREEN_2_2
+            MENUITEM "3:3",                         MENU_SCREEN_3_3
+            MENUITEM "4:4",                         MENU_SCREEN_4_4
         END
         POPUP "Screen Refresh"
         BEGIN
@@ -127,8 +127,8 @@ END
 //
 
 VERSIONINFO_1 VERSIONINFO
- FILEVERSION 0,5,5,2
- PRODUCTVERSION 0,5,5,2
+ FILEVERSION 0,5,5,4
+ PRODUCTVERSION 0,5,5,4
  FILEFLAGSMASK 0x0L
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -145,13 +145,13 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "-"
             VALUE "FileDescription", "MZ-700/1500 Emulator For Win32"
-            VALUE "FileVersion", "0.55a"
+            VALUE "FileVersion", "0.55b"
             VALUE "InternalName", "mz700win"
-            VALUE "LegalCopyright", "(C) 1998-2009 Marukun 2009-2012 Marukun/Youkan"
+            VALUE "LegalCopyright", "(C) 1998-2009 Marukun 2009-2016 Marukun/Youkan"
             VALUE "LegalTrademarks", "-"
             VALUE "OriginalFilename", "MZ700WIN.EXE"
             VALUE "ProductName", "MZ700WIN"
-            VALUE "ProductVersion", "0, 5, 5, 2"
+            VALUE "ProductVersion", "0.5.5.4"
         END
     END
     BLOCK "VarFileInfo"
@@ -175,9 +175,9 @@ BEGIN
     PUSHBUTTON      "OK",IDOK,70,105,36,14,BS_CENTER | BS_VCENTER
     LTEXT           "MZ-700 Emulator 'MZ700WIN'",-1,32,12,92,8,NOT WS_GROUP
     ICON            "AppIcon",-1,8,12,20,20
-    LTEXT           "Version 0.55a",-1,32,24,100,8,NOT WS_GROUP
+    LTEXT           "Version 0.55b",-1,32,24,100,8,NOT WS_GROUP
     CONTROL         "",-1,"Static",SS_ETCHEDHORZ,28,36,140,1
-    LTEXT           "Copyright (C) 1998-2012 Marukun/Youkan.",-1,32,39,139,8,NOT WS_GROUP
+    LTEXT           "Copyright (C) 1998-2016 Marukun/Youkan.",-1,32,39,139,8,NOT WS_GROUP
     LTEXT           "Based on Russell Marks's 'mz700em'.",-1,32,49,124,8,NOT WS_GROUP
     LTEXT           "Z80 emulation from 'Z80em'",-1,32,62,140,8,NOT WS_GROUP
     LTEXT           "E-Mail : mz-memories@retropc.net",IDC_MAILTO,34,94,101,8,SS_NOTIFY | NOT WS_GROUP
@@ -185,7 +185,7 @@ BEGIN
     LTEXT           "http://retropc.net/mz-memories/mz700/",IDC_WWW,35,83,119,8,SS_NOTIFY
 END
 
-IDD_ROMDIALOG DIALOG  0, 0, 162, 91
+IDD_ROMDIALOG DIALOG 0, 0, 162, 91
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Monitor ROM Setting"
 FONT 9, "ＭＳ Ｐゴシック"
@@ -245,7 +245,7 @@ END
 //
 
 #ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO 
+GUIDELINES DESIGNINFO
 BEGIN
     IDD_DIALOG1, DIALOG
     BEGIN
@@ -278,7 +278,7 @@ END
 //
 
 TOOLBAR                 BITMAP                  "toolbar.bmp"
-#endif    // 日本語 resources
+#endif    // 日本語 (日本) resources
 /////////////////////////////////////////////////////////////////////////////
 
 

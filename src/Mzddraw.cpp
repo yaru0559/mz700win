@@ -288,7 +288,17 @@ void update_winscr(void)
 				break;
 				/* 2:2 */
 			case 1:
-				StretchBlt(hdc,0,0,FORMWIDTH<<1,FORMHEIGHT<<1,
+				StretchBlt(hdc,0,0,FORMWIDTH*2,FORMHEIGHT*2,
+						   Buffer,0,0,FORMWIDTH,FORMHEIGHT,SRCCOPY);
+				break;
+				/* 3:3 */
+			case 2:
+				StretchBlt(hdc,0,0,FORMWIDTH*3,FORMHEIGHT*3,
+						   Buffer,0,0,FORMWIDTH,FORMHEIGHT,SRCCOPY);
+				break;
+				/* 4:4 */
+			case 3:
+				StretchBlt(hdc,0,0,FORMWIDTH*4,FORMHEIGHT*4,
 						   Buffer,0,0,FORMWIDTH,FORMHEIGHT,SRCCOPY);
 				break;
 			}

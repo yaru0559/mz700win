@@ -17,6 +17,8 @@
 
 #define MENU_SCREEN_1_1	200
 #define MENU_SCREEN_2_2	201
+#define MENU_SCREEN_3_3	202
+#define MENU_SCREEN_4_4	203
 
 #define MENU_KEYTYPE_BASE	300
 
