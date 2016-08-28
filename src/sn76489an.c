@@ -13,6 +13,28 @@ static	DWORD noise_gen[2];
 static	DWORD noise_fb[2];
 static	DWORD noise_md[2];
 
+/*
+ * 音量あふれチェックwav加算
+ */
+__inline int ADD_SATULATE_WAV(int mix, int val)
+{
+	__asm
+	{
+		mov eax,mix;
+		add eax,val;
+		cmp eax,-32768;
+		jg L01;
+		mov eax,-32768;
+		jp L02;
+L01:
+		cmp eax,32767;
+		jl L02;
+		mov eax,32767;
+L02:
+		mov mix,eax
+	}
+	return mix;
+}
 
 /*
  * コンストラクタ
@@ -133,10 +155,10 @@ void sn76489an_update(int iNo, short* ptr, int cou) {
 					psgch->bPulse = (noise_gen[iNo] & 1) ? TRUE : FALSE;
 				}
 			}
-//			dat += (psgch->bPulse ? -org_vol[j] : org_vol[j]);
 			dat += (psgch->bPulse ? -psgch->vol: psgch->vol);
 		} // j
-		ptr[i] += dat;
+//		ptr[i] += dat;
+		ptr[i] =ADD_SATULATE_WAV(ptr[i], dat);
 	
 	} //i
 	
