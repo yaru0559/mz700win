@@ -1139,8 +1139,6 @@ BOOL CALLBACK AppSpeedDialog(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 
 			// ダイアログクローズ
 			PostMessage(hwnd,WM_CLOSE,0,0L);
-//			mz_mon_setup();
-//			mz_reset();
 			break;
 
 			// キャンセルボタン
@@ -1416,20 +1414,9 @@ BOOL SystemTask(void)
 	/* メッセージ処理 */
     if (PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE))
 	{
-#if 0		
-		/* プログラム終了の時の処理 */
-		if (msg.message == WM_QUIT)
-		{
-			AppExit();													/* プログラム終了 */
-			exit(msg.wParam);
-		}
-#endif
-
 		/* アクセラレータキーの処理 */
 		if (hAccelApp)
-		{
 			TranslateAccelerator(hwndApp, hAccelApp, &msg);
-		}
 
 		/* Alt+Tab で、タスク切り替えされた時 */
 		if (msg.message == WM_SYSKEYDOWN)
@@ -1443,10 +1430,7 @@ BOOL SystemTask(void)
 						// 全画面であれば、プロセスの優先度を通常に
 						hProcess = GetCurrentProcess();
 						if (hProcess)
-						{
 							SetPriorityClass(hProcess, NORMAL_PRIORITY_CLASS);
-						}
-
 					}
 				}
 			}
@@ -1455,12 +1439,9 @@ BOOL SystemTask(void)
 		/* 通常のメッセージ処理 */
         if (!GetMessage(&msg, NULL, 0, 0))
 		{
-//			if (msg.hwnd == hwndApp)
-			{
-				/* プログラム終了時 */
-				AppExit();													/* プログラム終了 */
-				exit(msg.wParam);
-			}
+			/* プログラム終了時 */
+			AppExit();													/* プログラム終了 */
+			exit(msg.wParam);
 		}
 
         TranslateMessage(&msg);
@@ -1468,21 +1449,11 @@ BOOL SystemTask(void)
 
 		return TRUE;
     }
-	
-	/* メッセージが無いとき */
 	else
 	{
-#if 1		
-		if (!fAppActive)
-		{
-//			WaitMessage();												/* 処理待ち */
-		}
-#endif
+		/* メッセージが無いとき */
 	    return FALSE;													/* メインタスクへ */
-		
 	}
-
-
 }
 
 //-----------------------------------------------------
@@ -1705,7 +1676,6 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 	LPMEASUREITEMSTRUCT lpMI;
 	LPDRAWITEMSTRUCT lpDI;
 
-//	MINMAXINFO *lpmmi;
 	LPCSTR st;
 	RECT rc;
     SIZE sz;
@@ -1748,7 +1718,6 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 	case WM_MEASUREITEM:
 		lpMI = (LPMEASUREITEMSTRUCT)lParam;
-#if 1
 		if (lpMI->CtlType == ODT_MENU)
 		{
 			hdc = GetDC(hwnd);
@@ -1761,7 +1730,6 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 		    ReleaseDC(hwnd, hdc);
 			return TRUE;
 		}
-#endif
 		break;
 
 	case WM_DRAWITEM:
@@ -1875,8 +1843,7 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 
 	case WM_ACTIVATEAPP:
-		if (hwnd==hwndApp) fAppActive = (BOOL)wParam;
-//		fAppActive = (BOOL)wParam;
+		if (hwnd == hwndApp) fAppActive = (BOOL)wParam;
 //		printf("fAppActive = %d\n",fAppActive);
 		break;
 
@@ -1958,8 +1925,6 @@ void free_resource(void)
 	HWND hDest;
 
 	DSound_Cleanup();												// DirectSound 停止
-//	StopWaveBuffer(0);												/* 700Sound 停止 */
-//	EndDirectSound();												/* DirectSoundの終了 */
 
 	sn76489an_cleanup();
 	mzbeep_clean();
@@ -2249,4 +2214,3 @@ int font_load(int md)
 
 	return result;
 }
-
