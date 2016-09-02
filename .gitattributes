@@ -7,6 +7,8 @@
 *.csproj merge=union
 *.vbproj merge=union
 *.fsproj merge=union
+*.vsxproj merge=union
+*.vsxproj.filters merge=union
 *.dbproj merge=union
 
 # Standard to msysgit
