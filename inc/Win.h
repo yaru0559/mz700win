@@ -81,8 +81,6 @@ enum
 extern UINT8		RomFileDir[IniFileStrBuf];	// ROMファイルがあるディレクトリ名
 
 // prototype....
-void dprintf( char *fmt, ... );
-
 void InitMenuBitmaps(HWND);
 void EndMenuBitmaps(HWND);
 

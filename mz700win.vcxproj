@@ -150,6 +150,7 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <ClCompile Include="src\dprintf.c" />
     <ClCompile Include="src\DSOUND.C" />
     <ClCompile Include="src\fileio.c">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -229,6 +230,7 @@
   <ItemGroup>
     <ClInclude Include="inc\COMMON.H" />
     <ClInclude Include="inc\defkey.h" />
+    <ClInclude Include="inc\dprintf.h" />
     <ClInclude Include="src\DSOUND.H" />
     <ClInclude Include="inc\fileio.h" />
     <ClInclude Include="inc\fileset.h" />

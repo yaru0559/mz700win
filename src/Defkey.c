@@ -6,7 +6,8 @@
 // Programmed by Takeshi Maruyama
 //----------------------------------------------------------------------------
 
-#include <windows.h>
+//#include <windows.h>
+#include "dprintf.h"
 
 #include "mz700win.h"
 

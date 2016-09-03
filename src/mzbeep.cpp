@@ -1,3 +1,4 @@
+#include "dprintf.h"
 #include "mzbeep.h"
 
 static	BOOL bPlaying;

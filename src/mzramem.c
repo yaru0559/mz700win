@@ -8,8 +8,7 @@
 
 #define MZRAMEM_H_
 
-#include <stdio.h>
-#include <windows.h>
+#include "dprintf.h"
 #include "mz700win.h"
 
 #include "Z80.h"
@@ -114,9 +113,7 @@ void exec_ram(Z80_Regs *Regs)
 /* RDINF */
 void S_1Z007B_rdinf (Z80_Regs *Regs)
 {
-#if _DEBUG
 	 dprintf("S_1Z007B_rdinf()\n");
-#endif
 
 	rdinf_job(Regs, CPAT_RAM_1Z007B);
 }
@@ -124,9 +121,7 @@ void S_1Z007B_rdinf (Z80_Regs *Regs)
 /* RDDATA */
 void S_1Z007B_rddata (Z80_Regs *Regs)
 {
-#if _DEBUG
 	dprintf("S_1Z007B_rddata()\n");
-#endif
 
 	rddata_job(Regs, CPAT_RAM_1Z007B);
 }
@@ -134,9 +129,7 @@ void S_1Z007B_rddata (Z80_Regs *Regs)
 /* WRINF */
 void S_1Z007B_wrinf (Z80_Regs *Regs)
 {
-#if _DEBUG
 	 dprintf("S_1Z007B_wrinf()\n");
-#endif
 
 	wrinf_job(Regs, CPAT_RAM_1Z007B);
 }
@@ -144,9 +137,7 @@ void S_1Z007B_wrinf (Z80_Regs *Regs)
 /* WRDATA */
 void S_1Z007B_wrdata (Z80_Regs *Regs)
 {
-#if _DEBUG
 	dprintf("S_1Z007B_wrdata()\n");
-#endif
 
 	wrdata_job(Regs, CPAT_RAM_1Z007B);
 }
@@ -156,9 +147,7 @@ void S_1Z007B_wrdata (Z80_Regs *Regs)
 /* RDINF */
 void S_HUBAS_rdinf(Z80_Regs *Regs)
 {
-#if _DEBUG
 	 dprintf("S_HUBAS_rdinf()\n");
-#endif
 
 	rdinf_job(Regs, CPAT_RAM_HUBASIC);
 }
@@ -166,9 +155,7 @@ void S_HUBAS_rdinf(Z80_Regs *Regs)
 /* RDDATA */
 void S_HUBAS_rddata(Z80_Regs *Regs)
 {
-#if _DEBUG
 	dprintf("S_HUBAS_rddata()\n");
-#endif
 
 	rddata_job(Regs, CPAT_RAM_HUBASIC);
 }
@@ -176,9 +163,7 @@ void S_HUBAS_rddata(Z80_Regs *Regs)
 /* WRINF */
 void S_HUBAS_wrinf(Z80_Regs *Regs)
 {
-#if _DEBUG
 	 dprintf("S_HUBAS_wrinf()\n");
-#endif
 
 	wrinf_job(Regs, CPAT_RAM_HUBASIC);
 }
@@ -186,9 +171,7 @@ void S_HUBAS_wrinf(Z80_Regs *Regs)
 /* WRDATA */
 void S_HUBAS_wrdata(Z80_Regs *Regs)
 {
-#if _DEBUG
 	dprintf("S_HUBAS_wrdata()\n");
-#endif
 
 	wrdata_job(Regs, CPAT_RAM_HUBASIC);
 }

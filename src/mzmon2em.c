@@ -12,6 +12,7 @@
 #include <windows.h>
 
 #include "mz700win.h"
+#include "dprintf.h"
 #include "fileio.h"
 #include "Z80.h"
 #include "win.h"
@@ -70,9 +71,7 @@ static const byte qbt_code[] =
  */
 void patch_emul_rom2(void)
 {
-#if _DEBUG
 	dprintf("patch_emul_rom2()\n");
-#endif
 
 	FillMemory(mem + ROM2_START,0x1800, 0xC9);							// Fill by 'RET'
 	CopyMemory(mem + ROM2_START + (PAT_ADR_QBT - 0xE800) ,qbt_code, sizeof(qbt_code) );
@@ -146,9 +145,7 @@ void MON_psgrs(Z80_Regs *Regs)
 {
 	int i;
 	byte a;
-#if _DEBUG
 	dprintf("PSG Reset\n");
-#endif
 
 	a = 0x9F;
 	for (i=0;i<4;i++)
@@ -165,9 +162,7 @@ void MON_palres(Z80_Regs *Regs)
 {
 	int i;
 	byte a;
-#if _DEBUG
 	dprintf("PAL Reset\n");
-#endif
 
 	a = 0;
 
@@ -183,9 +178,7 @@ void MON_palres(Z80_Regs *Regs)
 // PCG Reset
 void MON_pcgres(Z80_Regs *Regs)
 {
-#if _DEBUG
 	dprintf("PCG Reset\n");
-#endif
 
 	ZeroMemory(pcg1500_font_blue,PCG1500_SIZE);
 	ZeroMemory(pcg1500_font_red,PCG1500_SIZE);
@@ -209,11 +202,8 @@ void MON_qdios(Z80_Regs *Regs)
     char ext[ _MAX_EXT ];
 
 	cmd = mem[RAM_START+L_QDPA];
-#if _DEBUG	
 	dprintf("QDIOS:");
 	dprintf("ACC=%d\n", cmd);
-#endif
-
 	
 	// $01:Ready Check
 	// $02:Format
@@ -364,16 +354,12 @@ void MON_qdios(Z80_Regs *Regs)
 			qdios_idx_bak = a;
 		}
 
-	#if _DEBUG
 		dprintf("qdpos=%d r=%d\n",qdpos,r);
-	#endif
 		 
 		if (qfp==FILE_VAL_ERROR || (r!=sz))
 		{
 			qdios_idx_bak = -1;
-	#if _DEBUG
 			dprintf("seek error\n");
-	#endif
 			/* シークエラー */
 			Z80_set_carry(Regs, 1);								// error
 			Regs->AF.B.h = 0x40;								// hard err
@@ -458,10 +444,8 @@ void MON_bas_qdios(Z80_Regs *Regs)
     char ext[ _MAX_EXT ];
 
 	cmd = mem[RAM_START+BL_QDPA];
-#if _DEBUG	
 	dprintf("QDIOS:");
 	dprintf("ACC=%d\n", cmd);
-#endif
 
 	
 	// $01:Ready Check
@@ -622,16 +606,12 @@ void MON_bas_qdios(Z80_Regs *Regs)
 			qdios_idx_bak = a;
 		}
 
-	#if _DEBUG
 		dprintf("qdpos=%d r=%d\n",qdpos,r);
-	#endif
 		 
 		if (qfp==FILE_VAL_ERROR || (r!=sz))
 		{
 			qdios_idx_bak = -1;
-	#if _DEBUG
 			dprintf("seek error\n");
-	#endif
 			/* シークエラー */
 			Z80_set_carry(Regs, 1);								// error
 			Regs->AF.B.h = 0x40;								// hard err

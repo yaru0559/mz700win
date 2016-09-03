@@ -11,6 +11,7 @@
 #define MZHW_H_
 
 #include <windows.h>
+#include "dprintf.h"
 
 #include "resource.h"
 

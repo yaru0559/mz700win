@@ -12,6 +12,7 @@
 #include <windows.h>
 #include "mz700win.h"
 
+#include "dprintf.h"
 #include "fileio.h"
 #include "Z80.h"
 #include "Z80codes.h"
@@ -481,9 +482,7 @@ static const byte st1_code[] =
  */
 void patch_emul_rom1(void)
 {
-#if _DEBUG
 	dprintf("patch_emul_rom1()\n");
-#endif
 
 	FillMemory(mem + ROM_START,0x0400, 0xC9);							// Fill by 'RET'
 	bios_patch(initial_code);
@@ -737,9 +736,7 @@ void rdinf_job(Z80_Regs *Regs, int mode)
 	int r = 0;
 	FILE_HDL tfp;													// テープ用ファイルハンドル
 	
-#if _DEBUG
 	 dprintf("rdinf_job()\n");
-#endif
 
 	 //
 	tfp = FILE_ROPEN(tapefile);
@@ -749,15 +746,11 @@ void rdinf_job(Z80_Regs *Regs, int mode)
 		r = FILE_READ(tfp,rdinf_buf,0x80);							/* read header */
 	}
 
-#if _DEBUG
 	dprintf("tapepos=%d r=%d\n",tapepos,r);
-#endif
 	 
 	if (tfp==FILE_VAL_ERROR || (r!=0x80))
 	{
-#if _DEBUG
 		dprintf("seek error\n");
-#endif
 		/* シークエラー処理 */
 		if (tfp != FILE_VAL_ERROR)
 		{
@@ -804,9 +797,7 @@ void rdinf_job(Z80_Regs *Regs, int mode)
 /* RDINF */
 void MON_rdinf (Z80_Regs *Regs)
 {
-#if _DEBUG
 	 dprintf("rdinf()\n");
-#endif
 	rdinf_job(Regs, CPAT_ROM);
 }
 
@@ -817,9 +808,7 @@ void rddata_job(Z80_Regs *Regs, int mode)
 	int errflg = 0;
 	int r = 0;
 	
-#if _DEBUG
 	dprintf("rddata_job()\n");
-#endif
 	
 	switch (mode)
 	{
@@ -854,9 +843,7 @@ void rddata_job(Z80_Regs *Regs, int mode)
 		errflg = 1;
 	 }
 
-#if _DEBUG
 	 dprintf("tapepos=%d r=%d\n",tapepos,r);
-#endif
 
 	 if ((errflg) || (inf_len != r))
 	 {
@@ -867,9 +854,7 @@ void rddata_job(Z80_Regs *Regs, int mode)
 		 }
 
 		 // error
-#if _DEBUG
 		dprintf("read error\n");
-#endif
 		 Z80_set_carry(Regs,1);
 		 Regs->AF.B.h = 1;
 		 ret();
@@ -896,9 +881,7 @@ void rddata_job(Z80_Regs *Regs, int mode)
 /* RDDATA */
 void MON_rddata (Z80_Regs *Regs)
 {
-#if _DEBUG
 	dprintf("rddata()\n");
-#endif
 
 	rddata_job(Regs, CPAT_ROM);
 }
@@ -910,9 +893,7 @@ void wrinf_job(Z80_Regs *Regs, int mode)
 	unsigned char buf[128];
 	FILE_HDL ofp;
 	
-#if _DEBUG
 	 dprintf("wrinf_job()\n");
-#endif
 
 	ofp = FILE_AOPEN(SaveTapeFile);
 	if (ofp != FILE_VAL_ERROR)
@@ -940,9 +921,7 @@ void wrinf_job(Z80_Regs *Regs, int mode)
 /* WRINF */
 void MON_wrinf (Z80_Regs *Regs)
 {
-#if _DEBUG
 	 dprintf("wrinf()\n");
-#endif
 
 	 wrinf_job(Regs, CPAT_ROM);
 }
@@ -956,9 +935,7 @@ void wrdata_job(Z80_Regs *Regs, int mode)
 	int len,addr;
 	int errflg;
 	
-#if _DEBUG
 	dprintf("wrdata_job()\n");
-#endif
 
 	errflg = 0;
 	
@@ -999,9 +976,7 @@ void wrdata_job(Z80_Regs *Regs, int mode)
 			a = FILE_WRITE(ofp, outbuf, cou);
 			if (a != cou)
 			{
-#if _DEBUG
 				dprintf("error\n");
-#endif
 				FILE_CLOSE(ofp);
 
 				Z80_set_carry(Regs,1);
@@ -1018,9 +993,7 @@ void wrdata_job(Z80_Regs *Regs, int mode)
 	else
 	{
 		errflg = 1;														/* error */
-#if _DEBUG
 		dprintf("error\n");
-#endif
 	}
 
 	
@@ -1041,9 +1014,7 @@ void wrdata_job(Z80_Regs *Regs, int mode)
 /* WRDATA */
 void MON_wrdata (Z80_Regs *Regs)
 {
-#if _DEBUG
 	dprintf("wrdata()\n");
-#endif
 
 	wrdata_job(Regs, CPAT_ROM);
 }
@@ -1051,9 +1022,7 @@ void MON_wrdata (Z80_Regs *Regs)
 /* VERIFY */
 void MON_verfy (Z80_Regs *Regs)
 {
-#if _DEBUG
 	dprintf("verify()\n");
-#endif
 
 	/* dummy */
 	Z80_set_carry(Regs, 0);		// cflag clr
@@ -1063,9 +1032,7 @@ void MON_verfy (Z80_Regs *Regs)
 /* ?MODE */
 void MON_qmode (Z80_Regs *Regs)
 {
-#if _DEBUG
 	dprintf("?MODE:\n");
-#endif
 
 	mmio_out(0xE003,0x8A);
 	mmio_out(0xE003,0x07);
@@ -1079,9 +1046,7 @@ void MON_timin(Z80_Regs *Regs)
 {
 	byte val1,val2;
 	word val_w;
-#if _DEBUG
 	dprintf("TIMIN:\n");
-#endif
 
 	mem[RAM_START+0x119B] ^= 1;		// AMPM
 	mmio_out(0xE007,0x80);
@@ -1136,9 +1101,7 @@ void em_qget(Z80_Regs *Regs)
 
 void MON_qget(Z80_Regs *Regs)
 {
-#if _DEBUG
 //	dprintf("QGET:\n");
-#endif
 	em_qget(Regs);
 	ret();
 }
@@ -1238,9 +1201,7 @@ void em_qkey(Z80_Regs *Regs)
 
 void MON_qkey(Z80_Regs *Regs)
 {
-#if _DEBUG
 //	dprintf("?KEY:\n");
-#endif
 	em_qkey(Regs);
 	ret();
 }
@@ -1312,9 +1273,7 @@ void em_qswep(Z80_Regs *Regs)
 //
 void MON_qswep(Z80_Regs *Regs)
 {
-#if _DEBUG
 	dprintf("?SWEP:\n");
-#endif
 
 	em_qswep(Regs);
 	ret();
@@ -1369,9 +1328,7 @@ void em_qbrk(Z80_Regs *Regs)
 	
 void MON_qbrk(Z80_Regs *Regs)
 {
-#if _DEBUG
 //	dprintf("?BRK:\n");
-#endif
 
 	em_qbrk(Regs);
 	ret();
@@ -1445,9 +1402,7 @@ void em_qpont(Z80_Regs *Regs)
 
 void MON_qpont(Z80_Regs *Regs)
 {
-#if _DEBUG
 	dprintf("?PONT:\n");
-#endif
 
 	em_qpont(Regs);
 	ret();
@@ -1474,9 +1429,7 @@ void em_qpnt1(Z80_Regs *Regs)
 
 void MON_qpnt1(Z80_Regs *Regs)
 {
-#if _DEBUG
 	dprintf("?PNT1:\n");
-#endif
 
 	em_qpnt1(Regs);
 	ret();
@@ -1561,9 +1514,7 @@ void em_qdsp(Z80_Regs *Regs)
 
 void MON_qdsp(Z80_Regs *Regs)
 {
-#if _DEBUG
 	dprintf("?DSP:\n");
-#endif
 
 	em_qdsp(Regs);
 	ret();
@@ -1598,9 +1549,7 @@ void em_qprnt(Z80_Regs *Regs)
 
 void MON_qprnt(Z80_Regs *Regs)
 {
-#if _DEBUG
 	dprintf("?PRNT:\n");
-#endif
 	em_qprnt(Regs);
 	ret();
 }
@@ -1619,9 +1568,7 @@ void em_prnt3(Z80_Regs *Regs)
 
 void MON_prnt3(Z80_Regs *Regs)
 {
-#if _DEBUG
 	dprintf("PRNT3:\n");
-#endif
 	em_prnt3(Regs);
 	ret();
 }
@@ -1654,9 +1601,7 @@ void em_qprt(Z80_Regs *Regs)
 
 void MON_qprt(Z80_Regs *Regs)
 {
-#if _DEBUG
 	dprintf("?PRT:\n");
-#endif
 	em_qprt(Regs);
 	ret();
 }
@@ -1671,9 +1616,7 @@ void em_qdpct(Z80_Regs *Regs)
 
 void MON_qdpct(Z80_Regs *Regs)
 {
-#if _DEBUG
 	dprintf("?DPCT:\n");
-#endif
 	em_qdpct(Regs);
 	ret();
 }
@@ -1730,9 +1673,7 @@ void em__mang(Z80_Regs *Regs)
 
 void MON__mang(Z80_Regs *Regs)
 {
-#if _DEBUG
 	dprintf(".MANG:\n");
-#endif
 	em__mang(Regs);
 	ret();
 }
@@ -1747,9 +1688,7 @@ void em_qltnl(Z80_Regs *Regs)
 
 void MON_qltnl(Z80_Regs *Regs)
 {
-#if _DEBUG
 	dprintf("?LTNL:\n");
-#endif
 	em_qltnl(Regs);
 	ret();
 }
@@ -1765,9 +1704,7 @@ void em_qnl(Z80_Regs *Regs)
 
 void MON_qnl(Z80_Regs *Regs)
 {
-#if _DEBUG
 	dprintf("?NL:\n");
-#endif
 	em_qnl(Regs);
 	ret();
 }
@@ -1799,9 +1736,7 @@ void em_qmsg(Z80_Regs *Regs)
 
 void MON_qmsg(Z80_Regs *Regs)
 {
-#if _DEBUG
 	dprintf("?MSG:\n");
-#endif
 	em_qmsg(Regs);
 	ret();
 }
@@ -1840,9 +1775,7 @@ void em_qmsgx(Z80_Regs *Regs)
 
 void MON_qmsgx(Z80_Regs *Regs)
 {
-#if _DEBUG
 	dprintf("?MSGX:\n");
-#endif
 	em_qmsgx(Regs);
 	ret();
 }
@@ -1858,9 +1791,7 @@ void em_qprts(Z80_Regs *Regs)
 
 void MON_qprts(Z80_Regs *Regs)
 {
-#if _DEBUG
 	dprintf("?PRTS:\n");
-#endif
 	em_qprts(Regs);
 	ret();
 }
@@ -1893,9 +1824,7 @@ void em_qprtt(Z80_Regs *Regs)
 
 void MON_qprtt(Z80_Regs *Regs)
 {
-#if _DEBUG
 	dprintf("?PRTT:\n");
-#endif
 	em_qprtt(Regs);
 	ret();
 }
@@ -1904,9 +1833,7 @@ void MON_mldst(Z80_Regs *Regs)
 {
 	byte val_h,val_l;
 	
-#if _DEBUG
 //	dprintf("MLDST:\n");
-#endif
 
 	val_l = Z80_RDMEM(L_RATIO);
 	val_h = Z80_RDMEM(L_RATIO+1);
@@ -1930,9 +1857,7 @@ void em_mldsp(void)
 
 void MON_mldsp(Z80_Regs *Regs)
 {
-#if _DEBUG
 	dprintf("MLDSP:\n");
-#endif
 
 	em_mldsp();
 	ret();
@@ -1950,9 +1875,8 @@ void em_qbel(void)
 
 void MON_qbel(Z80_Regs *Regs)
 {
-#if _DEBUG
 	dprintf("?BEL:\n");
-#endif
+
 	em_qbel();
 }
 
@@ -1969,9 +1893,7 @@ void em_asc(Z80_Regs *Regs)
 
 void MON_asc(Z80_Regs *Regs)
 {
-#if _DEBUG
 	dprintf("ASC:\n");
-#endif
 
 	em_asc(Regs);
 	ret();
@@ -2000,9 +1922,7 @@ void em_hex(Z80_Regs *Regs)
 
 void MON_hex(Z80_Regs *Regs)
 {
-#if _DEBUG
 	dprintf("HEX:\n");
-#endif
 
 	em_hex(Regs);
 	ret();
@@ -2061,9 +1981,7 @@ void em_hlhex(Z80_Regs *Regs)
 
 void MON_hlhex(Z80_Regs *Regs)
 {
-#if _DEBUG
 	dprintf("HLHEX:\n");
-#endif
 
 	em_hlhex(Regs);
 	ret();
@@ -2080,9 +1998,7 @@ void em_2hex(Z80_Regs *Regs)
 
 void MON_2hex(Z80_Regs *Regs)
 {
-#if _DEBUG
 	dprintf("2HEX:\n");
-#endif
 
 	em_2hex(Regs);
 	ret();
@@ -2104,9 +2020,7 @@ void em_prthx(Z80_Regs *Regs)
 
 void MON_prthx(Z80_Regs *Regs)
 {
-#if _DEBUG
 	dprintf("PRTHX:\n");
-#endif
 	em_prthx(Regs);
 	ret();
 }
@@ -2121,9 +2035,7 @@ void em_prthl(Z80_Regs *Regs)
 
 void MON_prthl(Z80_Regs *Regs)
 {
-#if _DEBUG
 	dprintf("PRTHL:\n");
-#endif
 	em_prthl(Regs);
 	ret();
 }
@@ -2138,9 +2050,7 @@ void em_sphex(Z80_Regs *Regs)
 
 void MON_sphex(Z80_Regs *Regs)
 {
-#if _DEBUG
 	dprintf("SPHEX:\n");
-#endif
 	em_sphex(Regs);
 	ret();
 }
@@ -2182,9 +2092,7 @@ void em_qsave(Z80_Regs *Regs)
 
 void MON_qsave(Z80_Regs *Regs)
 {
-#if _DEBUG
 	dprintf("?SAVE:\n");
-#endif
 
 	em_qsave(Regs);
 	ret();
@@ -2207,9 +2115,7 @@ void em_qload(Z80_Regs *Regs)
 
 void MON_qload(Z80_Regs *Regs)
 {
-#if _DEBUG
 	dprintf("?LOAD:\n");
-#endif
 
 	em_qload(Regs);
 	ret();
@@ -2241,9 +2147,7 @@ void em_qfls(Z80_Regs *Regs)
 
 void MON_qfls(Z80_Regs *Regs)
 {
-#if _DEBUG
 //	dprintf("?FLS:\n");
-#endif
 
 	em_qfls(Regs);
 	ret();
@@ -2261,9 +2165,7 @@ void em_flkey(Z80_Regs *Regs)
 
 void MON_flkey(Z80_Regs *Regs)
 {
-#if _DEBUG
 //	dprintf("FLKEY:\n");
-#endif
 
 	em_flkey(Regs);
 	ret();
@@ -2298,9 +2200,7 @@ void em_qqkey(Z80_Regs *Regs)
 
 void MON_qqkey(Z80_Regs *Regs)
 {
-#if _DEBUG
 	dprintf("??KEY:\n");
-#endif
 
 	em_qqkey(Regs);
 }
@@ -2321,9 +2221,7 @@ void em_qcler(Z80_Regs *Regs, int val)
 
 void MON_qcler(Z80_Regs *Regs)
 {
-#if _DEBUG
 	dprintf("?CLER:\n");
-#endif
 
 	em_qcler(Regs, 0);
 	ret();
@@ -2331,9 +2229,7 @@ void MON_qcler(Z80_Regs *Regs)
 
 void MON_qclrff(Z80_Regs *Regs)
 {
-#if _DEBUG
 	dprintf("?CLRFF:\n");
-#endif
 
 	em_qcler(Regs, 0xFF);
 	ret();
@@ -2359,9 +2255,7 @@ void em_dsp03(Z80_Regs *Regs)
 
 void MON_dsp03(Z80_Regs *Regs)
 {
-#if _DEBUG
 	dprintf("DSP03:\n");
-#endif
 
 	em_dsp03(Regs);
 	ret();

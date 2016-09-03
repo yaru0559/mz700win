@@ -22,6 +22,7 @@
 #include "mz700win.h"
 #include "Z80.h"
 
+#include "dprintf.h"
 #include "win.h"
 #include "fileio.h"
 #include "fileset.h"
@@ -116,23 +117,7 @@ WORD	key_patch = 0;													/* KeyTableパッチあてフラグ */
 WORD	bk_color = 0;													/* モニタ画面背景色 */
 WORD	use_cmos;														/* MZ-1R12 0:OFF 1:ON */
 
-//----------------------------------------------------------------------
-// debug用printf
-//----------------------------------------------------------------------
-void dprintf( char *fmt, ... )
-{
-#if _DEBUG
-	va_list		args;
-	char		buf[512];
-
-	va_start(args, fmt);
-	vsprintf_s(buf, sizeof(buf), fmt, args);
-	va_end(args);
-
-	OutputDebugString(buf);
-#endif
-}
-
+//
 BOOL add_menu_bmp(HMENU hmenu, UINT id,UINT bmp)
 {
 	int i;
@@ -1154,9 +1139,7 @@ BOOL CALLBACK AppSpeedDialog(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 		set_spd_text(tmp);
 //		sprintf_s(strtmp, sizeof(strtmp), "Speed : %d%%", tmp);
 //		SetDlgItemText(hwnd, IDC_STATIC_SPD, strtmp);
-#if _DEBUG
 		dprintf("x=%d\n", tmp);
-#endif
 		return TRUE;
 
 	  case WM_CLOSE:
