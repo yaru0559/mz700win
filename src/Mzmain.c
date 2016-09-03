@@ -33,6 +33,7 @@
 #include "DSOUND.h"
 #include "mzbeep.h"
 #include "sn76489an.h"
+#include "MZXInput.h"
 
 static HANDLE hCpuThread;
 static DWORD CpuThreadID   = 0;
@@ -909,6 +910,9 @@ void mainloop(void)
 	}
 //	InitDirectSound(hwndApp);					// DirectSoundの初期化。エラーでも続行（音源無しの場合）
 	mzsnd_init();
+
+	// XInput初期化
+	XInput_Init();
 
 	// Reset MZ
 	mz_reset();

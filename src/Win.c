@@ -32,6 +32,7 @@
 #include "MZddraw.h"
 #include "MZscrn.h"
 #include "DSOUND.h"
+#include "MZXInput.h"
 
 #include "mzbeep.h"
 #include "sn76489an.h"
@@ -1906,6 +1907,8 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 void free_resource(void)
 {
 	HWND hDest;
+
+	XInput_Cleanup();
 
 	DSound_Cleanup();												// DirectSound í‚é~
 
