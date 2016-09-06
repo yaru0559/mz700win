@@ -884,9 +884,12 @@ BOOL load_state(LPCSTR filename)
 void mainloop(void)
 {
 	int _synctime = SyncTime;
-//	int _iperiod;
 	int w;
 	long timetmp;
+	DWORD pad;
+	static DWORD tmppad;
+	DWORD GetTrg;
+	static DWORD GetPad_bak;
 
 #ifdef ENABLE_FDC
 	UINT8 strtmp[MAX_PATH];
@@ -908,7 +911,7 @@ void mainloop(void)
 	if (!DSound_Init(44100, 50)) {
 		sound_di = TRUE;
 	}
-//	InitDirectSound(hwndApp);					// DirectSoundの初期化。エラーでも続行（音源無しの場合）
+	// DirectSoundの初期化。エラーでも続行（音源無しの場合）
 	mzsnd_init();
 
 	// XInput初期化
@@ -931,6 +934,26 @@ void mainloop(void)
 		{
 			timetmp = get_timer();		
 			if (!Z80_Execute()) break;
+			XInput_Update();						// XInputの状態更新
+
+			if (XI_Is_GamePad_Connected(0))
+			{
+				// ゲームパッド接続時
+				pad = XI_Get_GamePad_RAW(0);
+				// ゲームパッドが繋がっていたら...
+//				dprintf("XI_Is_GamePad_Connected(0)\n");
+				// 押されたトリガー取得
+				tmppad = pad;
+				GetTrg = ~GetPad_bak & tmppad;
+				GetPad_bak = tmppad;
+
+
+			}
+			else
+			{
+				// ゲームパッド無しの時
+				pad = 0; 
+			}
 			
 			w = _synctime - (get_timer() - timetmp);
 			if (w > 0)
