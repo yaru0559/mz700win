@@ -950,46 +950,90 @@ void mainloop(void)
 
 				// 方向キー
 				if (GetTrg & PAD_RAW_LEFT)
+				{
 					dprintf("LEFT key pressed\n");
+					mz_keydown(VK_LEFT);	// cursor left
+				}
 				else if (GetReleaseTrg & PAD_RAW_LEFT)
+				{
 					dprintf("LEFT key released\n");
+					mz_keyup(VK_LEFT);	// cursor left
+				}
 
 				if (GetTrg & PAD_RAW_RIGHT)
+				{
 					dprintf("RIGHT key pressed\n");
+					mz_keydown(VK_RIGHT);	// cursor right
+				}
 				else if (GetReleaseTrg & PAD_RAW_RIGHT)
+				{
 					dprintf("RIGHT key released\n");
+					mz_keyup(VK_RIGHT);	// cursor right
+				}
 
 				if (GetTrg & PAD_RAW_UP)
+				{
 					dprintf("UP key pressed\n");
+					mz_keydown(VK_UP);	// cursor up
+				}
 				else if (GetReleaseTrg & PAD_RAW_UP)
+				{
 					dprintf("UP key released\n");
-
+					mz_keyup(VK_UP);	// cursor up
+				}
 				if (GetTrg & PAD_RAW_DOWN)
-					dprintf("DOWN key pressed\n");
+				{
+//					dprintf("DOWN key pressed\n");
+					mz_keydown(VK_DOWN);	// cursor down
+				}
 				else if (GetReleaseTrg & PAD_RAW_DOWN)
-					dprintf("DOWN key released\n");
+				{
+//					dprintf("DOWN key released\n");
+					mz_keyup(VK_DOWN);		// cursor down
+				}
 
 				// ボタン
 				if (GetTrg & PAD_RAW_A)
+				{
 					dprintf("A button pressed\n");
+					mz_keydown(VK_SPACE);	// space key
+				}
 				else if (GetReleaseTrg & PAD_RAW_A)
+				{
 					dprintf("A button released\n");
+					mz_keyup(VK_SPACE);		// space key
+				}
 
 				if (GetTrg & PAD_RAW_B)
+				{
 					dprintf("B button pressed\n");
+					mz_keydown(VK_SHIFT);	// shift key
+				}
 				else if (GetReleaseTrg & PAD_RAW_B)
+				{
 					dprintf("B button released\n");
-
+					mz_keyup(VK_SHIFT);		// shift key
+				}
 				if (GetTrg & PAD_RAW_X)
+				{
 					dprintf("X button pressed\n");
+					mz_keydown(0x5A);		// Z key
+				}
 				else if (GetReleaseTrg & PAD_RAW_X)
+				{
 					dprintf("X button released\n");
-
+					mz_keyup(0x5A);			// Z key
+				}
 				if (GetTrg & PAD_RAW_Y)
+				{
 					dprintf("Y button pressed\n");
+					mz_keydown(0x58);		// X key
+				}
 				else if (GetReleaseTrg & PAD_RAW_Y)
+				{
 					dprintf("Y button released\n");
-
+					mz_keyup(0x58);			// X key
+				}
 			}
 			else
 			{
