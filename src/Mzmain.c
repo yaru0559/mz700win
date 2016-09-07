@@ -18,6 +18,7 @@
 #include "fileio.h"
 #include "win.h"
 #include "fileset.h"
+#include "dprintf.h"
 
 #include "Z80.h"
 #include "Z80codes.h"
@@ -887,9 +888,9 @@ void mainloop(void)
 	int w;
 	long timetmp;
 	DWORD pad;
-	static DWORD tmppad;
 	DWORD GetTrg;
-	static DWORD GetPad_bak;
+	DWORD GetReleaseTrg;
+	static DWORD Pad_bak;
 
 #ifdef ENABLE_FDC
 	UINT8 strtmp[MAX_PATH];
@@ -939,14 +940,55 @@ void mainloop(void)
 			if (XI_Is_GamePad_Connected(0))
 			{
 				// ゲームパッド接続時
-				pad = XI_Get_GamePad_RAW(0);
 				// ゲームパッドが繋がっていたら...
 //				dprintf("XI_Is_GamePad_Connected(0)\n");
 				// 押されたトリガー取得
-				tmppad = pad;
-				GetTrg = ~GetPad_bak & tmppad;
-				GetPad_bak = tmppad;
+				pad = XI_Get_GamePad_RAW(0);
+				GetTrg = ~Pad_bak & pad;
+				GetReleaseTrg = Pad_bak & ~pad;
+				Pad_bak = pad;
 
+				// 方向キー
+				if (GetTrg & PAD_RAW_LEFT)
+					dprintf("LEFT key pressed\n");
+				else if (GetReleaseTrg & PAD_RAW_LEFT)
+					dprintf("LEFT key released\n");
+
+				if (GetTrg & PAD_RAW_RIGHT)
+					dprintf("RIGHT key pressed\n");
+				else if (GetReleaseTrg & PAD_RAW_RIGHT)
+					dprintf("RIGHT key released\n");
+
+				if (GetTrg & PAD_RAW_UP)
+					dprintf("UP key pressed\n");
+				else if (GetReleaseTrg & PAD_RAW_UP)
+					dprintf("UP key released\n");
+
+				if (GetTrg & PAD_RAW_DOWN)
+					dprintf("DOWN key pressed\n");
+				else if (GetReleaseTrg & PAD_RAW_DOWN)
+					dprintf("DOWN key released\n");
+
+				// ボタン
+				if (GetTrg & PAD_RAW_A)
+					dprintf("A button pressed\n");
+				else if (GetReleaseTrg & PAD_RAW_A)
+					dprintf("A button released\n");
+
+				if (GetTrg & PAD_RAW_B)
+					dprintf("B button pressed\n");
+				else if (GetReleaseTrg & PAD_RAW_B)
+					dprintf("B button released\n");
+
+				if (GetTrg & PAD_RAW_X)
+					dprintf("X button pressed\n");
+				else if (GetReleaseTrg & PAD_RAW_X)
+					dprintf("X button released\n");
+
+				if (GetTrg & PAD_RAW_Y)
+					dprintf("Y button pressed\n");
+				else if (GetReleaseTrg & PAD_RAW_Y)
+					dprintf("Y button released\n");
 
 			}
 			else
