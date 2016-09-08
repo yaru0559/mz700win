@@ -1,13 +1,13 @@
 #pragma once
 
-#define   DIRECTDRAW_VERSION 0x0200  // DirectX2相当
-#define	USE_DDRAW	0	// 1であればdirectdrawが有効
+#define		DIRECTDRAW_VERSION 0x0200   // DirectX2相当
+#define		USE_DDRAW 0					// 1であればdirectdrawが有効
 
 // maru:VS2010ではddraw.libが無くなっているため、全削除
+// ※DirectX SDK Feb.2010を別途インストールすることでリンク可能になった。が、動作しない…。
 //      ぶっちゃけフルスクリーンにするためにしか使っていない。
 #if USE_DDRAW
 #include <ddraw.h>
-#pragma comment(lib, "ddraw.lib")
 #endif
 
 #ifdef __cplusplus
@@ -28,6 +28,7 @@ enum
 	FULL_320_240,														/* 01:320x240 */
 	FULL_640_400,														/* 02:640x400 */
 	FULL_640_480,														/* 03:640x480 */
+	FULL_800_600,														/* 04:800x600 */
 
 	FULL_END
 };

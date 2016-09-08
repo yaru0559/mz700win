@@ -12,6 +12,17 @@ Please overwrite in a solution file of existence and a project file in sln direc
 Default is for VS2010.
 
 --
+branch ver_2016_09_03 (2016/09/09)
+- MZ700Win Version 0.56 -
+
+To build, You need DirectX SDK Feb2010. It includes 'ddraw.lib' and 'XInput.lib'.
+You can get it from below link.
+http://www.microsoft.com/downloads/details.aspx?displaylang=en&FamilyID=2c7da5fb-ffbb-4af6-8c66-651cbd28ca15
+MZ700Win needed 'ddraw.lib' and 'XInput.lib' from this version.
+But full screen mode doesn't  yet.
+It'll be merged with master branch later.
+
+--
 branch ver_2016_09_03 (2016/09/08)
 Allocation of game pad and keyboard was implemented by fixing.
 ARROW Key = CURSOR key
