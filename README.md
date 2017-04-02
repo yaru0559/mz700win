@@ -1,19 +1,25 @@
 <!-- コメント -->
-# mz700win version 0.56
+# mz700win version 0.56a
 code by Marukun, Youkan 
    
 Specifically, please visit there.  
-[http://retropc.net/mz-memories/mz700/](http://retropc.net/mz-memories/mz700/)  
-  
+Marukun: [http://retropc.net/mz-memories/mz700/](http://retropc.net/mz-memories/mz700/) <br>
+Youkan: [http://www.maroon.dti.ne.jp/youkan/mz700/](http://www.maroon.dti.ne.jp/youkan/mz700/)  
 - To build this project, Please use Visual Studio 2010. "Fullscreen" is disabled. Because It doesn't run yet.  
 Please overwrite in a solution file of existence and a project file in sln directory, according to the version of Visual Studio you're using.
 Default is for VS2010.  
 
 ---
-## master (2016/09/10)
-### branch ver_2016_09_03 was merged.
+## MZ700Win Version 0.56a
+### master (2017/04/03)
+- port $E5に関する微細な修正。下位3bitだけでプライオリティを判断するようにした。<hr>
+Fine fix for port $E5. The priority is judged with only the lower 3 bits.
 
-このバージョンでXInput対応 Windows用 XBOXゲームパッドに対応しました。  
+---
+## MZ700Win Version 0.56
+### master (2016/09/10)
+- branch ver_2016_09_03 was merged.<br>
+このバージョンでXInput対応 Windows用 XBOXゲームパッドに対応しました。
 何故DirectInputではなくてXInputなのか？  
 それは、作者がWindows用 XBOXゲームパッドを持っていたという事と、  
 XInputのほうが将来性がありそうだと思ったからです。   
@@ -22,9 +28,8 @@ XInputのほうが将来性がありそうだと思ったからです。
 Ａボタン = スペースキー  
 Ｂボタン = SHIFTキー  
 Ｘボタン = Ｚキー  
-Ｙボタン = Ｘキー  
-……キーコンフィグ？　今のところは無いです。将来暇が出来たらやるかもしれません。  
----
+Ｙボタン = Ｘキー  <br>
+……キーコンフィグ？　今のところは無いです。将来暇が出来たらやるかもしれません。 <hr>
 This version is implemented XInput for XBOX360 Gamepad for Windows.  
 Why isn't it DirectInput, and XInput?  
 Author (Marukun) had a 'XBOX360 Gamepad for Windows' in that.  
