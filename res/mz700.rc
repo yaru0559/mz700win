@@ -127,8 +127,8 @@ END
 //
 
 VERSIONINFO_1 VERSIONINFO
- FILEVERSION 0,5,6,0
- PRODUCTVERSION 0,5,6,0
+ FILEVERSION 0,5,6,1
+ PRODUCTVERSION 0,5,6,1
  FILEFLAGSMASK 0x0L
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -145,13 +145,13 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "-"
             VALUE "FileDescription", "MZ-700/1500 Emulator For Win32"
-            VALUE "FileVersion", "0.5.6.0"
+            VALUE "FileVersion", "0.5.6.1"
             VALUE "InternalName", "mz700win"
             VALUE "LegalCopyright", "(C) 1998-2009 Marukun 2009-2016 Marukun/Youkan"
             VALUE "LegalTrademarks", "-"
             VALUE "OriginalFilename", "MZ700WIN.EXE"
             VALUE "ProductName", "MZ700WIN"
-            VALUE "ProductVersion", "0.5.6.0"
+            VALUE "ProductVersion", "0.5.6.1"
         END
     END
     BLOCK "VarFileInfo"
@@ -175,9 +175,9 @@ BEGIN
     PUSHBUTTON      "OK",IDOK,70,105,36,14,BS_CENTER | BS_VCENTER
     LTEXT           "MZ-700 Emulator 'MZ700WIN'",-1,32,12,92,8,NOT WS_GROUP
     ICON            "AppIcon",-1,8,12,20,20
-    LTEXT           "Version 0.56",-1,32,24,100,8,NOT WS_GROUP
+    LTEXT           "Version 0.56a",-1,32,24,100,8,NOT WS_GROUP
     CONTROL         "",-1,"Static",SS_ETCHEDHORZ,28,36,140,1
-    LTEXT           "Copyright (C) 1998-2016 Marukun/Youkan.",-1,32,39,139,8,NOT WS_GROUP
+    LTEXT           "Copyright (C) 1998-2017 Marukun/Youkan.",-1,32,39,139,8,NOT WS_GROUP
     LTEXT           "Based on Russell Marks's 'mz700em'.",-1,32,49,124,8,NOT WS_GROUP
     LTEXT           "Z80 emulation from 'Z80em'",-1,32,62,140,8,NOT WS_GROUP
     LTEXT           "E-Mail : mz-memories@retropc.net",IDC_MAILTO,34,94,101,8,SS_NOTIFY | NOT WS_GROUP

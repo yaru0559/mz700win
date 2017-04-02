@@ -1,4 +1,17 @@
 #################
+## MZ700Win
+#################
+# Images
+*.ROM
+*.rom
+
+# TEMP QD
+$qd$.mzt
+
+# CMOS
+CMOS.RAM
+
+#################
 ## Eclipse
 #################
 
@@ -27,7 +40,6 @@ local.properties
 
 # PDT-specific
 .buildpath
-
 
 #################
 ## Visual Studio
@@ -67,6 +79,7 @@ local.properties
 #packages/
 
 # Visual C++ cache files
+.vs/
 ipch/
 *.aps
 *.ncb
@@ -77,6 +90,9 @@ ipch/
 # Visual Studio profiler
 *.psess
 *.vsp
+
+# Visual Studio Code
+.vscode/
 
 # ReSharper is a .NET coding add-in
 _ReSharper*

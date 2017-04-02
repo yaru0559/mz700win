@@ -1170,24 +1170,24 @@ void Z80_Out(word Port,word Value)
 		update_membank();
 		return;
 		
-	case 0xe4:
+	case 0xE4:
 		Z80_Out(0xe2,0);
 		Z80_Out(0xe3,0);
 		return;
 		
-	case 0xe5:
+	case 0xE5:
 		if (hw1500.e5_bak < 0)
 		{
-			/* Backup Bank Data */
+			// Backup Bank Data
 			CopyMemory(&hw1500.memctrl_bak,&hw700.memctrl[26],sizeof(TMEMBANK)*6);
 			hw1500.e5_bak = iVal;
 			update_membank();
 		}
-		/* Select PCG Block or CG */
-		switch (iVal)
+		// Select PCG Block or CG
+		switch (iVal & 0x03)			// 20170403 maru - Thanks to youkan700.
 		{
 		case 0x00:
-			/* CG BANK */
+			// CG BANK
 			mp = &hw700.memctrl[26];
 			mp->base = MB_FONT; mp->ofs = 0x0000; mp++;
 			mp->base = MB_FONT; mp->ofs = 0x0800; mp++;
@@ -1199,7 +1199,7 @@ void Z80_Out(word Port,word Value)
 			break;
 
 		case 0x01:
-			/* PCG BLUE */
+			// PCG BLUE
 			mp = &hw700.memctrl[26];
 			mp->base = MB_PCGB; mp->ofs = 0x0000; mp++;
 			mp->base = MB_PCGB; mp->ofs = 0x0800; mp++;
@@ -1211,7 +1211,7 @@ void Z80_Out(word Port,word Value)
 			break;
 			
 		case 0x02:
-			/* PCG RED */
+			// PCG RED
 			mp = &hw700.memctrl[26];
 			mp->base = MB_PCGR; mp->ofs = 0x0000; mp++;
 			mp->base = MB_PCGR; mp->ofs = 0x0800; mp++;
@@ -1223,7 +1223,7 @@ void Z80_Out(word Port,word Value)
 			break;
 			
 		case 0x03:
-			/* PCG GREEN */
+			// PCG GREEN
 			mp = &hw700.memctrl[26];
 			mp->base = MB_PCGG; mp->ofs = 0x0000; mp++;
 			mp->base = MB_PCGG; mp->ofs = 0x0800; mp++;
