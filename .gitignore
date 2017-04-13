@@ -92,7 +92,8 @@ ipch/
 *.vsp
 
 # Visual Studio Code
-.vscode/
+# .vscode/
+.BROWSE.VC.DB
 
 # ReSharper is a .NET coding add-in
 _ReSharper*
