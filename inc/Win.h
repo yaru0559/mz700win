@@ -112,6 +112,7 @@ void mouse_cursor(BOOL);
 void create_mmtimer(void);
 void free_mmtimer(void);
 void get_window_size(int);
+BOOL set_client_size(HWND hWnd, int width, int height);
 void set_select_chk(int,int,int);
 void set_screen_menu(int);
 void set_keytype_menu(int);

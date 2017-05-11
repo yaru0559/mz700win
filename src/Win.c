@@ -640,13 +640,33 @@ void free_mmtimer(void)
 // メニューとキャプションの大きさ込みでサイズを決定。
 void get_window_size(int m)
 {
+	// *ToDo* 20170512 
+//	set_client_size(hwndApp, FORMWIDTH * (m + 1), FORMHEIGHT * (m + 1));
+
 	win_sx = FORMWIDTH * (m+1);
 	win_sy = FORMHEIGHT * (m+1);
+
 	win_sx += (GetSystemMetrics(SM_CXFIXEDFRAME)*2);
 	win_sy += GetSystemMetrics(SM_CYCAPTION)+
 			  GetSystemMetrics(SM_CYMENU)+
 			  (GetSystemMetrics(SM_CXFIXEDFRAME)*2);
 }
+
+// *ToDo* 20170512 
+// クライアント領域のサイズからWindow全体のサイズを設定
+// ref: http://d.hatena.ne.jp/yus_iri/20110911/1315730376
+BOOL set_client_size(HWND hWnd, int width, int height)
+{
+	RECT rw, rc;
+	GetWindowRect(hWnd, &rw);
+	GetClientRect(hWnd, &rc);
+
+	int win_sx = (rw.right - rw.left) - (rc.right - rc.left) + width;
+	int win_sy = (rw.bottom - rw.top) - (rc.bottom - rc.top) + height;
+
+	return SetWindowPos(hWnd, NULL, 0, 0, win_sx, win_sy, SWP_NOMOVE | SWP_NOZORDER);
+}
+
 
 // メニューバーが２段になった場合、下が切れる現象の対策
 void adjust_window_size(HWND hwnd)
@@ -700,6 +720,7 @@ void set_screen_menu(int m)
 
 	/* ウィンドウサイズの変更 */
 	get_window_size(m);
+	set_client_size(hwndApp, win_sx, win_sy);
 
 	MoveWindow(hwndApp,xbak,ybak,win_sx,win_sy,TRUE);
 }
@@ -2056,7 +2077,7 @@ int APIENTRY WinMain (HINSTANCE hInstance,
 	/* INIファイルの設定を読み込み */
 	load_inifile();	
 	get_window_size(menu.screen);										/* win_sx,win_sy calc */
-	
+
 	/* スクリーンの広さを調べる */
 	GetClientRect(GetDesktopWindow(),&destrect);
 	if (win_xpos == -99999) win_xpos = (destrect.right-win_sx)>>1;
@@ -2095,6 +2116,9 @@ int APIENTRY WinMain (HINSTANCE hInstance,
 
 	ShowWindow(hwnd, nCmdShow);
 	UpdateWindow(hwnd);
+
+	// *ToDo* 20170512 
+//	set_client_size(hwndApp, win_sx, win_sy);
 
 	/* ミューテクスのリリース */
 //	ReleaseMutex(hMutex);
