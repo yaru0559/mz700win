@@ -1,4 +1,4 @@
-<!-- コメント -->
+﻿<!-- コメント -->
 # mz700win version 0.56a
 code by Marukun, Youkan 
    

@@ -1,4 +1,4 @@
-#################
+﻿#################
 ## MZ700Win
 #################
 # Images
@@ -56,6 +56,7 @@ local.properties
 # Build results
 [Dd]ebug/
 [Rr]elease/
+[Xx]64/
 *_i.c
 *_p.c
 *.ilk

@@ -657,12 +657,20 @@ void get_window_size(int m)
 // ref: http://d.hatena.ne.jp/yus_iri/20110911/1315730376
 BOOL set_client_size(HWND hWnd, int width, int height)
 {
+#if 0
 	RECT rw, rc;
 	GetWindowRect(hWnd, &rw);
 	GetClientRect(hWnd, &rc);
 
 	int win_sx = (rw.right - rw.left) - (rc.right - rc.left) + width;
 	int win_sy = (rw.bottom - rw.top) - (rc.bottom - rc.top) + height;
+#endif
+
+#if _MSC_VER >= 1900			// Visual Studio 2015 ˆÈ~‚¾‚Á‚½‚çWindowc‚ğL‚Î‚·
+	if (win_sy > FORMHEIGHT) {
+		win_sy += 10;			// 10 ‚¾‚Æ‰½ŒÌ‚©’ K‚ª‡‚¤
+	}
+#endif
 
 	return SetWindowPos(hWnd, NULL, 0, 0, win_sx, win_sy, SWP_NOMOVE | SWP_NOZORDER);
 }
