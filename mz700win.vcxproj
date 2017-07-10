@@ -105,6 +105,7 @@
     </Bscmake>
     <Manifest>
       <AdditionalManifestFiles>$(ProjectDir)\$(TargetFileName).manifest</AdditionalManifestFiles>
+      <EnableDpiAwareness>true</EnableDpiAwareness>
     </Manifest>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -159,6 +160,7 @@
     </Bscmake>
     <Manifest>
       <AdditionalManifestFiles>$(ProjectDir)\$(TargetFileName).manifest</AdditionalManifestFiles>
+      <EnableDpiAwareness>true</EnableDpiAwareness>
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
