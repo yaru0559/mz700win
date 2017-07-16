@@ -1,4 +1,4 @@
-//----------------------------------------------------------------------------
+ï»¿//----------------------------------------------------------------------------
 // File:defkey.c
 //
 // mz700win:MZ-Keymap Redefine Module
@@ -24,7 +24,7 @@ static BYTE *textptr;
 static int keymat_max;													// MAX of key-matrix menu
 static HMENU hmenu;														// HANDLE of Keyboard Menu
 
-static UINT8 KeyFileStr[MAX_PATH];										// ƒL[’è‹`ƒtƒ@ƒCƒ‹–¼
+static UINT8 KeyFileStr[MAX_PATH];										// ã‚­ãƒ¼å®šç¾©ãƒ•ã‚¡ã‚¤ãƒ«å
 static TDEFKEY_SECTION defkey_section[KEY_MATRIX_BANK_MAX];
 
 //
@@ -139,7 +139,7 @@ int chkchr(int ch)
 };
 
 //------------------------------
-// ‚P‚Ui”‚ÌƒeƒLƒXƒg‚ğ“Ç‚İ‚Ş
+// ï¼‘ï¼–é€²æ•°ã®ãƒ†ã‚­ã‚¹ãƒˆã‚’èª­ã¿è¾¼ã‚€
 //------------------------------
 int gethex(int *result)
 {
@@ -204,7 +204,7 @@ int set_current_section(void)
 	TDEFKEY_SECTION *defs_p;
 	BYTE strtmp[SECTION_NAME_MAX];
 
-	// ƒZƒNƒVƒ‡ƒ“–¼‚ğƒQƒbƒg
+	// ã‚»ã‚¯ã‚·ãƒ§ãƒ³åã‚’ã‚²ãƒƒãƒˆ
 	textptr++;
 	for (len=0 ;; len++)
 	{
@@ -214,14 +214,14 @@ int set_current_section(void)
 		{
 			if (*(textptr+1)==0x0A)
 			{
-				// “r’†‚Å‰üs
+				// é€”ä¸­ã§æ”¹è¡Œ
 				return -1;
 			}
 		}
 
 		if (ch==0x0A)
 		{
-			// “r’†‚Å‰üs
+			// é€”ä¸­ã§æ”¹è¡Œ
 			return -1;
 		}
 
@@ -262,7 +262,7 @@ int set_current_section(void)
 			return ok;
 		}
 		else
-		// VŠù“o˜^
+		// æ–°æ—¢ç™»éŒ²
 		for (i=0;i<KEY_MATRIX_BANK_MAX;i++)
 		{
 			defs_p = &defkey_section[i];
@@ -276,7 +276,7 @@ int set_current_section(void)
 		defs_p->flag=1;
 		ok = i;
 		
-		// ƒƒjƒ…[‚É’Ç‰Á
+		// ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã«è¿½åŠ 
 		InsertMenu(hmenu, keymat_max , MF_BYPOSITION | MF_STRING,
                    MENU_KEYTYPE_BASE + keymat_max, strtmp );
 
@@ -287,7 +287,7 @@ int set_current_section(void)
 }
 	
 //---------------------------------------------
-// “Ç‚İ‚ñ‚¾def.key‚ğ‰ğÍ‚µAƒ[ƒN‚Éæ‚è‚Ş
+// èª­ã¿è¾¼ã‚“ã def.keyã‚’è§£æã—ã€ãƒ¯ãƒ¼ã‚¯ã«å–ã‚Šè¾¼ã‚€
 // Read 'def.key' and define keymap
 //---------------------------------------------
 int set_defkey( void )
@@ -303,7 +303,7 @@ int set_defkey( void )
 	{
 		if ( (ch = space_skip()) <= 0) break;
 
-		//ƒZƒNƒVƒ‡ƒ“’è‹`
+		//ã‚»ã‚¯ã‚·ãƒ§ãƒ³å®šç¾©
 		if (ch == '[')
 		{
 			current_section = set_current_section();
@@ -324,7 +324,7 @@ int set_defkey( void )
 			}
 		}
 
-		// ƒL[ƒ}ƒgƒŠƒNƒX“Ç‚İ‚İ
+		// ã‚­ãƒ¼ãƒãƒˆãƒªã‚¯ã‚¹èª­ã¿è¾¼ã¿
 		// i = MZ-Key matrix
 		if (gethex(&i)<0)
 		{
@@ -376,14 +376,14 @@ int set_defkey( void )
 		if ( ch <= 0 ) break;
 	}
 
-	// ƒZƒpƒŒ[ƒ^‚ğíœ
+	// ã‚»ãƒ‘ãƒ¬ãƒ¼ã‚¿ã‚’å‰Šé™¤
 	RemoveMenu( hmenu, current_section+1 , MF_BYPOSITION);
 
 	return 0;
 }
 
 /////////////////////////////////////
-// ƒL[ƒ}ƒgƒŠƒNƒXÄ’è‹`ˆ—@‰Šú‰»
+// ã‚­ãƒ¼ãƒãƒˆãƒªã‚¯ã‚¹å†å®šç¾©å‡¦ç†ã€€åˆæœŸåŒ–
 /////////////////////////////////////
 int init_defkey(void)
 {
@@ -397,18 +397,18 @@ int init_defkey(void)
 
 	FillMemory(keymattbl_ptr, (KEY_MATRIX_BANK_MAX * 256), 0xFF );
 
-	// ƒL[’è‹`ƒtƒ@ƒCƒ‹–¼‚Ìì¬
+	// ã‚­ãƒ¼å®šç¾©ãƒ•ã‚¡ã‚¤ãƒ«åã®ä½œæˆ
 	GetCurrentDirectory(sizeof(KeyFileStr), KeyFileStr);
 	lstrcat(KeyFileStr, "\\key.def");
 
-	// ƒL[’è‹`ƒZƒNƒVƒ‡ƒ“ƒXƒe[ƒ^ƒX‚Ìì¬
+	// ã‚­ãƒ¼å®šç¾©ã‚»ã‚¯ã‚·ãƒ§ãƒ³ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã®ä½œæˆ
 	ZeroMemory(defkey_section, sizeof(defkey_section) );
 
 	return 0;
 }
 
 //////////////////////////////////
-// ƒL[ƒ}ƒgƒŠƒNƒXÄ’è‹`ˆ—@I—¹
+// ã‚­ãƒ¼ãƒãƒˆãƒªã‚¯ã‚¹å†å®šç¾©å‡¦ç†ã€€çµ‚äº†
 //////////////////////////////////
 int end_defkey(void)
 {
@@ -432,7 +432,7 @@ int read_defkey(void)
 
 	hmenu = GetSubMenu(hmenuApp , 2);								/* Keyboard Menu */
 	
-	// ’è‹`ƒtƒ@ƒCƒ‹‚ÌƒTƒCƒY‚ğ’²‚×‚é
+	// å®šç¾©ãƒ•ã‚¡ã‚¤ãƒ«ã®ã‚µã‚¤ã‚ºã‚’èª¿ã¹ã‚‹
 	fp = FILE_ROPEN( (LPCSTR)KeyFileStr );
 	if (fp == FILE_VAL_ERROR)
 	{
@@ -467,7 +467,7 @@ int read_defkey(void)
 
 	if ( textptr == NULL ) return -1;
 
-	err = set_defkey();													/* “Ç‚İ‚ñ‚¾key.def‚ğ‰ğÍ */
+	err = set_defkey();													/* èª­ã¿è¾¼ã‚“ã key.defã‚’è§£æ */
 
 	if (err == -1)
 	{

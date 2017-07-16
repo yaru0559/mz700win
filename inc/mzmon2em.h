@@ -1,4 +1,4 @@
-/* $Id: mzmon2em.h 1 2007-07-27 06:17:19Z maru $ */
+ï»¿/* $Id: mzmon2em.h 1 2007-07-27 06:17:19Z maru $ */
 
 #pragma once
 
@@ -9,7 +9,7 @@
 extern "C" {
 #endif
 
-// ƒpƒbƒ`ƒCƒ“ƒfƒbƒNƒX
+// ãƒ‘ãƒƒãƒã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
 enum TROM2NUM
 {
 	ROM2_psgrs = 0,

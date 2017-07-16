@@ -1,4 +1,4 @@
-//
+﻿//
 // XInput.h by Takeshi Maruyama
 // 2016/09/01-
 // now digital pad only....

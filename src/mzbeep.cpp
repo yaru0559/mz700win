@@ -1,4 +1,4 @@
-#include "dprintf.h"
+ï»¿#include "dprintf.h"
 #include "mzbeep.h"
 
 static	BOOL bPlaying;
@@ -9,7 +9,7 @@ static	int pulse_cou;
 static	int pulse_vec;
 
 /*
- * ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+ * ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
  */
 void mzbeep_init(int freq) {
 //	dprintf("mzbeep()\n");
@@ -22,7 +22,7 @@ void mzbeep_init(int freq) {
 }
 
 /*
- * ƒfƒXƒgƒ‰ƒNƒ^
+ * ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
  */
 void mzbeep_clean() {
 	bPlaying = false;
@@ -30,7 +30,7 @@ void mzbeep_clean() {
 }
 
 /*
- * Á‰¹
+ * æ¶ˆéŸ³
  */
 void mzbeep_stop() {
 	bPlaying = false;
@@ -38,7 +38,7 @@ void mzbeep_stop() {
 }
 
 /*
- * ü”g”‚Ìİ’è
+ * å‘¨æ³¢æ•°ã®è¨­å®š
  */
 void mzbeep_setFreq(int arg) {
 	bPlaying = true;
@@ -49,7 +49,7 @@ void mzbeep_setFreq(int arg) {
 }
 
 /*
- * XV
+ * æ›´æ–°
  */
 void mzbeep_update(short* ptr, int cou) {
 	int i;

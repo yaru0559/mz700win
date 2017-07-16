@@ -1,4 +1,4 @@
-//----------------------------------------------------------------------------
+ï»¿//----------------------------------------------------------------------------
 // File:fileio.c
 //
 // mz700win:File Access Module
@@ -10,9 +10,9 @@
 #include "fileio.h"
 
 //----------------------------------------------------------
-// ƒtƒ@ƒCƒ‹“Ç‚Ý‘‚«—pOpen
+// ãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿æ›¸ãç”¨Open
 //----------------------------------------------------------
-// Ret: ƒtƒ@ƒCƒ‹ƒnƒ“ƒhƒ‹
+// Ret: ãƒ•ã‚¡ã‚¤ãƒ«ãƒãƒ³ãƒ‰ãƒ«
 //      FILE_VAL_ERROR = Open Error
 FILE_HDL FILE_OPEN(LPCSTR filename) {
 
@@ -31,9 +31,9 @@ FILE_HDL FILE_OPEN(LPCSTR filename) {
 }
 
 //----------------------------------------------------------
-// ƒtƒ@ƒCƒ‹“Ç‚Ýž‚Ý—pOpen
+// ãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿ç”¨Open
 //----------------------------------------------------------
-// Ret: ƒtƒ@ƒCƒ‹ƒnƒ“ƒhƒ‹
+// Ret: ãƒ•ã‚¡ã‚¤ãƒ«ãƒãƒ³ãƒ‰ãƒ«
 //      FILE_VAL_ERROR = Open Error
 FILE_HDL FILE_ROPEN(LPCSTR filename)
 {
@@ -46,9 +46,9 @@ FILE_HDL FILE_ROPEN(LPCSTR filename)
 }
 
 //----------------------------------------------------------
-// ƒtƒ@ƒCƒ‹V‹Kì¬—pOpen
+// ãƒ•ã‚¡ã‚¤ãƒ«æ–°è¦ä½œæˆç”¨Open
 //----------------------------------------------------------
-// Ret: ƒtƒ@ƒCƒ‹ƒnƒ“ƒhƒ‹
+// Ret: ãƒ•ã‚¡ã‚¤ãƒ«ãƒãƒ³ãƒ‰ãƒ«
 //      FILE_VAL_ERROR = Open Error
 FILE_HDL FILE_COPEN(LPCSTR filename)
 {
@@ -61,9 +61,9 @@ FILE_HDL FILE_COPEN(LPCSTR filename)
 }
 
 //----------------------------------------------------------
-// ƒtƒ@ƒCƒ‹’Ç‰Áì¬—pOpen
+// ãƒ•ã‚¡ã‚¤ãƒ«è¿½åŠ ä½œæˆç”¨Open
 //----------------------------------------------------------
-// Ret: ƒtƒ@ƒCƒ‹ƒnƒ“ƒhƒ‹
+// Ret: ãƒ•ã‚¡ã‚¤ãƒ«ãƒãƒ³ãƒ‰ãƒ«
 //      FILE_VAL_ERROR = Open Error
 FILE_HDL FILE_AOPEN(LPCSTR filename)
 {
@@ -86,9 +86,9 @@ FILE_HDL FILE_AOPEN(LPCSTR filename)
 }
 
 //----------------------------------------------------------
-// ƒtƒ@ƒCƒ‹“Ç‚Ýž‚Ý
+// ãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿
 //----------------------------------------------------------
-// Ret: “Ç‚Ýž‚ÝƒoƒCƒg”F|‚PƒGƒ‰[
+// Ret: èª­ã¿è¾¼ã¿ãƒã‚¤ãƒˆæ•°ï¼šï¼ï¼‘ï¼ã‚¨ãƒ©ãƒ¼
 int FILE_READ(FILE_HDL fh, void * ptr, int sz)
 {
     BOOL result;
@@ -100,9 +100,9 @@ int FILE_READ(FILE_HDL fh, void * ptr, int sz)
 }
 
 //----------------------------------------------------------
-// ƒtƒ@ƒCƒ‹‘‚«ž‚Ý
+// ãƒ•ã‚¡ã‚¤ãƒ«æ›¸ãè¾¼ã¿
 //----------------------------------------------------------
-// Ret: ‘‚«ž‚ÝƒoƒCƒg”F|‚PƒGƒ‰[
+// Ret: æ›¸ãè¾¼ã¿ãƒã‚¤ãƒˆæ•°ï¼šï¼ï¼‘ï¼ã‚¨ãƒ©ãƒ¼
 int FILE_WRITE(FILE_HDL fh, void * ptr, int sz)
 {
     BOOL result;
@@ -114,9 +114,9 @@ int FILE_WRITE(FILE_HDL fh, void * ptr, int sz)
 }
 
 //----------------------------------------------------------
-// ƒtƒ@ƒCƒ‹ƒNƒ[ƒY
+// ãƒ•ã‚¡ã‚¤ãƒ«ã‚¯ãƒ­ãƒ¼ã‚º
 //----------------------------------------------------------
-// Ret: ‘‚«ž‚ÝƒoƒCƒg”F|‚PƒGƒ‰[
+// Ret: æ›¸ãè¾¼ã¿ãƒã‚¤ãƒˆæ•°ï¼šï¼ï¼‘ï¼ã‚¨ãƒ©ãƒ¼
 BOOL FILE_CLOSE(FILE_HDL fh)
 {
     return CloseHandle(fh);
@@ -124,16 +124,16 @@ BOOL FILE_CLOSE(FILE_HDL fh)
 
 
 //----------------------------------------------------------
-// ƒtƒ@ƒCƒ‹ƒV[ƒN
+// ãƒ•ã‚¡ã‚¤ãƒ«ã‚·ãƒ¼ã‚¯
 //----------------------------------------------------------
-// Ret: ƒtƒ@ƒCƒ‹‚ÌƒJƒŒƒ“ƒgˆÊ’uF|‚PƒGƒ‰[
+// Ret: ãƒ•ã‚¡ã‚¤ãƒ«ã®ã‚«ãƒ¬ãƒ³ãƒˆä½ç½®ï¼šï¼ï¼‘ï¼ã‚¨ãƒ©ãƒ¼
 int FILE_SEEK(FILE_HDL fh, long pointer, int mode)
 {
 	return SetFilePointer(fh, pointer, NULL, mode);
 }
 
 //----------------------------------------------------------
-// ƒtƒ@ƒCƒ‹‚ª‘¶Ý‚·‚é‚©‚Ç‚¤‚©ƒ`ƒFƒbƒN‚·‚é
+// ãƒ•ã‚¡ã‚¤ãƒ«ãŒå­˜åœ¨ã™ã‚‹ã‹ã©ã†ã‹ãƒã‚§ãƒƒã‚¯ã™ã‚‹
 //----------------------------------------------------------
 BOOL FileExists(LPCSTR filename)
 {
@@ -147,7 +147,7 @@ BOOL FileExists(LPCSTR filename)
 }
 
 //----------------------------------------------------------
-// ƒtƒ@ƒCƒ‹‚ÌƒAƒgƒŠƒrƒ…[ƒg‚ðƒ`ƒFƒbƒN‚·‚é
+// ãƒ•ã‚¡ã‚¤ãƒ«ã®ã‚¢ãƒˆãƒªãƒ“ãƒ¥ãƒ¼ãƒˆã‚’ãƒã‚§ãƒƒã‚¯ã™ã‚‹
 //----------------------------------------------------------
 short FILE_ATTR(LPCSTR filename) {
 

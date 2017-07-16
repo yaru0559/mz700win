@@ -1,4 +1,4 @@
-//
+﻿//
 #pragma once
 
 #ifndef __APPWIN_H__

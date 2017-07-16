@@ -1,12 +1,12 @@
-// Windows Header files:
+ï»¿// Windows Header files:
 #define WIN32_LEAN_AND_MEAN             // Except the part which isn't used from windows header.
 #include <windows.h>
 
 #include "dprintf.h"
 #include "MZXInput.h"
 
-#define MAX_CONTROLLERS  4		// XInput‚ª”FŽ¯‚Å‚«‚é‚Ì‚Í4‚Â‚Ü‚Å
-#define	Threshold   65535/4		// ‚µ‚«‚¢’l
+#define MAX_CONTROLLERS  4		// XInputãŒèªè­˜ã§ãã‚‹ã®ã¯4ã¤ã¾ã§
+#define	Threshold   65535/4		// ã—ãã„å€¤
 
 //
 typedef struct _CONTROLER_STATE
@@ -15,11 +15,11 @@ typedef struct _CONTROLER_STATE
 	bool bConnected;
 } CONTROLER_STATE, *pCONTROLER_STATE;
 
-// ƒ[ƒNƒGƒŠƒA
+// ãƒ¯ãƒ¼ã‚¯ã‚¨ãƒªã‚¢
 static CONTROLER_STATE GAME_PAD[MAX_CONTROLLERS];
 
 /*
-* Ú‘±‚³‚ê‚Ä‚¢‚é‚©’²‚×‚Â‚ÂAƒRƒ“ƒgƒ[ƒ‰[‚Ìó‘Ô‚ðŽæ“¾‚·‚é
+* æŽ¥ç¶šã•ã‚Œã¦ã„ã‚‹ã‹èª¿ã¹ã¤ã¤ã€ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ãƒ¼ã®çŠ¶æ…‹ã‚’å–å¾—ã™ã‚‹
 */
 static HRESULT UpdateControllerState()
 {
@@ -42,7 +42,7 @@ static HRESULT UpdateControllerState()
 	return S_OK;
 }
 /*
- * ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+ * ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
  */
 BOOL XInput_Init()
 {
@@ -54,7 +54,7 @@ BOOL XInput_Init()
 }
 
 /*
- * ƒfƒXƒgƒ‰ƒNƒ^
+ * ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
  */
 BOOL XInput_Cleanup()
 {
@@ -64,7 +64,7 @@ BOOL XInput_Cleanup()
 }
 
 /*
- *  XV
+ *  æ›´æ–°
  */
 BOOL XInput_Update()
 {
@@ -76,7 +76,7 @@ BOOL XInput_Update()
 }
 
 /*
-* ƒQ[ƒ€ƒpƒbƒh‚ªÚ‘±‚³‚ê‚Ä‚¢‚é‚©
+* ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰ãŒæŽ¥ç¶šã•ã‚Œã¦ã„ã‚‹ã‹
 *
 * no = GamePad 0-3
 */
@@ -96,7 +96,7 @@ BOOL XI_Is_GamePad_Connected(int no)
 }
 
 /*
- * ƒQ[ƒ€ƒpƒbƒh‚Ì¶“ü—Íî•ñŽæ“¾
+ * ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰ã®ç”Ÿå…¥åŠ›æƒ…å ±å–å¾—
  *
  * no = GamePad 0-3
  */
@@ -110,7 +110,7 @@ DWORD XI_Get_GamePad_RAW(int no)
 	if (no >= 0 && no < MAX_CONTROLLERS)
 	{
 		pC = &GAME_PAD[no];
-		if (!pC->bConnected)		// Ú‘±‚³‚ê‚Ä‚¢‚È‚¢
+		if (!pC->bConnected)		// æŽ¥ç¶šã•ã‚Œã¦ã„ãªã„
 			return result;
 
 		pGamepad = &pC->state.Gamepad;
@@ -136,30 +136,30 @@ DWORD XI_Get_GamePad_RAW(int no)
 
 		buttons = pGamepad->wButtons;
 
-		// ƒAƒiƒƒO•ûŒüƒL[
+		// ã‚¢ãƒŠãƒ­ã‚°æ–¹å‘ã‚­ãƒ¼
 		if (pGamepad->sThumbLY > Threshold) result |= PAD_RAW_UP;
 		if (pGamepad->sThumbLY < -Threshold) result |= PAD_RAW_DOWN;
 		if (pGamepad->sThumbLX > Threshold) result |= PAD_RAW_RIGHT;
 		if (pGamepad->sThumbLX < -Threshold) result |= PAD_RAW_LEFT;
 
-		// ƒfƒWƒ^ƒ‹•ûŒüƒL[
+		// ãƒ‡ã‚¸ã‚¿ãƒ«æ–¹å‘ã‚­ãƒ¼
 		if (buttons & XINPUT_GAMEPAD_DPAD_UP) result |= PAD_RAW_UP;
 		if (buttons & XINPUT_GAMEPAD_DPAD_DOWN) result |= PAD_RAW_DOWN;
 		if (buttons & XINPUT_GAMEPAD_DPAD_LEFT) result |= PAD_RAW_LEFT;
 		if (buttons & XINPUT_GAMEPAD_DPAD_RIGHT) result |= PAD_RAW_RIGHT;
 
-		// ƒ{ƒ^ƒ“
+		// ãƒœã‚¿ãƒ³
 		if (buttons & XINPUT_GAMEPAD_A) result |= PAD_RAW_A;
 		if (buttons & XINPUT_GAMEPAD_B) result |= PAD_RAW_B;
 		if (buttons & XINPUT_GAMEPAD_X) result |= PAD_RAW_X;
 		if (buttons & XINPUT_GAMEPAD_Y) result |= PAD_RAW_Y;
 		if (buttons & XINPUT_GAMEPAD_START) result |= PAD_RAW_START;
 		if (buttons & XINPUT_GAMEPAD_BACK)  result |= PAD_RAW_BACK;
-//		if (buttons & XINPUT_GAMEPAD_LEFT_THUMB) { } // TODO:¶ƒAƒiƒƒO•ûŒüƒL[‚ðƒpƒbƒh‰œ‚É‰Ÿ‚µ‚½ê‡
-//		if (buttons & XINPUT_GAMEPAD_RIGHT_THUMB) { } // TODO:‰EƒAƒiƒƒO•ûŒüƒL[‚ðƒpƒbƒh‰œ‚É‰Ÿ‚µ‚½ê‡
+//		if (buttons & XINPUT_GAMEPAD_LEFT_THUMB) { } // TODO:å·¦ã‚¢ãƒŠãƒ­ã‚°æ–¹å‘ã‚­ãƒ¼ã‚’ãƒ‘ãƒƒãƒ‰å¥¥ã«æŠ¼ã—ãŸå ´åˆ
+//		if (buttons & XINPUT_GAMEPAD_RIGHT_THUMB) { } // TODO:å³ã‚¢ãƒŠãƒ­ã‚°æ–¹å‘ã‚­ãƒ¼ã‚’ãƒ‘ãƒƒãƒ‰å¥¥ã«æŠ¼ã—ãŸå ´åˆ
 		if (buttons & XINPUT_GAMEPAD_LEFT_SHOULDER) result |= PAD_RAW_L;
 		if (buttons & XINPUT_GAMEPAD_RIGHT_SHOULDER) result |= PAD_RAW_R;
-		// ¶‰E‚ÌƒAƒiƒƒOƒgƒŠƒK[
+		// å·¦å³ã®ã‚¢ãƒŠãƒ­ã‚°ãƒˆãƒªã‚¬ãƒ¼
 //		if (&pC->state.Gamepad.bLeftTrigger) { } // TODO
 //		if (&pC->state.Gamepad.bRightTrigger) { } // TODO
 

@@ -1,4 +1,4 @@
-//----------------------------------------------------------------------------
+ï»¿//----------------------------------------------------------------------------
 // File:MZhw.c
 // MZ-700/1500 Emulator MZ700WIN for Windows9x/NT/2000
 // mz700win:Hardware Emulation Module
@@ -37,7 +37,7 @@
 #include "mzbeep.h"
 #include "sn76489an.h"
 
-#define TEMPO_STROBE_TIME		14								/* ƒeƒ“ƒ|ƒrƒbƒg¶¬ŠÔŠu */
+#define TEMPO_STROBE_TIME		14								/* ãƒ†ãƒ³ãƒãƒ“ãƒƒãƒˆç”Ÿæˆé–“éš” */
 #define PIT_DEBUG 0
 
 /*** for z80.c ***/
@@ -63,8 +63,8 @@ UINT8 *pcg1500_font_blue;										/* MZ-1500 PCG-BLUE (8K) */
 UINT8 *pcg1500_font_red;										/* MZ-1500 PCG-RED (8K) */
 UINT8 *pcg1500_font_green;										/* MZ-1500 PCG-GREEN (8K) */
 
-int rom1_mode;													/* ROM-1 ”»•Ê—pƒtƒ‰ƒO */
-int rom2_mode;													/* ROM-2 ”»•Ê—pƒtƒ‰ƒO */
+int rom1_mode;													/* ROM-1 åˆ¤åˆ¥ç”¨ãƒ•ãƒ©ã‚° */
+int rom2_mode;													/* ROM-2 åˆ¤åˆ¥ç”¨ãƒ•ãƒ©ã‚° */
 
 /* HARDWARE STATUS WORK */
 THW700_STAT		hw700;
@@ -73,11 +73,11 @@ T700_TS			ts700;
 THW1500_STAT	hw1500;
 T1500_TS		ts1500;
 
-/* 8253ŠÖ˜Aƒ[ƒN */
+/* 8253é–¢é€£ãƒ¯ãƒ¼ã‚¯ */
 T8253_DAT		_8253_dat;
 T8253_STAT		_8253_stat[3];
 
-/* PIOŠÖ˜Aƒ[ƒN */
+/* PIOé–¢é€£ãƒ¯ãƒ¼ã‚¯ */
 TZ80PIO_STAT	Z80PIO_stat[2];
 
 /* MZ-1500PSG */
@@ -86,7 +86,7 @@ TMZ1500PSG		mz1500psg[8];											// (3+1)*2
 /* for Keyboard Matrix */
 UINT8 keyports[10] ={ 0,0,0,0,0, 0,0,0,0,0 };
 
-// MZ‚ÌƒƒCƒ“ƒƒ‚ƒŠ‚Ìƒoƒ“ƒN|Àƒƒ‚ƒŠ‘Î‰•\
+// MZã®ãƒ¡ã‚¤ãƒ³ãƒ¡ãƒ¢ãƒªã®ãƒãƒ³ã‚¯ï¼å®Ÿãƒ¡ãƒ¢ãƒªå¯¾å¿œè¡¨
 static UINT8	*memptr[32];
 
 //
@@ -217,30 +217,30 @@ void mz_keyup(WPARAM wParam)
 #endif	
 }
 
-/* ‚l‚y‚ğƒŠƒZƒbƒg‚·‚é */
+/* ï¼­ï¼ºã‚’ãƒªã‚»ãƒƒãƒˆã™ã‚‹ */
 void mz_reset(void)
 {
 	int i, a;
 	TMEMBANK *mp;
 	Z80_Regs StartRegs;
 
-	/* ‚W‚Q‚T‚Rƒ[ƒN‚Ì‰Šú‰» */
+	/* ï¼˜ï¼’ï¼•ï¼“ãƒ¯ãƒ¼ã‚¯ã®åˆæœŸåŒ– */
 	ZeroMemory(&_8253_stat,sizeof(_8253_stat));
 	ZeroMemory(&_8253_dat,sizeof(_8253_dat));
 
-	/* ‚l‚yƒ[ƒN‚Ì‰Šú‰» */
+	/* ï¼­ï¼ºãƒ¯ãƒ¼ã‚¯ã®åˆæœŸåŒ– */
 	ZeroMemory(&hw700,sizeof(hw700));
 	ZeroMemory(&ts700,sizeof(ts700));
 	ZeroMemory(&hw1500,sizeof(hw1500));
 	ZeroMemory(&ts1500,sizeof(ts1500));
 
-	/* ‚o‚h‚s‰Šú‰» */
+	/* ï¼°ï¼©ï¼´åˆæœŸåŒ– */
 	pit_init();
 
-	/* ‚y‚W‚OƒŒƒWƒXƒ^‚Ì‰Šú‰» */
+	/* ï¼ºï¼˜ï¼ãƒ¬ã‚¸ã‚¹ã‚¿ã®åˆæœŸåŒ– */
 	Z80_SetRegs(&StartRegs);
 
-	/* ƒoƒ“ƒN\¬‚ğ‰Šú‰» */
+	/* ãƒãƒ³ã‚¯æ§‹æˆã‚’åˆæœŸåŒ– */
 	for (a=0,i=0; i<26; i++)
 	{
 		mp = &hw700.memctrl[i];
@@ -252,10 +252,10 @@ void mz_reset(void)
 	Z80_Out(0xE4,0);			// $0000-$0FFF:ROM  $E000-$FFFF:MMIO/ROM2
 	update_membank();
 
-	/* 1500‚o‚r‚f‰Šú‰» */
+	/* 1500ï¼°ï¼³ï¼§åˆæœŸåŒ– */
 	mz_psg_init();
 
-	/* ƒL[ƒ|[ƒg‚Ì‰Šú‰» */
+	/* ã‚­ãƒ¼ãƒãƒ¼ãƒˆã®åˆæœŸåŒ– */
 	mz_keyport_init();
 
 	/* RDINFwork Clear */
@@ -263,35 +263,35 @@ void mz_reset(void)
 
     if (rom1_mode <= MON_OTHERS || rom1_mode >= MON_NEWMON700)
     {
-        // ƒ‚ƒjƒ^ƒ[ƒN‚Ì‰Šú‰»
+        // ãƒ¢ãƒ‹ã‚¿ãƒ¯ãƒ¼ã‚¯ã®åˆæœŸåŒ–
         ZeroMemory(mem + RAM_START + 0x1000, 0x200);
-        // VRAM‚Ì‰Šú‰»
+        // VRAMã®åˆæœŸåŒ–
         ZeroMemory(mem + VID_START , 0x0400);
         FillMemory(mem + VID_START + 0x800 , 0x0400, (bk_color) ? bk_color : 0x71);
     }
-	// ‰æ–Êbltƒtƒ‰ƒO
+	// ç”»é¢bltãƒ•ãƒ©ã‚°
 	mz_refresh_screen(REFSC_ALL);
 
 	Z80_intflag=0;
 	
-	mz_palet_init();											/* 1500ƒpƒŒƒbƒg‰Šú‰» */
+	mz_palet_init();											/* 1500ãƒ‘ãƒ¬ãƒƒãƒˆåˆæœŸåŒ– */
 
 //	hw700.pcg700_mode=8;
 	hw700.tempo_strobe=1;
 
 	hw700.retrace=1;
-	hw700.motor=1;												/* ƒJƒZƒbƒgƒ‚[ƒ^[ */
+	hw700.motor=1;												/* ã‚«ã‚»ãƒƒãƒˆãƒ¢ãƒ¼ã‚¿ãƒ¼ */
 
-	/* ƒTƒEƒ“ƒh(8253#0)‚Ì‰Šú‰» */
+	/* ã‚µã‚¦ãƒ³ãƒ‰(8253#0)ã®åˆæœŸåŒ– */
 	_8253_dat.beep_mask=1;
 	_8253_dat.int_mask=4;
 	
 	hw1500.e5_bak = -1;
 	
-	/* ‚y‚W‚O‚ÌƒŠƒZƒbƒg */
+	/* ï¼ºï¼˜ï¼ã®ãƒªã‚»ãƒƒãƒˆ */
 	Z80_Reset();
 
-	/* ƒXƒŒƒbƒh@ŠJn */
+	/* ã‚¹ãƒ¬ãƒƒãƒ‰ã€€é–‹å§‹ */
 	start_thread();
 }
 
@@ -300,7 +300,7 @@ void mz_reset(void)
 /////////////////////////////////////////////////////////////////
 
 //////////////
-// PIT ‰Šú‰»
+// PIT åˆæœŸåŒ–
 //////////////
 void pit_init(void)
 {
@@ -341,7 +341,7 @@ void write_8253_cw(int cw)
 //	if (_8253_dat.sc==2) st->counter_out = 0;								/* count#2,then clr */
 	st->counter_out = 0;								/* count clr */
 
-	/* ƒJƒEƒ“ƒ^Eƒ‰ƒbƒ`EƒIƒyƒŒ[ƒVƒ‡ƒ“ */
+	/* ã‚«ã‚¦ãƒ³ã‚¿ãƒ»ãƒ©ãƒƒãƒãƒ»ã‚ªãƒšãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³ */
 	if (_8253_dat.rl==0)
 	{
 		st->counter_lat = st->counter;
@@ -395,7 +395,7 @@ void mz_z80pio_ctrl(int port,int value)
 		return;
 	}
 		
-	if ( (value & 0x0F) == 0x0F)										/* ƒ‚[ƒhEƒ[ƒh‚Å‚ ‚é‚±‚Æ‚Ìˆó */
+	if ( (value & 0x0F) == 0x0F)										/* ãƒ¢ãƒ¼ãƒ‰ãƒ»ãƒ¯ãƒ¼ãƒ‰ã§ã‚ã‚‹ã“ã¨ã®å° */
 	{
 		pio->mode = (value >> 6) & 3;
 #if _DEBUG
@@ -405,7 +405,7 @@ void mz_z80pio_ctrl(int port,int value)
 			pio->cont = 1;												/* mode 2nd */
 	}
 	else
-	if ( (value & 0x0F) == 0x07)										/* Š„‚İ§Œäƒ[ƒh‚Å‚ ‚é‚±‚Æ‚Ìˆó */
+	if ( (value & 0x0F) == 0x07)										/* å‰²è¾¼ã¿åˆ¶å¾¡ãƒ¯ãƒ¼ãƒ‰ã§ã‚ã‚‹ã“ã¨ã®å° */
 	{
 		pio->intw = value & 0xF0;
 #if _DEBUG
@@ -415,7 +415,7 @@ void mz_z80pio_ctrl(int port,int value)
 			pio->cont = 2;												/* mask follows 2nd */
 	}
 	else
-	if ( (value & 0x0F) == 0x03)										/* Š„‚İ‹–‰Âƒ[ƒh‚Å‚ ‚é‚±‚Æ‚Ìˆó */
+	if ( (value & 0x0F) == 0x03)										/* å‰²è¾¼ã¿è¨±å¯ãƒ¯ãƒ¼ãƒ‰ã§ã‚ã‚‹ã“ã¨ã®å° */
 	{
 		pio->intw &= 0x70;
 		pio->intw |= (value & 0x80);
@@ -424,9 +424,9 @@ void mz_z80pio_ctrl(int port,int value)
 #endif		
 	}
 	else
-	if ( (value & 0x01) == 0x00)										/* ƒxƒNƒgƒ‹ƒ[ƒh‚Å‚ ‚é‚±‚Æ‚Ìˆó */
+	if ( (value & 0x01) == 0x00)										/* ãƒ™ã‚¯ãƒˆãƒ«ãƒ¯ãƒ¼ãƒ‰ã§ã‚ã‚‹ã“ã¨ã®å° */
 	{
-		pio->intv = value;												/* ƒxƒNƒgƒ‹Eƒ[ƒh */
+		pio->intv = value;												/* ãƒ™ã‚¯ãƒˆãƒ«ãƒ»ãƒ¯ãƒ¼ãƒ‰ */
 #if _DEBUG
 		dprintf("Z80PIO:%d:intv=$%02x\n",port,pio->intv);
 #endif		
@@ -441,22 +441,22 @@ void mz_z80pio_data(int port,int value)
 
 }
 
-// Z80PIO Š„‚İˆ—Às
+// Z80PIO å‰²è¾¼ã¿å‡¦ç†å®Ÿè¡Œ
 void pio_intjob(int out)
 {
-	if (Z80PIO_stat[0].intw & 0x80)										/* Š„‚è‚İg—p‚Ì—L–³ */
+	if (Z80PIO_stat[0].intw & 0x80)										/* å‰²ã‚Šè¾¼ã¿ä½¿ç”¨ã®æœ‰ç„¡ */
 	{
 //		dprintf("intv=$%02x\n",Z80PIO_stat[0].intv);
 		Z80_intflag |= 2;
 		if (out == 0)
-			Z80PIO_stat[0].pin |= 0x10;									/* (INT 0)“Ç‚İ‚Ü‚ê‚éƒf[ƒ^‚Ì‰Šú‰» */
+			Z80PIO_stat[0].pin |= 0x10;									/* (INT 0)èª­ã¿è¾¼ã¾ã‚Œã‚‹ãƒ‡ãƒ¼ã‚¿ã®åˆæœŸåŒ– */
 		else
-			Z80PIO_stat[0].pin |= 0x20;									/* (INT 1)“Ç‚İ‚Ü‚ê‚éƒf[ƒ^‚Ì‰Šú‰» */
+			Z80PIO_stat[0].pin |= 0x20;									/* (INT 1)èª­ã¿è¾¼ã¾ã‚Œã‚‹ãƒ‡ãƒ¼ã‚¿ã®åˆæœŸåŒ– */
 		Interrupt((int)(Z80PIO_stat[0].intv));
 	}
 }
 
-// Z80PIOŠ„‚è‚İ—pƒJƒEƒ“ƒ^
+// Z80PIOå‰²ã‚Šè¾¼ã¿ç”¨ã‚«ã‚¦ãƒ³ã‚¿
 int pio_pitcount(void)
 {
 	T8253_STAT *st;
@@ -469,7 +469,7 @@ int pio_pitcount(void)
 	// pit int=INT0(A3) or CPU INT
 	if (_8253_dat.makesound)											/* e008 makesound=gate */
 	{
-		if (st->mode != 3)												/* •ûŒ`”g‚ÌŒJ‚è•Ô‚µ”gŒ`‚¶‚á‚È‚©‚Á‚½‚çˆ— */
+		if (st->mode != 3)												/* æ–¹å½¢æ³¢ã®ç¹°ã‚Šè¿”ã—æ³¢å½¢ã˜ã‚ƒãªã‹ã£ãŸã‚‰å‡¦ç† */
 		{
 			if (pitcount_job(0,PIO_TIMER_RESO))
 			{
@@ -511,7 +511,7 @@ int pitcount_job(int no,int cou)
 		st->counter-=cou;
 		if (st->counter<=0)
 		{
-			/* ƒJƒEƒ“ƒ^‰Šú’lƒZƒbƒg */
+			/* ã‚«ã‚¦ãƒ³ã‚¿åˆæœŸå€¤ã‚»ãƒƒãƒˆ */
 			st->counter = (int) st->counter_base;
 //			do{
 //			st->counter += (int) st->counter_base;
@@ -529,7 +529,7 @@ int pitcount_job(int no,int cou)
 		st->counter-=cou;
 		if (st->counter<=0)
 		{
-			/* ƒJƒEƒ“ƒ^‰Šú’lƒZƒbƒg */
+			/* ã‚«ã‚¦ãƒ³ã‚¿åˆæœŸå€¤ã‚»ãƒƒãƒˆ */
 			st->counter = -1;
 			out=1;														/* out pulse (1 time only) */
 		}
@@ -548,10 +548,10 @@ int pit_count(void)
 {
 	int ret = 0;
 
-	/* ƒJƒEƒ“ƒ^‚P‚ği‚ß‚é */
+	/* ã‚«ã‚¦ãƒ³ã‚¿ï¼‘ã‚’é€²ã‚ã‚‹ */
 	if (pitcount_job(1,1))
 	{
-		/* ƒJƒEƒ“ƒ^‚Q‚ği‚ß‚é */
+		/* ã‚«ã‚¦ãƒ³ã‚¿ï¼’ã‚’é€²ã‚ã‚‹ */
 		ret = pitcount_job(2,1);
 	}
 
@@ -576,7 +576,7 @@ void play8253(void)
 		return;
 	}
 
-	// ƒTƒEƒ“ƒh‚ğ–Â‚ç‚·
+	// ã‚µã‚¦ãƒ³ãƒ‰ã‚’é³´ã‚‰ã™
 	freqtmp = _8253_stat[0].counter_base;		
 	if (_8253_dat.makesound == 0) {
 	  _8253_dat.setsound = 0;
@@ -662,7 +662,7 @@ void Z80_WRMEM(dword x, dword y)
 		memptr[page][x&0x7FF] = (BYTE) y;
 		if (attr & 4)
 		{
-			mz_blt_screen();											/* VRAMƒAƒNƒZƒX‚ª‚ ‚ê‚ÎRefresh */
+			mz_blt_screen();											/* VRAMã‚¢ã‚¯ã‚»ã‚¹ãŒã‚ã‚Œã°Refresh */
 //			if (hw700.retrace)											/* not V-blank? */
 			{
 				M_CSTATE(VRAM_ACCESS_WAIT);								/* wait */
@@ -695,14 +695,14 @@ int mmio_in(int addr)
 		 * bit 6 - cursor blink timer
 		 * bit 7 - vertical blanking signal (retrace?)
 		 */
-		tmp=((hw700.cursor_cou%25>15) ? 0x40:0);						/* ƒJ[ƒ\ƒ‹“_–Åƒ^ƒCƒ}[ */
+		tmp=((hw700.cursor_cou%25>15) ? 0x40:0);						/* ã‚«ãƒ¼ã‚½ãƒ«ç‚¹æ»…ã‚¿ã‚¤ãƒãƒ¼ */
 		tmp=(((hw700.retrace^1)<<7)|(hw700.motor<<4)|tmp|0x0F);						
 		return tmp;
 		
 	case 0xE003:
 		return 0xff;
 		
-		/* ‚o‚h‚sŠÖ˜A */
+		/* ï¼°ï¼©ï¼´é–¢é€£ */
 	case 0xE004:
 	case 0xE005:
 	case 0xE006:
@@ -710,24 +710,24 @@ int mmio_in(int addr)
 		
 		if (st->lat_flag)
 		{
-			/* ƒJƒEƒ“ƒ^ƒ‰ƒbƒ`ƒIƒyƒŒ[ƒVƒ‡ƒ“ */
+			/* ã‚«ã‚¦ãƒ³ã‚¿ãƒ©ãƒƒãƒã‚ªãƒšãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³ */
 			switch (st->rl)
 			{
 			case 1:
-				/* ‰ºˆÊ‚WƒrƒbƒgŒÄ‚Ño‚µ */
+				/* ä¸‹ä½ï¼˜ãƒ“ãƒƒãƒˆå‘¼ã³å‡ºã— */
 				st->lat_flag = 0;						// counter latch opelation: off
 				return (st->counter_lat & 255);
 			case 2:
-				/* ãˆÊ‚WƒrƒbƒgŒÄ‚Ño‚µ */
+				/* ä¸Šä½ï¼˜ãƒ“ãƒƒãƒˆå‘¼ã³å‡ºã— */
 				st->lat_flag = 0;						// counter latch opelation: off
 				return (st->counter_lat >> 8);
 			case 3:
-				/* ƒJƒEƒ“ƒ^Eƒ‰ƒbƒ`EƒIƒyƒŒ[ƒVƒ‡ƒ“ */
-				if((st->bit_hl^=1)) return (st->counter_lat & 255);			/* ‰ºˆÊ */
+				/* ã‚«ã‚¦ãƒ³ã‚¿ãƒ»ãƒ©ãƒƒãƒãƒ»ã‚ªãƒšãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³ */
+				if((st->bit_hl^=1)) return (st->counter_lat & 255);			/* ä¸‹ä½ */
 				else
 				{
 					st->lat_flag = 0;					// counter latch opelation: off
-					return (st->counter_lat>>8); 	/* ãˆÊ */
+					return (st->counter_lat>>8); 	/* ä¸Šä½ */
 				}
 
 				break;
@@ -740,13 +740,13 @@ int mmio_in(int addr)
 			switch (st->rl)
 			{
 			case 1:
-				/* ‰ºˆÊ‚WƒrƒbƒgŒÄ‚Ño‚µ */
+				/* ä¸‹ä½ï¼˜ãƒ“ãƒƒãƒˆå‘¼ã³å‡ºã— */
 				return (st->counter & 255);
 			case 2:
-				/* ãˆÊ‚WƒrƒbƒgŒÄ‚Ño‚µ */
+				/* ä¸Šä½ï¼˜ãƒ“ãƒƒãƒˆå‘¼ã³å‡ºã— */
 				return (st->counter>>8);
 			case 3:
-				/* ‰ºˆÊEãˆÊ */
+				/* ä¸‹ä½ãƒ»ä¸Šä½ */
 				if((st->bit_hl^=1)) return (st->counter & 255);
 				else return (st->counter>>8);
 			default:
@@ -756,7 +756,7 @@ int mmio_in(int addr)
 		break;
 
 	case 0xE008:
-		/* ‰¹‚ğ–Â‚ç‚·‚½‚ß‚Ìƒ^ƒCƒ~ƒ“ƒOƒrƒbƒg¶¬ */
+		/* éŸ³ã‚’é³´ã‚‰ã™ãŸã‚ã®ã‚¿ã‚¤ãƒŸãƒ³ã‚°ãƒ“ãƒƒãƒˆç”Ÿæˆ */
 		return (0x7e | hw700.tempo_strobe);
 		
 	default:
@@ -859,9 +859,9 @@ void mmio_out(int addr,int val)
 	case 0xE004:
 	case 0xE005:
 	case 0xE006:
-		/* ƒJƒEƒ“ƒ^‚É‘‚«‚İ */
+		/* ã‚«ã‚¦ãƒ³ã‚¿ã«æ›¸ãè¾¼ã¿ */
 		st = &_8253_stat[addr-0xE004];
-		if (st->mode == 0)												/* ƒ‚[ƒh‚O‚¾‚Á‚½‚çAout‚ğƒNƒŠƒA */
+		if (st->mode == 0)												/* ãƒ¢ãƒ¼ãƒ‰ï¼ã ã£ãŸã‚‰ã€outã‚’ã‚¯ãƒªã‚¢ */
 		{
 			st->counter_out = 0;
 		}
@@ -870,7 +870,7 @@ void mmio_out(int addr,int val)
 		switch(st->rl)
 		{
 		case 1:
-			/* ‰ºˆÊ‚Wƒrƒbƒg‘‚«‚İ */
+			/* ä¸‹ä½ï¼˜ãƒ“ãƒƒãƒˆæ›¸ãè¾¼ã¿ */
 			st->counter_base = (val&0x00FF);
 			if (!st->running || (st->mode != 2 && st->mode != 3)) {
 				st->counter = st->counter_base;
@@ -882,7 +882,7 @@ void mmio_out(int addr,int val)
 			st->running = 1;
 			break;
 		case 2:
-			/* ãˆÊ‚Wƒrƒbƒg‘‚«‚İ */
+			/* ä¸Šä½ï¼˜ãƒ“ãƒƒãƒˆæ›¸ãè¾¼ã¿ */
 			st->counter_base = (val << 8)&0xFF00;
 			if (!st->running || (st->mode != 2 && st->mode != 3)) {
 				st->counter = st->counter_base;
@@ -920,7 +920,7 @@ void mmio_out(int addr,int val)
 			break;
 		}
 
-		/* ƒTƒEƒ“ƒh—p‚ÌƒJƒEƒ“ƒ^‚Ìê‡ */
+		/* ã‚µã‚¦ãƒ³ãƒ‰ç”¨ã®ã‚«ã‚¦ãƒ³ã‚¿ã®å ´åˆ */
 		if (addr==0xE004)
 		{
 			if(!st->bit_hl)
@@ -966,7 +966,7 @@ void mmio_out(int addr,int val)
 		hw700.pcg700_addr |= (val<<8);
 		if ((val & (16+32))==(16+32))
 		{
-			/* ‚b‚f¨‚o‚b‚fƒRƒs[ */
+			/* ï¼£ï¼§â†’ï¼°ï¼£ï¼§ã‚³ãƒ”ãƒ¼ */
 			i = hw700.pcg700_addr & 2047;
 			if (i & 1024) i=2048+i;
 			else i=1024+i;
@@ -976,11 +976,11 @@ void mmio_out(int addr,int val)
 		else
 		if (val & 16)
 		{
-			/* ‚o‚b‚f’è‹` */
+			/* ï¼°ï¼£ï¼§å®šç¾© */
 			pcg700_font[hw700.pcg700_addr & 2047]=hw700.pcg700_data;
 		}
 
-		/* ‚o‚b‚f‘I‘ğ */
+		/* ï¼°ï¼£ï¼§é¸æŠ */
 		hw700.pcg700_mode = val & 8;
 		break;
 		
@@ -1030,7 +1030,7 @@ byte Z80_In (word Port)
 
 	case 0xe8:
 		// Voice board
-		// –\‘–‚µ‚È‚¢‚æ‚¤‚ÉACK(bit4)‚É‚O‚ğ•Ô‚·
+		// æš´èµ°ã—ãªã„ã‚ˆã†ã«ACK(bit4)ã«ï¼ã‚’è¿”ã™
 		r = 0;
 		break;
 
@@ -1069,10 +1069,10 @@ byte Z80_In (word Port)
 		break;
 	case 0xfe:
 		/* z80 pio Port-A DATA Reg.*/
-//		r = 0x10;														/* int0‚©‚ç‚Ì‚í‚è‚±‚İH */
-//		r = 0x20;														/* int1‚©‚ç‚Ì‚í‚è‚±‚İH */
+//		r = 0x10;														/* int0ã‹ã‚‰ã®ã‚ã‚Šã“ã¿ï¼Ÿ */
+//		r = 0x20;														/* int1ã‹ã‚‰ã®ã‚ã‚Šã“ã¿ï¼Ÿ */
 		r = Z80PIO_stat[0].pin;
-		Z80PIO_stat[0].pin = 0xC0;										/* “Ç‚İ‚Ü‚ê‚éƒf[ƒ^‚Ì‰Šú‰» */
+		Z80PIO_stat[0].pin = 0xC0;										/* èª­ã¿è¾¼ã¾ã‚Œã‚‹ãƒ‡ãƒ¼ã‚¿ã®åˆæœŸåŒ– */
 		break;
 	case 0xff:
 		/* z80 pio Port-B DATA Reg.*/
@@ -1154,7 +1154,7 @@ void Z80_Out(word Port,word Value)
 		mp->base = MB_VRAM; mp->ofs = 0x0000; mp++;
 		mp->base = MB_VRAM; mp->ofs = 0x0800; mp++;
 		mp->base = MB_DUMMY; mp->ofs = 0x0000; mp++;
-		/* 1500/700‚ÆØ‚è‘Ö‚¦‚Ä“®ì‚³‚¹‚é‚Æ‚« */
+		/* 1500/700ã¨åˆ‡ã‚Šæ›¿ãˆã¦å‹•ä½œã•ã›ã‚‹ã¨ã */
 		if (menu.machine == MACHINE_MZ1500)
 		{
 			mp->base = MB_ROM2; mp->ofs = 0x0000; mp++;

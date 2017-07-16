@@ -1,10 +1,10 @@
-/*  $Id: MZhw.h 24 2010-01-30 12:07:43Z maru $ */
+ï»¿/*  $Id: MZhw.h 24 2010-01-30 12:07:43Z maru $ */
 
 #ifdef __cplusplus
 extern "C" {
 #endif 
 
-/* MZ-1R23,1R24ƒTƒ|[ƒg */
+/* MZ-1R23,1R24ã‚µãƒãƒ¼ãƒˆ */
 #define KANJIROM
 
 //
@@ -24,9 +24,9 @@ enum
 //
 typedef struct
 {
-	UINT16		ofs;									// ƒƒ‚ƒŠƒIƒtƒZƒbƒg
-	UINT8		base;									// ƒƒ‚ƒŠƒuƒƒbƒN”Ô†
-	UINT8		attr;									// ƒƒ‚ƒŠ“Ç‚İ‘‚«ƒAƒgƒŠƒrƒ…[ƒg
+	UINT16		ofs;									// ãƒ¡ãƒ¢ãƒªã‚ªãƒ•ã‚»ãƒƒãƒˆ
+	UINT8		base;									// ãƒ¡ãƒ¢ãƒªãƒ–ãƒ­ãƒƒã‚¯ç•ªå·
+	UINT8		attr;									// ãƒ¡ãƒ¢ãƒªèª­ã¿æ›¸ãã‚¢ãƒˆãƒªãƒ“ãƒ¥ãƒ¼ãƒˆ
 } TMEMBANK;
 
 /* HARDWARE STATUS (MZ-700) */
@@ -40,7 +40,7 @@ typedef struct
 	int		cursor_cou;
 	UINT16	pcg700_mode;
 	UINT8	tempo_strobe;
-	UINT8	motor;						/* bit0:ƒJƒZƒbƒgƒ‚[ƒ^[ bit2:ƒf[ƒ^ƒŒƒR[ƒ_‚ÌƒXƒCƒbƒ`ƒZƒ“ƒX*/
+	UINT8	motor;						/* bit0:ã‚«ã‚»ãƒƒãƒˆãƒ¢ãƒ¼ã‚¿ãƒ¼ bit2:ãƒ‡ãƒ¼ã‚¿ãƒ¬ã‚³ãƒ¼ãƒ€ã®ã‚¹ã‚¤ãƒƒãƒã‚»ãƒ³ã‚¹*/
 	UINT8	retrace;
 } THW700_STAT;
 
@@ -58,14 +58,14 @@ typedef struct
 typedef struct
 {
 	int			e5_bak;
-	int			mz1r18_addr;			/* MZ-1R18 (RAM FILE Board)ƒAƒhƒŒƒX */
+	int			mz1r18_addr;			/* MZ-1R18 (RAM FILE Board)ã‚¢ãƒ‰ãƒ¬ã‚¹ */
 #ifdef KANJIROM
-	int			mz1r23_ctrl;			/* MZ-1R23 (Š¿šROM)ƒRƒ“ƒgƒ[ƒ‹ */
-	int			mz1r23_addr;			/* MZ-1R23 (Š¿šROM)ƒAƒhƒŒƒX */
-	int			mz1r24_addr;			/* MZ-1R24 («‘ROM)ƒAƒhƒŒƒX */
+	int			mz1r23_ctrl;			/* MZ-1R23 (æ¼¢å­—ROM)ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ« */
+	int			mz1r23_addr;			/* MZ-1R23 (æ¼¢å­—ROM)ã‚¢ãƒ‰ãƒ¬ã‚¹ */
+	int			mz1r24_addr;			/* MZ-1R24 (è¾æ›¸ROM)ã‚¢ãƒ‰ãƒ¬ã‚¹ */
 #endif /*KANJIROM*/
-	TMEMBANK	memctrl_bak[6];			/* Memory Bank Controller ƒoƒbƒNƒAƒbƒv */
-	UINT16		prty;					/* ƒvƒ‰ƒCƒIƒŠƒeƒB */
+	TMEMBANK	memctrl_bak[6];			/* Memory Bank Controller ãƒãƒƒã‚¯ã‚¢ãƒƒãƒ— */
+	UINT16		prty;					/* ãƒ—ãƒ©ã‚¤ã‚ªãƒªãƒ†ã‚£ */
 
 } THW1500_STAT;
 
@@ -75,7 +75,7 @@ typedef struct
 	int		pio_tstates;
 } T1500_TS;
 
-/* ‚W‚Q‚T‚RƒXƒe[ƒ^ƒXŒ^ */
+/* ï¼˜ï¼’ï¼•ï¼“ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹å‹ */
 typedef struct
 {
 	UINT8 bcd;															/* BCD */
@@ -192,18 +192,18 @@ extern T700_TS			ts700;
 extern THW1500_STAT		hw1500;
 extern T1500_TS			ts1500;
 
-/* 8253ŠÖ˜Aƒ[ƒN */
+/* 8253é–¢é€£ãƒ¯ãƒ¼ã‚¯ */
 extern T8253_DAT		_8253_dat;
 extern T8253_STAT		_8253_stat[3];
 
-/* PIOŠÖ˜Aƒ[ƒN */
+/* PIOé–¢é€£ãƒ¯ãƒ¼ã‚¯ */
 extern TZ80PIO_STAT		Z80PIO_stat[2];
 
 /* MZ-1500PSG */
 extern TMZ1500PSG		mz1500psg[8];									// (3+1)*2
 	
-extern int rom1_mode;													/* ROM-1 ”»•Ê—pƒtƒ‰ƒO */
-extern int rom2_mode;													/* ROM-2 ”»•Ê—pƒtƒ‰ƒO */
+extern int rom1_mode;													/* ROM-1 åˆ¤åˆ¥ç”¨ãƒ•ãƒ©ã‚° */
+extern int rom2_mode;													/* ROM-2 åˆ¤åˆ¥ç”¨ãƒ•ãƒ©ã‚° */
 
 /* memory */
 extern UINT8	*mem;													/* Main Memory */

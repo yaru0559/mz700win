@@ -1,4 +1,4 @@
-/* $Id: Mzmon1em.h 1 2007-07-27 06:17:19Z maru $ */
+ï»¿/* $Id: Mzmon1em.h 1 2007-07-27 06:17:19Z maru $ */
 
 #pragma once
 
@@ -10,7 +10,7 @@
 extern "C" {
 #endif
 
-// ƒJƒZƒbƒgƒAƒNƒZƒXƒpƒbƒ`ˆ——p’Ê‚µ”Ô†
+// ã‚«ã‚»ãƒƒãƒˆã‚¢ã‚¯ã‚»ã‚¹ãƒ‘ãƒƒãƒå‡¦ç†ç”¨é€šã—ç•ªå·
 enum TCPAT
 {
 	CPAT_ROM = 0,				// for Monitor-ROM
@@ -18,7 +18,7 @@ enum TCPAT
 	CPAT_RAM_HUBASIC,			// Japanese -BASIC
 };
 
-// ƒpƒbƒ`ƒCƒ“ƒfƒbƒNƒX
+// ãƒ‘ãƒƒãƒã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
 enum TROM1NUM
 {
 	ROM1_ret = 0,
@@ -195,7 +195,7 @@ void MON_dsp03(Z80_Regs *);
 
 #define PAT_ADR_VGOFF			0x0747
 
-// ƒpƒbƒ`ƒAƒhƒŒƒX’è‹`
+// ãƒ‘ãƒƒãƒã‚¢ãƒ‰ãƒ¬ã‚¹å®šç¾©
 #define PAT_ADR_RDINF			0x0027
 //#define PAT_ADR_RDINF			0x04D8
 #define PAT_ADR_RDDATA			0x002A

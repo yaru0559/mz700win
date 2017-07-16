@@ -1,9 +1,9 @@
-#pragma once
+ï»¿#pragma once
 
 #ifndef __MZSCRN_H__
 #define __MZSCRN_H__
 
-/* ‰æ–ÊƒŠƒtƒŒƒbƒVƒ…ŠÖŒW‚Ìƒtƒ‰ƒO */
+/* ç”»é¢ãƒªãƒ•ãƒ¬ãƒƒã‚·ãƒ¥é–¢ä¿‚ã®ãƒ•ãƒ©ã‚° */
 #define REFSC_VRAM		0x0001											/* bit00:Render Vram */
 #define REFSC_BLT		0x0002											/* bit01:Blt Virtual Screen */
 #define REFSC_ALL		0x0003											/* Refresh All */

@@ -1,4 +1,4 @@
-//----------------------------------------------------------------------------
+ï»¿//----------------------------------------------------------------------------
 // File:MZramem.c
 //
 // mz700win:1Z-00007B (Japanese S-BASIC) / HuBASIC Cassete Emulation ....
@@ -74,18 +74,18 @@ void patch_ram(unsigned char *buf)
 	WORD addr;
 	BYTE len;
 
-	if (*sig != RAM_PATCH_SIG) return;		// ƒpƒbƒ`ƒVƒOƒlƒ`ƒƒƒ`ƒFƒbƒN
-	// ‚n‚j‚¾‚Á‚½‚çƒVƒOƒlƒ`ƒƒ‚ğ‚Â‚Ô‚·
+	if (*sig != RAM_PATCH_SIG) return;		// ãƒ‘ãƒƒãƒã‚·ã‚°ãƒãƒãƒ£ãƒã‚§ãƒƒã‚¯
+	// ï¼¯ï¼«ã ã£ãŸã‚‰ã‚·ã‚°ãƒãƒãƒ£ã‚’ã¤ã¶ã™
 	(*ptr) = '\x0';
 	ptr += 4;
 
-	// ƒpƒbƒ`“–‚Ä
+	// ãƒ‘ãƒƒãƒå½“ã¦
 	for (;;)
 	{
-		addr = (WORD) (ptr[0] | (ptr[1] << 8) );	// ƒpƒbƒ`ƒAƒhƒŒƒX‚ğæ“¾
+		addr = (WORD) (ptr[0] | (ptr[1] << 8) );	// ãƒ‘ãƒƒãƒã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’å–å¾—
 		if (addr == 0xFFFF) return;					// EOD
 
-		len = *(ptr+2);								// ƒpƒbƒ`’·
+		len = *(ptr+2);								// ãƒ‘ãƒƒãƒé•·
 		ptr += 3;
 
 		ofs = RAM_START + addr;

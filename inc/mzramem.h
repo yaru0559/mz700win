@@ -1,4 +1,4 @@
-/* $Id: mzramem.h 1 2007-07-27 06:17:19Z maru $ */
+﻿/* $Id: mzramem.h 1 2007-07-27 06:17:19Z maru $ */
 
 #pragma once
 

@@ -1,4 +1,4 @@
-#include	<windows.h>
+ï»¿#include	<windows.h>
 #include	<dsound.h>
 #include	"mz700win.h"
 #include	"DSOUND.H"
@@ -38,7 +38,7 @@ BOOL DSound_Init(DWORD rate, DWORD buflen)
 		return FALSE;
 	}
 
-	if (!rate) {				// Rate=0 : ƒTƒEƒ“ƒhOFF‚Ì
+	if (!rate) {				// Rate=0 : ã‚µã‚¦ãƒ³ãƒ‰OFFã®æ™‚
 		dstimerid = 0;
 		lpdsb = 0;
 		lpdsb_primary = 0;
@@ -79,7 +79,7 @@ BOOL DSound_Init(DWORD rate, DWORD buflen)
 
 	IDirectSoundBuffer_SetFormat(lpdsb_primary, &wf);
 
-	// ƒZƒJƒ“ƒ_ƒŠƒoƒbƒtƒ@ì¬
+	// ã‚»ã‚«ãƒ³ãƒ€ãƒªãƒãƒƒãƒ•ã‚¡ä½œæˆ
 	memset(&dsbd, 0, sizeof(DSBUFFERDESC));
 	dsbd.dwSize = sizeof(DSBUFFERDESC);
 	dsbd.dwFlags = DSBCAPS_CTRLDEFAULT | DSBCAPS_STICKYFOCUS | DSBCAPS_GETCURRENTPOSITION2;
@@ -110,7 +110,7 @@ BOOL DSound_Init(DWORD rate, DWORD buflen)
 }
 
 // ---------------------------------------------------------------------------
-//  Œã•Ğ•t‚¯
+//  å¾Œç‰‡ä»˜ã‘
 // ---------------------------------------------------------------------------
 
 BOOL DSound_Cleanup()
@@ -142,17 +142,17 @@ BOOL DSound_Cleanup()
 }
 
 // ---------------------------------------------------------------------------
-//  ƒ^ƒCƒ}[‚ªŒÄ‚Î‚ê‚½‚ç
+//  ã‚¿ã‚¤ãƒãƒ¼ãŒå‘¼ã°ã‚ŒãŸã‚‰
 // ---------------------------------------------------------------------------
 void CALLBACK DSound_TimeProc(unsigned int uid, unsigned int tmp, DWORD user, DWORD tmp0, DWORD tmp1)
 {
 	if (user == userid) {
-		DSound_Send();			// ID‚ğŠm”F‚µ‚Ä”ò‚ÔB
+		DSound_Send();			// IDã‚’ç¢ºèªã—ã¦é£›ã¶ã€‚
 	}
 }
 
 // ---------------------------------------------------------------------------
-//  ƒTƒEƒ“ƒh‚Ìƒ~ƒ…[ƒg
+//  ã‚µã‚¦ãƒ³ãƒ‰ã®ãƒŸãƒ¥ãƒ¼ãƒˆ
 // ---------------------------------------------------------------------------
 void DSound_Mute(BOOL sw)
 {
@@ -160,7 +160,7 @@ void DSound_Mute(BOOL sw)
 }
 
 // ---------------------------------------------------------------------------
-//  ƒ^ƒCƒ}[‚Ì–{‘Ì
+//  ã‚¿ã‚¤ãƒãƒ¼æ™‚ã®æœ¬ä½“
 // ---------------------------------------------------------------------------
 void DSound_Send(void)
 {
@@ -203,15 +203,15 @@ void DSound_Send(void)
 						 (void**) &a1, &al1, (void**) &a2, &al2, 0))
 				goto ret;
 
-			if (DS_MuteMode)	// ƒƒjƒ…[‚Æ‚©o‚Ä‚½‚ç‰¹‚ğ~‚ß‚é
+			if (DS_MuteMode)	// ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã¨ã‹å‡ºã¦ãŸã‚‰éŸ³ã‚’æ­¢ã‚ã‚‹
 			{
-				// DSƒoƒbƒtƒ@‚ğ–³‰¹‚Å–„‚ß‚é
+				// DSãƒãƒƒãƒ•ã‚¡ã‚’ç„¡éŸ³ã§åŸ‹ã‚ã‚‹
 				if (a1) ZeroMemory(a1, al1);
 				if (a2) ZeroMemory(a2, al2);
 			}
 			else
 			{
-				// ’Êí‚Ìˆ—
+				// é€šå¸¸ã®å‡¦ç†
 				if (a1) ZeroMemory(a1, al1);
 				if (a2) ZeroMemory(a2, al2);
 

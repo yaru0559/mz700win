@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #ifndef mz700win_common_h
 #define mz700win_common_h
@@ -22,7 +22,7 @@
 #define	TRUE		1
 #define	FALSE		0
 
-#define FD_DRIVES	2		// FDD ƒhƒ‰ƒCƒu”
+#define FD_DRIVES	2		// FDD ãƒ‰ãƒ©ã‚¤ãƒ–æ•°
 /*
 #define FASTCALL	__fastcall
 #ifndef INLINE

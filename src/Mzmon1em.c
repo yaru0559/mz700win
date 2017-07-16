@@ -1,4 +1,4 @@
-//----------------------------------------------------------------------------
+ï»¿//----------------------------------------------------------------------------
 // File:MZmonem1.c
 //
 // mz700win:1Z-009A (For Japanese MZ-700) Emulation / Patch ....
@@ -27,7 +27,7 @@
 
 static const byte hextbl[] = { "0123456789ABCDEF" };
 
-static int tapepos = 0;													// ƒe[ƒvƒV[ƒNˆÊ’u
+static int tapepos = 0;													// ãƒ†ãƒ¼ãƒ—ã‚·ãƒ¼ã‚¯ä½ç½®
 static int inf_start;
 static int inf_len;
 
@@ -422,7 +422,7 @@ static const byte dly12_code[] =
 };
 
 // ?BLNK:
-// ROMƒ‚ƒjƒ^‚ÌƒR[ƒh‚Æ“¯ˆê‚Å‚·‚ªA’N‚ª‚Ç‚¤‘‚¢‚Ä‚à‚±‚¤‚È‚è‚Ü‚·‚æ‚ËB
+// ROMãƒ¢ãƒ‹ã‚¿ã®ã‚³ãƒ¼ãƒ‰ã¨åŒä¸€ã§ã™ãŒã€èª°ãŒã©ã†æ›¸ã„ã¦ã‚‚ã“ã†ãªã‚Šã¾ã™ã‚ˆã­ã€‚
 static const byte qblnk_code[] =
 {
 	0xF5,		// PUSH AF
@@ -577,7 +577,7 @@ static void pem_scroll(void)
 	// COLOR SCROLL
 	CopyMemory(mem + VID_START + 0x800, mem + VID_START + 0x800 + 40, (40*24) );
 
-	// Å‰ºs‚ÌÁ‹
+	// æœ€ä¸‹è¡Œã®æ¶ˆå»
 	ZeroMemory(mem + VID_START + (24*40) , 40);
 	FillMemory(mem + VID_START + 0x800 + (24*40), 40, (bk_color) ? bk_color : 0x71);
 
@@ -734,7 +734,7 @@ void MON_ret(Z80_Regs *Regs)
 void rdinf_job(Z80_Regs *Regs, int mode)
 {
 	int r = 0;
-	FILE_HDL tfp;													// ƒe[ƒv—pƒtƒ@ƒCƒ‹ƒnƒ“ƒhƒ‹
+	FILE_HDL tfp;													// ãƒ†ãƒ¼ãƒ—ç”¨ãƒ•ã‚¡ã‚¤ãƒ«ãƒãƒ³ãƒ‰ãƒ«
 	
 	 dprintf("rdinf_job()\n");
 
@@ -751,21 +751,21 @@ void rdinf_job(Z80_Regs *Regs, int mode)
 	if (tfp==FILE_VAL_ERROR || (r!=0x80))
 	{
 		dprintf("seek error\n");
-		/* ƒV[ƒNƒGƒ‰[ˆ— */
+		/* ã‚·ãƒ¼ã‚¯ã‚¨ãƒ©ãƒ¼å‡¦ç† */
 		if (tfp != FILE_VAL_ERROR)
 		{
-			FILE_CLOSE(tfp);										/* ‚·‚Å‚ÉOpen‚µ‚Ä‚½‚çClose */
+			FILE_CLOSE(tfp);										/* ã™ã§ã«Openã—ã¦ãŸã‚‰Close */
 			tfp=FILE_VAL_ERROR;
 		}
 
-		/* ƒGƒ‰[‚Å‚· */
+		/* ã‚¨ãƒ©ãƒ¼ã§ã™ */
 		Z80_set_carry(Regs,1);
 		Regs->AF.B.h = 1;
 		ret();														/* Load Error */
 		return;
 	}
 
-	/* ƒtƒ@ƒCƒ‹‚ÌƒNƒ[ƒY */
+	/* ãƒ•ã‚¡ã‚¤ãƒ«ã®ã‚¯ãƒ­ãƒ¼ã‚º */
 	FILE_CLOSE(tfp);
 	tfp = FILE_VAL_ERROR;
 
@@ -787,7 +787,7 @@ void rdinf_job(Z80_Regs *Regs, int mode)
 	}
 	tapepos+=128;
 	
-	/* ƒGƒ‰[–³‚µ */
+	/* ã‚¨ãƒ©ãƒ¼ç„¡ã— */
 	Z80_set_carry(Regs, 0);
 	Regs->AF.B.h = 0;
 
@@ -804,7 +804,7 @@ void MON_rdinf (Z80_Regs *Regs)
 /* RDDATA */
 void rddata_job(Z80_Regs *Regs, int mode)
 {
-	FILE_HDL tfp = FILE_VAL_ERROR;									// ƒe[ƒv—pƒtƒ@ƒCƒ‹ƒnƒ“ƒhƒ‹
+	FILE_HDL tfp = FILE_VAL_ERROR;									// ãƒ†ãƒ¼ãƒ—ç”¨ãƒ•ã‚¡ã‚¤ãƒ«ãƒãƒ³ãƒ‰ãƒ«
 	int errflg = 0;
 	int r = 0;
 	

@@ -1,4 +1,4 @@
-//----------------------------------------------------------------------------
+ï»¿//----------------------------------------------------------------------------
 // File:MZmonem2.c
 //
 // mz700win:9Z-502M (for MZ-1500) Emulation / Patch ....
@@ -26,8 +26,8 @@
 static unsigned char qdios_buf[128];
 
 static int qdios_idx_bak = -1;
-static int qdpos = 0;													// ‚p‚cƒV[ƒNˆÊ’u
-static FILE_HDL qfp = FILE_VAL_ERROR;									// ‚p‚c—pƒtƒ@ƒCƒ‹ƒnƒ“ƒhƒ‹
+static int qdpos = 0;													// ï¼±ï¼¤ã‚·ãƒ¼ã‚¯ä½ç½®
+static FILE_HDL qfp = FILE_VAL_ERROR;									// ï¼±ï¼¤ç”¨ãƒ•ã‚¡ã‚¤ãƒ«ãƒãƒ³ãƒ‰ãƒ«
 
 // ROM2 PATCH JUMPTBL
 static void (* rom2_functbl[])(Z80_Regs *) =
@@ -188,7 +188,7 @@ void MON_pcgres(Z80_Regs *Regs)
 }
 
 //////////////////////////////////////////////////////////////////////////
-// 9Z-502M—p QDIOS
+// 9Z-502Mç”¨ QDIOS
 //////////////////////////////////////////////////////////////////////////
 void MON_qdios(Z80_Regs *Regs)
 {
@@ -360,7 +360,7 @@ void MON_qdios(Z80_Regs *Regs)
 		{
 			qdios_idx_bak = -1;
 			dprintf("seek error\n");
-			/* ƒV[ƒNƒGƒ‰[ */
+			/* ã‚·ãƒ¼ã‚¯ã‚¨ãƒ©ãƒ¼ */
 			Z80_set_carry(Regs, 1);								// error
 			Regs->AF.B.h = 0x40;								// hard err
 //			Regs->AF.B.h = 0x28;								// not found
@@ -392,7 +392,7 @@ void MON_qdios(Z80_Regs *Regs)
 		ofs = mem[RAM_START+L_QDPC]|(mem[RAM_START+L_QDPC+1]<<8);
 		sz = mem[RAM_START+L_QDPE]|(mem[RAM_START+L_QDPE+1]<<8);
 
-		// QDPC == 0x10F0, DQPE == 0x0040 ‚ÌŽžAƒRƒ“ƒo[ƒgB
+		// QDPC == 0x10F0, DQPE == 0x0040 ã®æ™‚ã€ã‚³ãƒ³ãƒãƒ¼ãƒˆã€‚
 		CopyMemory(qdios_buf,mem+RAM_START+ofs,18);				// copy header
 		qdios_buf[18]=mem[RAM_START+L_QSIZE  ];
 		qdios_buf[19]=mem[RAM_START+L_QSIZE+1];
@@ -428,7 +428,7 @@ void MON_qdios(Z80_Regs *Regs)
 }
 
 //////////////////////////////////////////////////////////////////////////
-// 5Z001—p QDIOS
+// 5Z001ç”¨ QDIOS
 //////////////////////////////////////////////////////////////////////////
 void MON_bas_qdios(Z80_Regs *Regs)
 {
@@ -566,8 +566,8 @@ void MON_bas_qdios(Z80_Regs *Regs)
 					ptr[23] = qdios_buf[21];
 					ptr[24] = qdios_buf[22];						// Set Exec Address
 					ptr[25] = qdios_buf[23];
-					ptr[18] = 0;									// ƒƒbƒNH‰½‚©‚ÉŽg‚Á‚Ä‚é‚ç‚µ‚¢H
-					ptr[19] = 0;									// ƒVƒXƒeƒ€ID?‰½‚©‚ÉŽg‚Á‚Ä‚é‚ç‚µ‚¢H
+					ptr[18] = 0;									// ãƒ­ãƒƒã‚¯ï¼Ÿä½•ã‹ã«ä½¿ã£ã¦ã‚‹ã‚‰ã—ã„ï¼Ÿ
+					ptr[19] = 0;									// ã‚·ã‚¹ãƒ†ãƒ ID?ä½•ã‹ã«ä½¿ã£ã¦ã‚‹ã‚‰ã—ã„ï¼Ÿ
 					CopyMemory(mem+RAM_START+BL_QSIZE, ptr+20, 6);
 
 	#if _DEBUG
@@ -612,7 +612,7 @@ void MON_bas_qdios(Z80_Regs *Regs)
 		{
 			qdios_idx_bak = -1;
 			dprintf("seek error\n");
-			/* ƒV[ƒNƒGƒ‰[ */
+			/* ã‚·ãƒ¼ã‚¯ã‚¨ãƒ©ãƒ¼ */
 			Z80_set_carry(Regs, 1);								// error
 			Regs->AF.B.h = 0x40;								// hard err
 //			Regs->AF.B.h = 0x28;								// not found
@@ -645,7 +645,7 @@ void MON_bas_qdios(Z80_Regs *Regs)
 		ofs = mem[RAM_START+BL_QDPC]|(mem[RAM_START+BL_QDPC+1]<<8);
 		sz = mem[RAM_START+BL_QDPE]|(mem[RAM_START+BL_QDPE+1]<<8);
 
-		// QDPC == 0x10F0, DQPE == 0x0040 ‚ÌŽžAƒRƒ“ƒo[ƒgB
+		// QDPC == 0x10F0, DQPE == 0x0040 ã®æ™‚ã€ã‚³ãƒ³ãƒãƒ¼ãƒˆã€‚
 		CopyMemory(qdios_buf,mem+RAM_START+ofs,18);				// copy header
 		ftype = (int) qdios_buf[0] & 0xFF; 
 

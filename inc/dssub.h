@@ -1,4 +1,4 @@
-#define DIRECTSOUND_VERSION  0x0200  // DirectX2‘Š“–II
+ï»¿#define DIRECTSOUND_VERSION  0x0200  // DirectX2ç›¸å½“ï¼ï¼
 
 #include <dsound.h>
 
@@ -25,7 +25,7 @@ extern "C" {
 void MakeNoise(BYTE *, int, int, int);
 BOOL SetRuntimeNoise(int, int, int);
 
-/* ƒwƒ‹ƒpŠÖ” */
+/* ãƒ˜ãƒ«ãƒ‘é–¢æ•° */
 BOOL InitDirectSound(HWND hwnd);
 void EndDirectSound(void);
 void DisableDirectSound(void);

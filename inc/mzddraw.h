@@ -1,11 +1,11 @@
-#pragma once
+﻿#pragma once
 
-#define		DIRECTDRAW_VERSION 0x0200   // DirectX2����
-#define		USE_DDRAW 0					// 1�ł����directdraw���L��
+#define		DIRECTDRAW_VERSION 0x0200   // DirectX2相当
+#define		USE_DDRAW 0					// 1であればdirectdrawが有効
 
-// maru:VS2010�ł�ddraw.lib�������Ȃ��Ă��邽�߁A�S�폜
-// ��DirectX SDK Feb.2010��ʓr�C���X�g�[�����邱�ƂŃ����N�\�ɂȂ����B���A���삵�Ȃ��c�B
-//      �Ԃ����Ⴏ�t���X�N���[���ɂ��邽�߂ɂ����g���Ă��Ȃ��B
+// maru:VS2010ではddraw.libが無くなっているため、全削除
+// ※DirectX SDK Feb.2010を別途インストールすることでリンク可能になった。が、動作しない…。
+//      ぶっちゃけフルスクリーンにするためにしか使っていない。
 #if USE_DDRAW
 #include <ddraw.h>
 #endif
@@ -35,8 +35,8 @@ enum
 
 typedef struct
 {
-	int xscr,yscr;														/* �S��ʃT�C�Y */
-	int xpos,ypos;														/* �S��ʕ\���ʒu */
+	int xscr,yscr;														/* 全画面サイズ */
+	int xpos,ypos;														/* 全画面表示位置 */
 	int xsiz,ysiz;														/* BLT Size */
 	
 } TSCRSIZE;

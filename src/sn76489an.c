@@ -1,4 +1,4 @@
-#include "dprintf.h"
+ï»¿#include "dprintf.h"
 #include "sn76489an.h"
 
 //
@@ -14,7 +14,7 @@ static	DWORD noise_fb[2];
 static	DWORD noise_md[2];
 
 /*
- * ‰¹—Ê‚ ‚Ó‚êƒ`ƒFƒbƒNwav‰ÁZ
+ * éŸ³é‡ã‚ãµã‚Œãƒã‚§ãƒƒã‚¯wavåŠ ç®—
  */
 __inline int ADD_SATULATE_WAV(int mix, int val)
 {
@@ -37,7 +37,7 @@ L02:
 }
 
 /*
- * ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+ * ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
  */
 void sn76489an_init(int freq, int bclock) {
 	
@@ -50,18 +50,18 @@ void sn76489an_init(int freq, int bclock) {
 	
 	sn76489an_reset();
 
-	// ƒ{ƒŠƒ…[ƒ€ƒe[ƒuƒ‹ì¬
+	// ãƒœãƒªãƒ¥ãƒ¼ãƒ ãƒ†ãƒ¼ãƒ–ãƒ«ä½œæˆ
 	sn76489an_make_voltbl(0x1E00);
 }
 
 /*
- * ƒfƒXƒgƒ‰ƒNƒ^
+ * ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
  */
 void sn76489an_cleanup() {
 }
 
 /*
- * ƒŠƒZƒbƒg
+ * ãƒªã‚»ãƒƒãƒˆ
  */
 void sn76489an_reset() {
 	int i,j;
@@ -70,10 +70,10 @@ void sn76489an_reset() {
 	for (j=0; j<2; j++) {
 		reg_cur[j] = 0;
 		
-		// ƒ`ƒƒƒ“ƒlƒ‹ƒ[ƒN‚Ì‰Šú‰»
+		// ãƒãƒ£ãƒ³ãƒãƒ«ãƒ¯ãƒ¼ã‚¯ã®åˆæœŸåŒ–
 		ZeroMemory(ch[j], sizeof(ch[0]));
 		
-		// ƒ{ƒŠƒ…[ƒ€ƒŠƒZƒbƒg
+		// ãƒœãƒªãƒ¥ãƒ¼ãƒ ãƒªã‚»ãƒƒãƒˆ
 		for (i=0; i<4; i++) {
 			ch[j][i].vol = 0;
 		}
@@ -87,7 +87,7 @@ void sn76489an_reset() {
 }
 
 /*
- * ƒ{ƒŠƒ…[ƒ€ƒe[ƒuƒ‹‚Ìì¬
+ * ãƒœãƒªãƒ¥ãƒ¼ãƒ ãƒ†ãƒ¼ãƒ–ãƒ«ã®ä½œæˆ
  */
 void sn76489an_make_voltbl(int volume) {
 	// create gain
@@ -102,7 +102,7 @@ void sn76489an_make_voltbl(int volume) {
 }
 
 /*
- * ƒg[ƒ“ü”g”‚Ìİ’è
+ * ãƒˆãƒ¼ãƒ³å‘¨æ³¢æ•°ã®è¨­å®š
  */
 void sn76489an_setFreqTone(int iNo, int iCh, int arg) {
 	TPSGCH * psgch = &ch[iNo][iCh];
@@ -119,7 +119,7 @@ void sn76489an_setFreqTone(int iNo, int iCh, int arg) {
 }
 
 /*
- * ƒmƒCƒYü”g”‚Ìİ’è
+ * ãƒã‚¤ã‚ºå‘¨æ³¢æ•°ã®è¨­å®š
  */
 void sn76489an_setFreqNoise(int iNo, int arg) {
 	ch[iNo][3].bMute = FALSE;
@@ -127,7 +127,7 @@ void sn76489an_setFreqNoise(int iNo, int arg) {
 }
 
 /*
- * XV
+ * æ›´æ–°
  */
 void sn76489an_update(int iNo, short* ptr, int cou) {
 	volatile short dat;
@@ -169,20 +169,20 @@ void sn76489an_outreg(int iNo, int value)
 	TPSGCH *psgch;
 
 	if (value & 128) {
-		// ‰ºˆÊ
+		// ä¸‹ä½
 		psgch = &ch[iNo][(value >> 5) & 3];
 		if (value & 16)	{
-			// ‰¹—Ê
+			// éŸ³é‡
 			reg_cur[iNo] = (value >> 5) & 3;
 			psgch->vol = voltbl[value & 15];
 			//		dprintf("psgout::value=%02x\n", psgp->vol);
 			return;
 		}
-		// ‘€ì‚·‚éƒŒƒWƒXƒ^‚ğİ’è
+		// æ“ä½œã™ã‚‹ãƒ¬ã‚¸ã‚¹ã‚¿ã‚’è¨­å®š
 		reg_cur[iNo] = (value >> 5) & 3;
 		psgch = &ch[iNo][reg_cur[iNo]];
 		if (reg_cur[iNo] < 3) {
-			// tone ü”g”
+			// tone å‘¨æ³¢æ•°
 			psgch->freq &= 0x3F0;
 			psgch->freq |= (value & 0x0F);
 		} else {
@@ -199,7 +199,7 @@ void sn76489an_outreg(int iNo, int value)
 			ch[iNo][3].bPulse = (NG_PRESET & 1) ? TRUE : FALSE;
 		}
 	} else {
-		// ãˆÊ
+		// ä¸Šä½
 		psgch = &(ch[iNo][reg_cur[iNo]]);
 		psgch->freq &= 0x0F;
 		psgch->freq |= ((value & 0x3F)<<4);

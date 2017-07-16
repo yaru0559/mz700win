@@ -1,4 +1,4 @@
-//----------------------------------------------------------------------------
+ï»¿//----------------------------------------------------------------------------
 // File:dssub.cpp
 //
 // mz700win:DirectSound Module
@@ -16,12 +16,12 @@
 #include "dssub.h"
 #include "win.h"
 
-/* DirectSound\‘¢‘Ì */
-static BOOL			DSAvailable = FALSE;								/* DirectSound‚ªg—p‰Â”\H */
+/* DirectSoundæ§‹é€ ä½“ */
+static BOOL			DSAvailable = FALSE;								/* DirectSoundãŒä½¿ç”¨å¯èƒ½ï¼Ÿ */
 
-static LPDIRECTSOUND       lpDS = NULL;									/* DirectSoundƒIƒuƒWƒFƒNƒg */
-static LPDIRECTSOUNDBUFFER lpPRIMARYBUFFER = NULL;						/* ƒvƒ‰ƒCƒ}ƒŠƒoƒbƒtƒ@ */
-static LPDIRECTSOUNDBUFFER lpWAVEBUFFER[WAVE_MAX];						/* ƒTƒEƒ“ƒhƒoƒbƒtƒ@ƒƒ‚ƒŠ‚Ìƒ\[ƒX */
+static LPDIRECTSOUND       lpDS = NULL;									/* DirectSoundã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ */
+static LPDIRECTSOUNDBUFFER lpPRIMARYBUFFER = NULL;						/* ãƒ—ãƒ©ã‚¤ãƒãƒªãƒãƒƒãƒ•ã‚¡ */
+static LPDIRECTSOUNDBUFFER lpWAVEBUFFER[WAVE_MAX];						/* ã‚µã‚¦ãƒ³ãƒ‰ãƒãƒƒãƒ•ã‚¡ãƒ¡ãƒ¢ãƒªã®ã‚½ãƒ¼ã‚¹ */
 
 static int noiseptr = 0;
 
@@ -122,11 +122,11 @@ BOOL SetRuntimeNoise(int no, int prm, int ch3freq)
 	int bytes;
 	int _no;
 
-	/* DirectSound‚ªg—p•s‰Â‚È‚çReturn */
+	/* DirectSoundãŒä½¿ç”¨ä¸å¯ãªã‚‰Return */
 	if (!DSAvailable) return FALSE;
 
 	_no = no+1;
-	/* WAVE FORMAT‚ğİ’è */
+	/* WAVE FORMATã‚’è¨­å®š */
 	wfmt.wFormatTag=WAVE_FORMAT_PCM;									// 0001?
 	wfmt.nChannels=0x0001;
 	wfmt.nSamplesPerSec=22050;
@@ -152,32 +152,32 @@ BOOL SetRuntimeNoise(int no, int prm, int ch3freq)
 
 	if(lpDS->CreateSoundBuffer(&dsbd, &lpWAVEBUFFER[_no],
 									NULL) != DS_OK) return FALSE;
-	/* ƒTƒEƒ“ƒhƒoƒbƒtƒ@ƒƒ‚ƒŠ‚ÌƒƒbƒN */
+	/* ã‚µã‚¦ãƒ³ãƒ‰ãƒãƒƒãƒ•ã‚¡ãƒ¡ãƒ¢ãƒªã®ãƒ­ãƒƒã‚¯ */
 	lpWAVEBUFFER[_no]->Lock(0, bytes,
 						&lpbuf1, &dwbuf1, &lpbuf2, &dwbuf2, 0); 
-	/* ‰¹Œ¹ƒf[ƒ^‚Ìİ’è */
+	/* éŸ³æºãƒ‡ãƒ¼ã‚¿ã®è¨­å®š */
 	CopyMemory(lpbuf1, (BYTE*)snoise_runtime, dwbuf1);
 	if(dwbuf2 != 0) CopyMemory(lpbuf2,
 							(BYTE*)snoise_runtime+dwbuf1, dwbuf2);
-	/* ƒTƒEƒ“ƒhƒoƒbƒtƒ@‚ÌƒƒbƒN‰ğœ */
+	/* ã‚µã‚¦ãƒ³ãƒ‰ãƒãƒƒãƒ•ã‚¡ã®ãƒ­ãƒƒã‚¯è§£é™¤ */
 	lpWAVEBUFFER[_no]->Unlock(lpbuf1, dwbuf1, lpbuf2, dwbuf2); 
 
     return TRUE;
 }
 
-/* DirectSound‚Ì‰Šú‰» */
+/* DirectSoundã®åˆæœŸåŒ– */
 BOOL InitDirectSound(HWND hwnd)
 {
     int i;
     DSBUFFERDESC dsbd;
 
-	/* ƒTƒEƒ“ƒhg—p‹Ö~ƒ`ƒFƒbƒN */
+	/* ã‚µã‚¦ãƒ³ãƒ‰ä½¿ç”¨ç¦æ­¢ãƒã‚§ãƒƒã‚¯ */
 	if (sound_di) {
 		DSAvailable = FALSE;
 		return FALSE;
 	}
 
-    /* DirectDraw‚Ì‰Šú‰» */
+    /* DirectDrawã®åˆæœŸåŒ– */
     if (DirectSoundCreate(NULL, &lpDS, NULL) != DS_OK)	{
 		DSAvailable = FALSE;
 		return FALSE;
@@ -197,38 +197,38 @@ BOOL InitDirectSound(HWND hwnd)
 		}
 	}
 
-	/* ƒmƒCƒYƒe[ƒuƒ‹‚Ìì¬ */
+	/* ãƒã‚¤ã‚ºãƒ†ãƒ¼ãƒ–ãƒ«ã®ä½œæˆ */
 	InitNoiseTable();
     lpDS->SetCooperativeLevel(hwnd, DSSCL_NORMAL);
 
-    /* ƒvƒ‰ƒCƒ}ƒŠƒoƒbƒtƒ@‚Ì‰Šú‰» */
+    /* ãƒ—ãƒ©ã‚¤ãƒãƒªãƒãƒƒãƒ•ã‚¡ã®åˆæœŸåŒ– */
     ZeroMemory(&dsbd, sizeof(DSBUFFERDESC));
     dsbd.dwSize = sizeof(DSBUFFERDESC);
     dsbd.dwFlags = DSBCAPS_PRIMARYBUFFER;
     lpDS->CreateSoundBuffer(&dsbd, &lpPRIMARYBUFFER, NULL);
 
-	/* ƒoƒbƒtƒ@ƒƒ‚ƒŠ‚Ì‰Šú‰» */
+	/* ãƒãƒƒãƒ•ã‚¡ãƒ¡ãƒ¢ãƒªã®åˆæœŸåŒ– */
     for(i = 0; i < WAVE_MAX; i++) lpWAVEBUFFER[i] = NULL;
 
 	DSAvailable = TRUE;
     return TRUE;
 }
 
-/* DirectSound‚Ì‹Ö~ */
+/* DirectSoundã®ç¦æ­¢ */
 void DisableDirectSound(void)
 {
 	DSAvailable = FALSE;
 }
 
-/* DirectSound‚ÌI—¹ */
+/* DirectSoundã®çµ‚äº† */
 void EndDirectSound(void)
 {
     int i;
 
-	/* DirectSound‚ªg—p•s‰Â‚È‚çReturn */
+	/* DirectSoundãŒä½¿ç”¨ä¸å¯ãªã‚‰Return */
 	if (!DSAvailable) return;
 
-	/* ƒoƒbƒtƒ@ƒƒ‚ƒŠ‚ÌŠJ•ú */
+	/* ãƒãƒƒãƒ•ã‚¡ãƒ¡ãƒ¢ãƒªã®é–‹æ”¾ */
     for (i = 0; i < WAVE_MAX; i++)
 	{
         if (lpWAVEBUFFER[i] != NULL)
@@ -238,22 +238,22 @@ void EndDirectSound(void)
 		}
     }
 
-	/* ƒvƒ‰ƒCƒ}ƒŠƒoƒbƒtƒ@‚ÌŠJ•ú */
+	/* ãƒ—ãƒ©ã‚¤ãƒãƒªãƒãƒƒãƒ•ã‚¡ã®é–‹æ”¾ */
     if(lpPRIMARYBUFFER != NULL) lpPRIMARYBUFFER->Release();
 
-	/* ƒ_ƒCƒŒƒNƒgƒTƒEƒ“ƒh‚ÌŠJ•ú */
+	/* ãƒ€ã‚¤ãƒ¬ã‚¯ãƒˆã‚µã‚¦ãƒ³ãƒ‰ã®é–‹æ”¾ */
     if(lpDS != NULL) lpDS->Release();
 
-	/* ƒmƒCƒYƒe[ƒuƒ‹‚ÌŠJ•ú */
+	/* ãƒã‚¤ã‚ºãƒ†ãƒ¼ãƒ–ãƒ«ã®é–‹æ”¾ */
 	if (noisetable)
 		MEM_free(noisetable);
 
-	/* ƒmƒCƒY@ƒ‰ƒ“ƒ^ƒCƒ€ì¬ƒoƒbƒtƒ@‚ÌŠJ•ú */
+	/* ãƒã‚¤ã‚ºã€€ãƒ©ãƒ³ã‚¿ã‚¤ãƒ ä½œæˆãƒãƒƒãƒ•ã‚¡ã®é–‹æ”¾ */
 	if (snoise_runtime)
 		MEM_free(snoise_runtime);
 }
 
-/* ƒTƒEƒ“ƒh‚Ìİ’è */
+/* ã‚µã‚¦ãƒ³ãƒ‰ã®è¨­å®š */
 BOOL Set700Sound(int no)
 {
     DSBUFFERDESC dsbd;
@@ -261,10 +261,10 @@ BOOL Set700Sound(int no)
     DWORD dwbuf1, dwbuf2;
 	WAVEFORMATEX wfmt;
 
-	/* DirectSound‚ªg—p•s‰Â‚È‚çReturn */
+	/* DirectSoundãŒä½¿ç”¨ä¸å¯ãªã‚‰Return */
 	if (!DSAvailable) return FALSE;
 
-	/* WAVE FORMAT‚ğİ’è */
+	/* WAVE FORMATã‚’è¨­å®š */
 	wfmt.wFormatTag=WAVE_FORMAT_PCM;									// 0001?
 	wfmt.nChannels=0x0001;
 	wfmt.nSamplesPerSec=22050;
@@ -274,7 +274,7 @@ BOOL Set700Sound(int no)
 	wfmt.wBitsPerSample=8;												// 8Bits Sample
 	wfmt.cbSize=0;
 
-    /* ƒTƒEƒ“ƒhƒoƒbƒtƒ@ƒƒ‚ƒŠ‚Ì‰Šú‰» */
+    /* ã‚µã‚¦ãƒ³ãƒ‰ãƒãƒƒãƒ•ã‚¡ãƒ¡ãƒ¢ãƒªã®åˆæœŸåŒ– */
 	/* tone */
 	ZeroMemory(&dsbd, sizeof(DSBUFFERDESC));
 	dsbd.dwSize = sizeof(DSBUFFERDESC);
@@ -285,24 +285,24 @@ BOOL Set700Sound(int no)
 	dsbd.lpwfxFormat = &wfmt; 
 	if(lpDS->CreateSoundBuffer(&dsbd, &lpWAVEBUFFER[no],
 									NULL) != DS_OK) return FALSE;
-	/* ƒTƒEƒ“ƒhƒoƒbƒtƒ@ƒƒ‚ƒŠ‚ÌƒƒbƒN */
+	/* ã‚µã‚¦ãƒ³ãƒ‰ãƒãƒƒãƒ•ã‚¡ãƒ¡ãƒ¢ãƒªã®ãƒ­ãƒƒã‚¯ */
 	lpWAVEBUFFER[no]->Lock(0, sizeof(tone_samples),
 						&lpbuf1, &dwbuf1, &lpbuf2, &dwbuf2, 0); 
-	/* ‰¹Œ¹ƒf[ƒ^‚Ìİ’è */
+	/* éŸ³æºãƒ‡ãƒ¼ã‚¿ã®è¨­å®š */
 	CopyMemory(lpbuf1, (BYTE*)tone_samples, dwbuf1);
 	if(dwbuf2 != 0) CopyMemory(lpbuf2,
 							(BYTE*)tone_samples+dwbuf1, dwbuf2);
-	/* ƒTƒEƒ“ƒhƒoƒbƒtƒ@‚ÌƒƒbƒN‰ğœ */
+	/* ã‚µã‚¦ãƒ³ãƒ‰ãƒãƒƒãƒ•ã‚¡ã®ãƒ­ãƒƒã‚¯è§£é™¤ */
 	lpWAVEBUFFER[no]->Unlock(lpbuf1, dwbuf1, lpbuf2, dwbuf2); 
 
     return TRUE;
 }
 
-/* “o˜^ƒTƒEƒ“ƒh‚Ì’¼ÚÄ¶id‚Ë‚ ‚í‚¹–³‚µj */
+/* ç™»éŒ²ã‚µã‚¦ãƒ³ãƒ‰ã®ç›´æ¥å†ç”Ÿï¼ˆé‡ã­ã‚ã‚ã›ç„¡ã—ï¼‰ */
 /* loop=0 or DSBPLAY_LOOPING */
 BOOL StartWaveBuffer(int no, DWORD freq , LONG pan ,LONG vol,DWORD loop)
 {
-	/* DirectSound‚ªg—p•s‰Â‚È‚çReturn */
+	/* DirectSoundãŒä½¿ç”¨ä¸å¯ãªã‚‰Return */
 	if (!DSAvailable) return FALSE;
   
 	lpWAVEBUFFER[no]->SetFrequency(freq);
@@ -313,11 +313,11 @@ BOOL StartWaveBuffer(int no, DWORD freq , LONG pan ,LONG vol,DWORD loop)
   return TRUE;
 }
 
-/* “o˜^ƒTƒEƒ“ƒh‚Ì’¼ÚÄ¶id‚Ë‚ ‚í‚¹–³‚µj */
+/* ç™»éŒ²ã‚µã‚¦ãƒ³ãƒ‰ã®ç›´æ¥å†ç”Ÿï¼ˆé‡ã­ã‚ã‚ã›ç„¡ã—ï¼‰ */
 /* loop=0 or DSBPLAY_LOOPING */
 BOOL PlayWaveBuffer(int no, DWORD loop)
 {
-	/* DirectSound‚ªg—p•s‰Â‚È‚çReturn */
+	/* DirectSoundãŒä½¿ç”¨ä¸å¯ãªã‚‰Return */
 	if (!DSAvailable) return FALSE;
 
 	lpWAVEBUFFER[no]->Play(0 , 0 , loop);
@@ -325,13 +325,13 @@ BOOL PlayWaveBuffer(int no, DWORD loop)
 	return TRUE;
 }
 
-/* “o˜^ƒTƒEƒ“ƒh‚Ì’â~ */
+/* ç™»éŒ²ã‚µã‚¦ãƒ³ãƒ‰ã®åœæ­¢ */
 BOOL StopWaveBuffer(int no)
 {
 	HRESULT dsres;
 	DWORD   stat;
 	
-	/* DirectSound‚ªg—p•s‰Â‚È‚çReturn */
+	/* DirectSoundãŒä½¿ç”¨ä¸å¯ãªã‚‰Return */
 	if (!DSAvailable) return FALSE;
 
 	dsres = lpWAVEBUFFER[no]->GetStatus(&stat);
@@ -339,13 +339,13 @@ BOOL StopWaveBuffer(int no)
   
 	return TRUE;
 }
-/* “o˜^ƒTƒEƒ“ƒh‚ÌƒXƒe[ƒ^ƒX‚ğƒQƒbƒg */
+/* ç™»éŒ²ã‚µã‚¦ãƒ³ãƒ‰ã®ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã‚’ã‚²ãƒƒãƒˆ */
 BOOL GetWaveBufferStat(int no)
 {
 	HRESULT dsres;
 	DWORD   stat;
 	
-	/* DirectSound‚ªg—p•s‰Â‚È‚çReturn */
+	/* DirectSoundãŒä½¿ç”¨ä¸å¯ãªã‚‰Return */
 	if (!DSAvailable) return FALSE;
 
 	dsres = lpWAVEBUFFER[no]->GetStatus(&stat);
@@ -356,7 +356,7 @@ BOOL GetWaveBufferStat(int no)
 
 BOOL SetWaveFreq(int no, DWORD freq)
 {
-	/* DirectSound‚ªg—p•s‰Â‚È‚çReturn */
+	/* DirectSoundãŒä½¿ç”¨ä¸å¯ãªã‚‰Return */
 	if (!DSAvailable) return FALSE;
 
 	lpWAVEBUFFER[no]->SetFrequency(freq);
@@ -366,7 +366,7 @@ BOOL SetWaveFreq(int no, DWORD freq)
 
 BOOL SetWaveVol(int no, DWORD vol)
 {
-	/* DirectSound‚ªg—p•s‰Â‚È‚çReturn */
+	/* DirectSoundãŒä½¿ç”¨ä¸å¯ãªã‚‰Return */
 	if (!DSAvailable) return FALSE;
 
 	lpWAVEBUFFER[no]->SetVolume(vol);
@@ -378,7 +378,7 @@ LONG GetWaveVol(int no)
 {
 	LONG result;
 
-	/* DirectSound‚ªg—p•s‰Â‚È‚çReturn */
+	/* DirectSoundãŒä½¿ç”¨ä¸å¯ãªã‚‰Return */
 	if (!DSAvailable) return DSBVOLUME_MIN;
 
 	lpWAVEBUFFER[no]->GetVolume(&result);

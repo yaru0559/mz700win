@@ -1,4 +1,4 @@
-/* $Id: mz700win.h 20 2009-05-25 18:20:32Z maru $ */
+ï»¿/* $Id: mz700win.h 20 2009-05-25 18:20:32Z maru $ */
 
 #pragma once
 
@@ -11,10 +11,10 @@ typedef		unsigned int UINT32;
 typedef		unsigned short UINT16;
 typedef		unsigned char UINT8;
 
-// FDC—LŒøH
+// FDCæœ‰åŠ¹ï¼Ÿ
 //#define ENABLE_FDC
 
-/* ƒƒbƒZ[ƒW‚Å“ú–{Œê‚ğg‚¤‚© */
+/* ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã§æ—¥æœ¬èªã‚’ä½¿ã†ã‹ */
 #define JAPANESE		0
 
 /* */
@@ -27,9 +27,9 @@ typedef		unsigned char UINT8;
 #define ROM1_ADDR 0x0000		/* ROM1 mz addr */
 #define ROM2_ADDR 0xE800		/* ROM2 mz addr */
 
-#define MZ1R12_SIZE 0x8000		/* MZ-1R12‚ÌƒTƒCƒY(32k) */
-#define MZ1R12_MAX	64			/* MZ-1R12‚ÌÅ‘å‘•’…–‡” */
-#define MZ1R18_SIZE 0x10000		/* MZ-1R18‚ÌƒTƒCƒY(64k) */
+#define MZ1R12_SIZE 0x8000		/* MZ-1R12ã®ã‚µã‚¤ã‚º(32k) */
+#define MZ1R12_MAX	64			/* MZ-1R12ã®æœ€å¤§è£…ç€æšæ•° */
+#define MZ1R18_SIZE 0x10000		/* MZ-1R18ã®ã‚µã‚¤ã‚º(64k) */
 
 #define ROMFONT_SIZE 4096		/* ROMFONT SIZE  */
 #define PCG700_SIZE 2048		/* PCG-700 SIZE  */
@@ -44,7 +44,7 @@ typedef		unsigned char UINT8;
 #define TEMPO_TSTATES ((CPU_SPEED*10)/381/2)
 #define VBLANK_TSTATES 45547	
 
-/* ƒ‚ƒjƒ^‚q‚n‚l‚P‚Ìƒ^ƒCƒv’è” */
+/* ãƒ¢ãƒ‹ã‚¿ï¼²ï¼¯ï¼­ï¼‘ã®ã‚¿ã‚¤ãƒ—å®šæ•° */
 enum TMON1_TYPE
 {
 	MON_EMUL = 0,														/*  0:EMUL ROM(NO ROM FILE) */
@@ -57,25 +57,25 @@ enum TMON1_TYPE
 	MON_LAST,
 };
 
-/* ƒ‚ƒjƒ^‚q‚n‚l‚Q‚Ìƒ^ƒCƒv’è” */
+/* ãƒ¢ãƒ‹ã‚¿ï¼²ï¼¯ï¼­ï¼’ã®ã‚¿ã‚¤ãƒ—å®šæ•° */
 enum TMON2_TYPE
 {
 	MON_9Z502 = 1,														/*  1:9Z-502M */
 };
 
-/* MZTƒtƒ@ƒCƒ‹‚Ìƒwƒbƒ_ */
+/* MZTãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ˜ãƒƒãƒ€ */
 typedef struct
 {
-	BYTE mz_fmode;														/* ‚l‚y‚Ìƒtƒ@ƒCƒ‹ƒ‚[ƒh */
-	BYTE mz_filename[17];												/* ‚l‚y‚Ìƒtƒ@ƒCƒ‹–¼ */
-	WORD mz_filesize;													/* ƒtƒ@ƒCƒ‹ƒTƒCƒY */
-	WORD mz_topaddr;													/* æ“ªƒAƒhƒŒƒX */
-	WORD mz_execaddr;													/* ÀsƒAƒhƒŒƒX */
+	BYTE mz_fmode;														/* ï¼­ï¼ºã®ãƒ•ã‚¡ã‚¤ãƒ«ãƒ¢ãƒ¼ãƒ‰ */
+	BYTE mz_filename[17];												/* ï¼­ï¼ºã®ãƒ•ã‚¡ã‚¤ãƒ«å */
+	WORD mz_filesize;													/* ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚º */
+	WORD mz_topaddr;													/* å…ˆé ­ã‚¢ãƒ‰ãƒ¬ã‚¹ */
+	WORD mz_execaddr;													/* å®Ÿè¡Œã‚¢ãƒ‰ãƒ¬ã‚¹ */
 	
-	BYTE dummy[0x80-0x18];												/* ƒpƒfƒBƒ“ƒO */
+	BYTE dummy[0x80-0x18];												/* ãƒ‘ãƒ‡ã‚£ãƒ³ã‚° */
 } MZTHED;
 
-/* ƒL[ƒe[ƒuƒ‹ Patch—p\‘¢‘Ì */
+/* ã‚­ãƒ¼ãƒ†ãƒ¼ãƒ–ãƒ« Patchç”¨æ§‹é€ ä½“ */
 typedef struct
 {
 	WORD addr;															/* patch address */

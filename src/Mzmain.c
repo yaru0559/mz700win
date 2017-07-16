@@ -1,4 +1,4 @@
-//----------------------------------------------------------------------------
+ï»¿//----------------------------------------------------------------------------
 // File:MZmain.c
 // MZ-700/1500 Emulator MZ700WIN for Windows9x/NT/2000
 // mz700win:Main Program Module ($Id: Mzmain.c 24 2010-01-30 12:07:43Z maru $)
@@ -41,7 +41,7 @@ static DWORD CpuThreadID   = 0;
 
 static CRITICAL_SECTION CriticalSection;
 
-// ROM‘I‘ğƒƒjƒ…[—pƒtƒ@ƒCƒ‹–¼
+// ROMé¸æŠãƒ¡ãƒ‹ãƒ¥ãƒ¼ç”¨ãƒ•ã‚¡ã‚¤ãƒ«å
 static const char *rom_filelist[] =
 {
 	NULL,															/* Internal */
@@ -53,7 +53,7 @@ static const char *rom_filelist[] =
 	"SP1002.ROM",													/* SP-1002 */
 	"MZ1500.ROM",													/* MZ-1500 1Z-009B+9Z-502M */
 };
-// ROM‘I‘ğƒƒjƒ…[—p€–Ú–¼
+// ROMé¸æŠãƒ¡ãƒ‹ãƒ¥ãƒ¼ç”¨é …ç›®å
 static const char *rom_menulist[] =
 {
 	"MZ-700(J) / Internal",											/* Internal */
@@ -217,7 +217,7 @@ void bios_patch(const TPATCH *patch_dat)
 }
 
 //--------------------------------------------------------------
-// ƒRƒ“ƒ{ƒ{ƒbƒNƒX‚É€–Ú‚ğ’Ç‰Á
+// ã‚³ãƒ³ãƒœãƒœãƒƒã‚¯ã‚¹ã«é …ç›®ã‚’è¿½åŠ 
 //--------------------------------------------------------------
 void init_rom_combo(HWND hwnd)
 {
@@ -242,7 +242,7 @@ void init_rom_combo(HWND hwnd)
 }
 
 //--------------------------------------------------------------
-// ‚q‚n‚lƒ‚ƒjƒ^‚Ì‘¶İƒ`ƒFƒbƒN
+// ï¼²ï¼¯ï¼­ãƒ¢ãƒ‹ã‚¿ã®å­˜åœ¨ãƒã‚§ãƒƒã‚¯
 //--------------------------------------------------------------
 int rom_check(void)
 {
@@ -270,7 +270,7 @@ int rom_check(void)
 }
 
 //--------------------------------------------------------------
-// ‚q‚n‚lƒ‚ƒjƒ^‚ğ“Ç‚İ‚Ş
+// ï¼²ï¼¯ï¼­ãƒ¢ãƒ‹ã‚¿ã‚’èª­ã¿è¾¼ã‚€
 //--------------------------------------------------------------
 int rom_load(unsigned char *x)
 {
@@ -283,8 +283,8 @@ int rom_load(unsigned char *x)
 
 	wsprintf(strtmp,"%s%s",RomFileDir, rom_filelist[menu.selrom]);
 
-	// ƒfƒtƒHƒ‹ƒgF700‚Ìê‡ CMOS‚ğg—p
-	use_cmos = 1;														// 1R12 ƒIƒ“
+	// ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆï¼š700ã®å ´åˆ CMOSã‚’ä½¿ç”¨
+	use_cmos = 1;														// 1R12 ã‚ªãƒ³
 	
 	if (menu.selrom == ROM_KIND_MZ1500)
 		romlen = 10240;
@@ -300,12 +300,12 @@ int rom_load(unsigned char *x)
 			use_cmos = 0;
 			menu.machine = MACHINE_MZ1500;
 		} /* else {
-			// 1500‚ÌROMˆÈŠO‚¾‚Á‚½‚ç
-			use_cmos = 1;										// 1R12 ƒIƒ“
+			// 1500ã®ROMä»¥å¤–ã ã£ãŸã‚‰
+			use_cmos = 1;										// 1R12 ã‚ªãƒ³
 		} */
 	}
 
-	/* ƒtƒHƒ“ƒgƒf[ƒ^‚ğ“Ç‚İ‚Ş */
+	/* ãƒ•ã‚©ãƒ³ãƒˆãƒ‡ãƒ¼ã‚¿ã‚’èª­ã¿è¾¼ã‚€ */
 	if (font_load(menu.fontset)<0)
 	{
     	MessageBox(hwndApp, "Couldn't load font data.",
@@ -315,7 +315,7 @@ int rom_load(unsigned char *x)
 	}
 	
 #ifdef KANJIROM
-	/* Š¿šROM, «‘ROM“Ç‚İ‚İ */
+	/* æ¼¢å­—ROM, è¾æ›¸ROMèª­ã¿è¾¼ã¿ */
 	if (mz1r23_ptr == NULL) {
 		wsprintf(strtmp, "%sMZ1R23.ROM",RomFileDir);
 		if((in=FILE_ROPEN((LPCSTR)strtmp))!=FILE_VAL_ERROR)
@@ -325,7 +325,7 @@ int rom_load(unsigned char *x)
 				FILE_READ(in, mz1r23_ptr, 128 * 1024);
 				FILE_CLOSE(in);
 
-				/* Š¿šROM‚ğ“Ç‚ß‚½‚çA«‘ROM‚à“Ç‚ñ‚Å‚İ‚é */
+				/* æ¼¢å­—ROMã‚’èª­ã‚ãŸã‚‰ã€è¾æ›¸ROMã‚‚èª­ã‚“ã§ã¿ã‚‹ */
 				if (mz1r24_ptr == NULL) {
 					wsprintf(strtmp, "%sMZ1R24.ROM",RomFileDir);
 					if((in=FILE_ROPEN((LPCSTR)strtmp))!=FILE_VAL_ERROR)
@@ -345,7 +345,7 @@ int rom_load(unsigned char *x)
 	return result;
 }
 
-// ƒ‚ƒjƒ^‚q‚n‚lƒ^ƒCƒv‚ğ”»•Ê‚µArom1_mode‚ğƒZƒbƒg
+// ãƒ¢ãƒ‹ã‚¿ï¼²ï¼¯ï¼­ã‚¿ã‚¤ãƒ—ã‚’åˆ¤åˆ¥ã—ã€rom1_modeã‚’ã‚»ãƒƒãƒˆ
 int set_romtype(void)
 {
 	if (!strncmp(mem+0x6F3,"1Z-009",5))
@@ -372,7 +372,7 @@ int set_romtype(void)
 }
 
 //--------------------------------------------------------------
-// ‚l‚y‚Ìƒ‚ƒjƒ^‚q‚n‚l‚ÌƒZƒbƒgƒAƒbƒv
+// ï¼­ï¼ºã®ãƒ¢ãƒ‹ã‚¿ï¼²ï¼¯ï¼­ã®ã‚»ãƒƒãƒˆã‚¢ãƒƒãƒ—
 //--------------------------------------------------------------
 void mz_mon_setup(void)
 {
@@ -386,7 +386,7 @@ void mz_mon_setup(void)
 		"(1500Mode)",
 	};
 
-	// ROMƒ‚ƒjƒ^‚Ì“Ç‚İ‚İ
+	// ROMãƒ¢ãƒ‹ã‚¿ã®èª­ã¿è¾¼ã¿
 	rom1_mode = rom_load(mem);
 
 #if MZ_SP_PATCH
@@ -442,19 +442,19 @@ void mz_mon_setup(void)
 	ZeroMemory(mem+VID_START,4*1024);
 	ZeroMemory(mem+RAM_START,64*1024);
 
-	// ƒƒjƒ…[‚Æ‚©‚ğ”½‰f
+	// ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã¨ã‹ã‚’åæ˜ 
     hmenu = GetSubMenu(hmenuApp , 0);									// Keyboard Menu
 	
 
-	// 1500ƒ‚[ƒh‚¾‚Á‚½‚çPCG700‚ğ‹­§“I‚É‚n‚e‚e
+	// 1500ãƒ¢ãƒ¼ãƒ‰ã ã£ãŸã‚‰PCG700ã‚’å¼·åˆ¶çš„ã«ï¼¯ï¼¦ï¼¦
 	if (menu.machine == MACHINE_MZ1500)
 	{
 		menu.pcg700 = 0;
-		EnableMenuItem(hmenuApp, MENU_PCG700, MF_BYCOMMAND | MF_GRAYED); // PCG700‘I‘ğ•s”\
+		EnableMenuItem(hmenuApp, MENU_PCG700, MF_BYCOMMAND | MF_GRAYED); // PCG700é¸æŠä¸èƒ½
 	}
 	else
 	{
-		EnableMenuItem(hmenuApp, MENU_PCG700, MF_BYCOMMAND | MF_ENABLED); // PCG700‘I‘ğ‰Â”\
+		EnableMenuItem(hmenuApp, MENU_PCG700, MF_BYCOMMAND | MF_ENABLED); // PCG700é¸æŠå¯èƒ½
 	}
 
 	if (rom2_mode != MON_9Z502)
@@ -484,30 +484,30 @@ void mz_mon_setup(void)
 
 	UpdateTapeMenu();
 
-	// ƒ^ƒCƒgƒ‹ƒo[
+	// ã‚¿ã‚¤ãƒˆãƒ«ãƒãƒ¼
 	wsprintf(strtmp, "%s %s",szAppName, machine_md_str[menu.machine]);
 	SetWindowText(hwndApp, strtmp);
 }
 
 //--------------------------------------------------------------
-// ƒƒCƒ“•”
+// ãƒ¡ã‚¤ãƒ³éƒ¨
 //--------------------------------------------------------------
 void mz_main(void)
 {
-	// ‚l‚y‚Ìƒ‚ƒjƒ^‚ÌƒZƒbƒgƒAƒbƒv
+	// ï¼­ï¼ºã®ãƒ¢ãƒ‹ã‚¿ã®ã‚»ãƒƒãƒˆã‚¢ãƒƒãƒ—
 	mz_mon_setup();
 
-	// ƒJƒŒƒ“ƒgƒfƒBƒŒƒNƒgƒŠ@İ’è
+	// ã‚«ãƒ¬ãƒ³ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã€€è¨­å®š
 	SetCurrentDirectory(LoadOpenDir);
 
-	// ƒƒCƒ“ƒ‹[ƒvÀs
+	// ãƒ¡ã‚¤ãƒ³ãƒ«ãƒ¼ãƒ—å®Ÿè¡Œ
 	mainloop();
 
 }
 
 //-------------------------------------------------------------
-// “Á’è‚ÌŠÔ@ƒEƒFƒCƒg‚ğ“ü‚ê‚é
-//   iƒƒbƒZ[ƒWƒ‹[ƒv•t‚«j
+// ç‰¹å®šã®æ™‚é–“ã€€ã‚¦ã‚§ã‚¤ãƒˆã‚’å…¥ã‚Œã‚‹
+//   ï¼ˆãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ«ãƒ¼ãƒ—ä»˜ãï¼‰
 //-------------------------------------------------------------
 void win_sleep(int t)
 {
@@ -523,10 +523,10 @@ void win_sleep(int t)
 }
 
 //-------------------------------------------------------------
-// RAMƒtƒ@ƒCƒ‹‚ÌƒZ[ƒu
+// RAMãƒ•ã‚¡ã‚¤ãƒ«ã®ã‚»ãƒ¼ãƒ–
 //-------------------------------------------------------------
-// In :	RAMƒtƒ@ƒCƒ‹–¼
-// Out:	TRUE (³íI—¹) / FALSE (ƒGƒ‰[)
+// In :	RAMãƒ•ã‚¡ã‚¤ãƒ«å
+// Out:	TRUE (æ­£å¸¸çµ‚äº†) / FALSE (ã‚¨ãƒ©ãƒ¼)
 BOOL save_ramfile(LPCSTR filename)
 {
 	FILE_HDL	fh;
@@ -546,10 +546,10 @@ BOOL save_ramfile(LPCSTR filename)
 }
 
 //-------------------------------------------------------------
-// RAMƒtƒ@ƒCƒ‹ƒ[ƒh
+// RAMãƒ•ã‚¡ã‚¤ãƒ«ãƒ­ãƒ¼ãƒ‰
 //-------------------------------------------------------------
-// In :	RAMƒtƒ@ƒCƒ‹–¼
-// Out:	TRUE (³íI—¹) / FALSE (ƒGƒ‰[)
+// In :	RAMãƒ•ã‚¡ã‚¤ãƒ«å
+// Out:	TRUE (æ­£å¸¸çµ‚äº†) / FALSE (ã‚¨ãƒ©ãƒ¼)
 BOOL load_ramfile(LPCSTR filename)
 {
 	FILE_HDL	fh;
@@ -571,12 +571,12 @@ BOOL load_ramfile(LPCSTR filename)
 
 
 //-------------------------------------------------------------
-//  ƒf[ƒ^ƒpƒPƒbƒg‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ğ“¾‚é
+//  ãƒ‡ãƒ¼ã‚¿ãƒ‘ã‚±ãƒƒãƒˆã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å¾—ã‚‹
 //-------------------------------------------------------------
-// In:	num = ƒpƒPƒbƒgƒ^ƒCƒv”Ô†
-//		**datptr =  ƒf[ƒ^ƒpƒPƒbƒg‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ğ•Ô‚·ƒ|ƒCƒ“ƒ^
-//		*size = ƒf[ƒ^ƒpƒPƒbƒgƒTƒCƒY‚ğ•Ô‚·int‚Ö‚Ìƒ|ƒCƒ“ƒ^
-// Out:	TRUE (³íI—¹) / FALSE (ƒGƒ‰[)
+// In:	num = ãƒ‘ã‚±ãƒƒãƒˆã‚¿ã‚¤ãƒ—ç•ªå·
+//		**datptr =  ãƒ‡ãƒ¼ã‚¿ãƒ‘ã‚±ãƒƒãƒˆã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’è¿”ã™ãƒã‚¤ãƒ³ã‚¿
+//		*size = ãƒ‡ãƒ¼ã‚¿ãƒ‘ã‚±ãƒƒãƒˆã‚µã‚¤ã‚ºã‚’è¿”ã™intã¸ã®ãƒã‚¤ãƒ³ã‚¿
+// Out:	TRUE (æ­£å¸¸çµ‚äº†) / FALSE (ã‚¨ãƒ©ãƒ¼)
 static BOOL get_packet_ptr(int num, void* *datptr, int *size)
 {
 	switch (num)
@@ -738,10 +738,10 @@ static BOOL write_stat_packet(int num, FILE_HDL fh)
 }
 
 //-------------------------------------------------------------
-// STATEƒtƒ@ƒCƒ‹‚ÌƒZ[ƒu
+// STATEãƒ•ã‚¡ã‚¤ãƒ«ã®ã‚»ãƒ¼ãƒ–
 //-------------------------------------------------------------
-// In :	STATEƒtƒ@ƒCƒ‹–¼
-// Out:	TRUE (³íI—¹) / FALSE (ƒGƒ‰[)
+// In :	STATEãƒ•ã‚¡ã‚¤ãƒ«å
+// Out:	TRUE (æ­£å¸¸çµ‚äº†) / FALSE (ã‚¨ãƒ©ãƒ¼)
 BOOL save_state(LPCSTR filename)
 {
 	TMZS_HEAD	head;
@@ -828,10 +828,10 @@ static WORD read_stat_packet(FILE_HDL fh)
 }
 
 //-------------------------------------------------------------
-// STATEƒtƒ@ƒCƒ‹‚Ìƒ[ƒh
+// STATEãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ­ãƒ¼ãƒ‰
 //-------------------------------------------------------------
-// In :	STATEƒtƒ@ƒCƒ‹–¼
-// Out:	TRUE (³íI—¹) / FALSE (ƒGƒ‰[)
+// In :	STATEãƒ•ã‚¡ã‚¤ãƒ«å
+// Out:	TRUE (æ­£å¸¸çµ‚äº†) / FALSE (ã‚¨ãƒ©ãƒ¼)
 BOOL load_state(LPCSTR filename)
 {
 	TMZS_HEAD	head;
@@ -847,7 +847,7 @@ BOOL load_state(LPCSTR filename)
 	sz = FILE_READ(fh, &head, sizeof(head));
 	if (sz == sizeof(head))
 	{
-		// ƒwƒbƒ_‚ª³‚µ‚¢‚©H
+		// ãƒ˜ãƒƒãƒ€ãŒæ­£ã—ã„ã‹ï¼Ÿ
 		if (!lstrcmp(head.name, stat_head_name))
 		{
 			// Check ROM Mode
@@ -895,27 +895,27 @@ void mainloop(void)
 #ifdef ENABLE_FDC
 	UINT8 strtmp[MAX_PATH];
 
-	// FDC ‰Šú‰»
+	// FDC åˆæœŸåŒ–
 	FDC_Init();
-	/* ƒJƒŒƒ“ƒgƒfƒBƒŒƒNƒgƒŠƒQƒbƒg */
+	/* ã‚«ãƒ¬ãƒ³ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚²ãƒƒãƒˆ */
 	GetCurrentDirectory(sizeof(strtmp), strtmp);
 	strcat_s(strtmp, sizeof(strtmp), "\\test.D88");
 
-	// FDDƒeƒXƒg
+	// FDDãƒ†ã‚¹ãƒˆ
 	mz_set_fd(0, 0, strtmp);
 #endif
 
 	mzbeep_init(44100);
 	sn76489an_init(44100, CPU_SPEED_BASE);
 
-	// DirectSound‰Šú‰»
+	// DirectSoundåˆæœŸåŒ–
 	if (!DSound_Init(44100, 50)) {
 		sound_di = TRUE;
 	}
-	// DirectSound‚Ì‰Šú‰»BƒGƒ‰[‚Å‚à‘±si‰¹Œ¹–³‚µ‚Ìê‡j
+	// DirectSoundã®åˆæœŸåŒ–ã€‚ã‚¨ãƒ©ãƒ¼ã§ã‚‚ç¶šè¡Œï¼ˆéŸ³æºç„¡ã—ã®å ´åˆï¼‰
 	mzsnd_init();
 
-	// XInput‰Šú‰»
+	// XInputåˆæœŸåŒ–
 	XInput_Init();
 
 	// Reset MZ
@@ -935,20 +935,20 @@ void mainloop(void)
 		{
 			timetmp = get_timer();		
 			if (!Z80_Execute()) break;
-			XInput_Update();						// XInput‚Ìó‘ÔXV
+			XInput_Update();						// XInputã®çŠ¶æ…‹æ›´æ–°
 
 			if (XI_Is_GamePad_Connected(0))
 			{
-				// ƒQ[ƒ€ƒpƒbƒhÚ‘±
-				// ƒQ[ƒ€ƒpƒbƒh‚ªŒq‚ª‚Á‚Ä‚¢‚½‚ç...
+				// ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰æ¥ç¶šæ™‚
+				// ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰ãŒç¹‹ãŒã£ã¦ã„ãŸã‚‰...
 //				dprintf("XI_Is_GamePad_Connected(0)\n");
-				// ‰Ÿ‚³‚ê‚½ƒgƒŠƒK[æ“¾
+				// æŠ¼ã•ã‚ŒãŸãƒˆãƒªã‚¬ãƒ¼å–å¾—
 				pad = XI_Get_GamePad_RAW(0);
 				GetTrg = ~Pad_bak & pad;
 				GetReleaseTrg = Pad_bak & ~pad;
 				Pad_bak = pad;
 
-				// •ûŒüƒL[
+				// æ–¹å‘ã‚­ãƒ¼
 				if (GetTrg & PAD_RAW_LEFT)
 				{
 					dprintf("LEFT key pressed\n");
@@ -992,7 +992,7 @@ void mainloop(void)
 					mz_keyup(VK_DOWN);		// cursor down
 				}
 
-				// ƒ{ƒ^ƒ“
+				// ãƒœã‚¿ãƒ³
 				if (GetTrg & PAD_RAW_A)
 				{
 					dprintf("A button pressed\n");
@@ -1037,7 +1037,7 @@ void mainloop(void)
 			}
 			else
 			{
-				// ƒQ[ƒ€ƒpƒbƒh–³‚µ‚Ì
+				// ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰ç„¡ã—ã®æ™‚
 				pad = 0; 
 			}
 			
@@ -1051,7 +1051,7 @@ void mainloop(void)
 }
 
 //------------------------------------------------------------
-// CPU‘¬“x‚ğİ’è (10-100)
+// CPUé€Ÿåº¦ã‚’è¨­å®š (10-100)
 //------------------------------------------------------------
 void setup_cpuspeed(int per) {
 	int _iperiod;
@@ -1070,7 +1070,7 @@ void setup_cpuspeed(int per) {
 }
 
 //--------------------------------------------------------------
-// ƒXƒŒƒbƒh‚Ì€”õ
+// ã‚¹ãƒ¬ãƒƒãƒ‰ã®æº–å‚™
 //--------------------------------------------------------------
 int create_thread(void)
 {
@@ -1087,7 +1087,7 @@ int create_thread(void)
 }
 
 //--------------------------------------------------------------
-// ƒXƒŒƒbƒh‚ÌŠJn
+// ã‚¹ãƒ¬ãƒƒãƒ‰ã®é–‹å§‹
 //--------------------------------------------------------------
 void start_thread(void)
 {
@@ -1096,7 +1096,7 @@ void start_thread(void)
 }
 
 //--------------------------------------------------------------
-// ƒXƒŒƒbƒh‚ÌŒãn––
+// ã‚¹ãƒ¬ãƒƒãƒ‰ã®å¾Œå§‹æœ«
 //--------------------------------------------------------------
 int end_thread(void)
 {
@@ -1111,7 +1111,7 @@ int end_thread(void)
 }
 
 //--------------------------------------------------------------
-// ‰æ–Ê•`‰æƒXƒŒƒbƒh 
+// ç”»é¢æç”»ã‚¹ãƒ¬ãƒƒãƒ‰ 
 //--------------------------------------------------------------
 void WINAPI scrn_thread(void *arg)
 {
@@ -1121,13 +1121,13 @@ void WINAPI scrn_thread(void *arg)
 	{
 		if (isAppActive())
 		{
-			// ‰æ–ÊXVˆ—
+			// ç”»é¢æ›´æ–°å‡¦ç†
 			hw700.retrace = 1;											/* retrace = 0 : in v-blnk */
 			vblnk_start();
 
 			EnterCriticalSection( &CriticalSection );
 			timetmp = get_timer();
-			update_scrn();												/* ‰æ–Ê•`‰æ */
+			update_scrn();												/* ç”»é¢æç”» */
 			LeaveCriticalSection( &CriticalSection );
 
 			vsynctmp = get_timer() - timetmp;

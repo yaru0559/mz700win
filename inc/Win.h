@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #ifndef __WIN_H__
 #define __WIN_H__
@@ -9,15 +9,15 @@ extern "C"
 {
 #endif 
 
-#define MZ_SP_PATCH 1							// ƒ³‚q‚n‚l‚Ìƒpƒbƒ`‚ğ—LŒø‚É‚·‚é‚© 1=‚·‚é
-#define MZ_ROM1_TEST 0							// ROM1—LŒø‚Éentry emul‚ÌƒeƒXƒg‚ğ‚·‚é‚© 1=‚·‚é
+#define MZ_SP_PATCH 1							// ç´”æ­£ï¼²ï¼¯ï¼­æ™‚ã®ãƒ‘ãƒƒãƒã‚’æœ‰åŠ¹ã«ã™ã‚‹ã‹ 1=ã™ã‚‹
+#define MZ_ROM1_TEST 0							// ROM1æœ‰åŠ¹æ™‚ã«entry emulã®ãƒ†ã‚¹ãƒˆã‚’ã™ã‚‹ã‹ 1=ã™ã‚‹
 
 //
 #define FORMWIDTH		320
 #define FORMHEIGHT		200
 
-// ‚h‚m‚hƒtƒ@ƒCƒ‹–¼‚ÆƒZƒNƒVƒ‡ƒ“
-#define		IniFileStrBuf	144					// ‚h‚m‚hƒtƒ@ƒCƒ‹–¼‚ğ‚µ‚Ü‚¤ƒoƒbƒtƒ@ƒTƒCƒY
+// ï¼©ï¼®ï¼©ãƒ•ã‚¡ã‚¤ãƒ«åã¨ã‚»ã‚¯ã‚·ãƒ§ãƒ³
+#define		IniFileStrBuf	144					// ï¼©ï¼®ï¼©ãƒ•ã‚¡ã‚¤ãƒ«åã‚’ã—ã¾ã†ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚º
 #define		IniFileName	"\\MZ700WIN.INI"
 #define		CmosFileName	"\\CMOS.RAM"
 #define		IniSection_Option	"OPTIONS"
@@ -49,42 +49,42 @@ typedef struct header
 
 extern pal LogicalPalette;
 
-// MENU‚Éo‚µ‚½‚©‚Á‚½ƒrƒbƒgƒ}ƒbƒvŠÖŒWi–¢g—p
+// MENUã«å‡ºã—ãŸã‹ã£ãŸãƒ“ãƒƒãƒˆãƒãƒƒãƒ—é–¢ä¿‚ï¼ˆæœªä½¿ç”¨
 #define MENU_BMP_WIDTH  16
 #define MENU_BMP_HEIGHT 15
 #define MENU_BMP_MAX (144/MENU_BMP_WIDTH)		// Number of Menu BITMAP ICON
 
-#define MENU_WORK_MAX	64						// ƒ[ƒNŠm•Û”
+#define MENU_WORK_MAX	64						// ãƒ¯ãƒ¼ã‚¯ç¢ºä¿æ•°
 
 //
 typedef struct
 {
-	char menustr[64];							// ƒƒjƒ…[•¶š—ñ
-	UINT menuID;								// ƒƒjƒ…[‚h‚c
-	UINT menuBMP;								// ƒƒjƒ…[‚a‚l‚o
+	char menustr[64];							// ãƒ¡ãƒ‹ãƒ¥ãƒ¼æ–‡å­—åˆ—
+	UINT menuID;								// ãƒ¡ãƒ‹ãƒ¥ãƒ¼ï¼©ï¼¤
+	UINT menuBMP;								// ãƒ¡ãƒ‹ãƒ¥ãƒ¼ï¼¢ï¼­ï¼°
 } TBMPMENU;
 
 // options setting
 typedef struct
 {
-	int		selrom;								// ‘I‘ğ‚³‚ê‚½‚q‚n‚l
-	int		machine;							// ƒ}ƒVƒ“ƒ‚[ƒh
-    int     speed;                              // Às‘¬“x(10-100)
-	int		screen;								// ‰æ–Ê”{—¦
-	int		scrn_freq;							// ‰æ–ÊXVƒJƒEƒ“ƒ^
-	int		keytype;							// ƒL[ƒ{[ƒhƒ^ƒCƒv
-	int		fontset;							// ƒtƒHƒ“ƒgƒ^ƒCƒv 0:Europe / 1:Japan
+	int		selrom;								// é¸æŠã•ã‚ŒãŸï¼²ï¼¯ï¼­
+	int		machine;							// ãƒã‚·ãƒ³ãƒ¢ãƒ¼ãƒ‰
+    int     speed;                              // å®Ÿè¡Œé€Ÿåº¦(10-100)
+	int		screen;								// ç”»é¢å€ç‡
+	int		scrn_freq;							// ç”»é¢æ›´æ–°ã‚«ã‚¦ãƒ³ã‚¿
+	int		keytype;							// ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ã‚¿ã‚¤ãƒ—
+	int		fontset;							// ãƒ•ã‚©ãƒ³ãƒˆã‚¿ã‚¤ãƒ— 0:Europe / 1:Japan
 	int		pcg700;								// PCG700 0:OFF 1:ON
 } TMENUVAL;
 
-// menuƒZƒbƒeƒBƒ“ƒO‚Ìmachineƒƒ“ƒo—p
+// menuã‚»ãƒƒãƒ†ã‚£ãƒ³ã‚°ã®machineãƒ¡ãƒ³ãƒç”¨
 enum
 {
 	MACHINE_MZ700,
 	MACHINE_MZ1500,
 };
 
-extern char			RomFileDir[IniFileStrBuf];	// ROMƒtƒ@ƒCƒ‹‚ª‚ ‚éƒfƒBƒŒƒNƒgƒŠ–¼
+extern char			RomFileDir[IniFileStrBuf];	// ROMãƒ•ã‚¡ã‚¤ãƒ«ãŒã‚ã‚‹ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªå
 
 // prototype....
 void InitMenuBitmaps(HWND);
@@ -132,11 +132,11 @@ extern HWND      hwndApp;
 extern HMENU     hmenuApp;
 extern HDC       Buffer;
 
-extern WORD		sound_di;												/* ‚r‚d‹Ö~ƒ‚[ƒh */
-extern WORD		sound_md;												/* ƒTƒEƒ“ƒhƒ‚[ƒh */
-//extern WORD		mz1500mode;												/* MZ-1500ƒ‚[ƒh */
-extern WORD		key_patch;												/* KeyTableƒpƒbƒ`‚ ‚Äƒtƒ‰ƒO */
-extern int		bk_color;												/* ŠÈˆÕMZ-80K/C/1200ƒpƒbƒ`ƒ‚[ƒh */
+extern WORD		sound_di;												/* ï¼³ï¼¥ç¦æ­¢ãƒ¢ãƒ¼ãƒ‰ */
+extern WORD		sound_md;												/* ã‚µã‚¦ãƒ³ãƒ‰ãƒ¢ãƒ¼ãƒ‰ */
+//extern WORD		mz1500mode;												/* MZ-1500ãƒ¢ãƒ¼ãƒ‰ */
+extern WORD		key_patch;												/* KeyTableãƒ‘ãƒƒãƒã‚ã¦ãƒ•ãƒ©ã‚° */
+extern int		bk_color;												/* ç°¡æ˜“MZ-80K/C/1200ãƒ‘ãƒƒãƒãƒ¢ãƒ¼ãƒ‰ */
 extern WORD		use_cmos;												/* MZ-1R12 0:OFF 1:ON */
 
 extern TMENUVAL	menu;
@@ -149,10 +149,10 @@ extern char		SaveTapeFile[MAX_PATH];
 extern char		StateOpenDir[IniFileStrBuf];
 extern char		CmosFileStr[MAX_PATH];
 
-extern char		statefile[MAX_PATH];			// state ƒtƒ@ƒCƒ‹–¼
-extern char		qdfile[MAX_PATH];				// ‚p‚cƒtƒ@ƒCƒ‹–¼
-extern char		tapefile[MAX_PATH];				// ƒe[ƒvƒtƒ@ƒCƒ‹–¼
-extern char		ramfile[MAX_PATH];				// ‚q‚`‚lƒtƒ@ƒCƒ‹–¼
+extern char		statefile[MAX_PATH];			// state ãƒ•ã‚¡ã‚¤ãƒ«å
+extern char		qdfile[MAX_PATH];				// ï¼±ï¼¤ãƒ•ã‚¡ã‚¤ãƒ«å
+extern char		tapefile[MAX_PATH];				// ãƒ†ãƒ¼ãƒ—ãƒ•ã‚¡ã‚¤ãƒ«å
+extern char		ramfile[MAX_PATH];				// ï¼²ï¼¡ï¼­ãƒ•ã‚¡ã‚¤ãƒ«å
 
 #ifdef __cplusplus
 }

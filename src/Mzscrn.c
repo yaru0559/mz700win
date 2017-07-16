@@ -1,4 +1,4 @@
-//----------------------------------------------------------------------------
+ï»¿//----------------------------------------------------------------------------
 // File:MZscrn.c
 //
 // mz700win:VRAM/CRT Emulation Module
@@ -19,7 +19,7 @@
 #include "MZscrn.h"
 
 static UINT8	vidmem_old[4096];
-static int		refresh_screen;		// ƒXƒNƒŠ[ƒ“‚ÌƒŠƒtƒŒƒbƒVƒ…ƒtƒ‰ƒO bit0:VRAM Rewrite/bit1:Window Blt
+static int		refresh_screen;		// ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ã®ãƒªãƒ•ãƒ¬ãƒƒã‚·ãƒ¥ãƒ•ãƒ©ã‚° bit0:VRAM Rewrite/bit1:Window Blt
 static int		fullmode;
 
 #ifndef __BORLANDC__
@@ -58,7 +58,7 @@ BOOL chg_screen_mode(int mode)
 			return FALSE;
 		}
 
-		// ‘S‰æ–Ê‚Å‚ ‚ê‚ÎAƒvƒƒZƒX‚Ì—Dæ“x‚ğ‚ ‚°‚é
+		// å…¨ç”»é¢ã§ã‚ã‚Œã°ã€ãƒ—ãƒ­ã‚»ã‚¹ã®å„ªå…ˆåº¦ã‚’ã‚ã’ã‚‹
 	    hProcess = GetCurrentProcess();
 		if (hProcess)
 		{
@@ -83,7 +83,7 @@ BOOL chg_screen_mode(int mode)
 //
 void mz_screen_init(void)
 {
-	mz_palet_init();	/* 1500ƒpƒŒƒbƒg‰Šú‰» */
+	mz_palet_init();	/* 1500ãƒ‘ãƒ¬ãƒƒãƒˆåˆæœŸåŒ– */
 	
 	vptr = CreateOffScreen();
 	ZeroMemory(vptr,320*200);
@@ -118,7 +118,7 @@ void mz_palet(int iVal)
 
 void mz_palet_init(void)
 {
-	/* 1500ƒpƒŒƒbƒg‰Šú‰» */
+	/* 1500ãƒ‘ãƒ¬ãƒƒãƒˆåˆæœŸåŒ– */
 	CopyMemory(mzcol_palet,mzcol2dibcol,sizeof(mzcol2dibcol));
 };
 
@@ -146,7 +146,7 @@ int search_bits(int flg,int st,int bit)
 	return r;
 }
 /************************************/
-/* ƒtƒHƒ“ƒgƒf[ƒ^‚ğ”²‚«•`‰æ—p‚Éˆ³k */
+/* ãƒ•ã‚©ãƒ³ãƒˆãƒ‡ãƒ¼ã‚¿ã‚’æŠœãæç”»ç”¨ã«åœ§ç¸® */
 /************************************/
 void compress_font(void)
 {
@@ -162,12 +162,12 @@ void compress_font(void)
 	{
 		dstfont = &fontbuf[i][0];
 
-		/* cƒ‹[ƒv */
+		/* ç¸¦ãƒ«ãƒ¼ãƒ— */
 		for (j=0;j<8;j++)
 		{
 			orgfont = &font[(i<<3)+j];
 
-			/* ‚PsƒGƒ“ƒR[ƒh */
+			/* ï¼‘è¡Œã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ */
 			mask = 0x80;
 			k=0;
 			while (1)
@@ -191,10 +191,10 @@ void compress_font(void)
 				if (!mask) break;
 			}
 			
-			/* ‚PsƒGƒ“ƒhƒ}[ƒN•t‚¯‚é */
+			/* ï¼‘è¡Œã‚¨ãƒ³ãƒ‰ãƒãƒ¼ã‚¯ä»˜ã‘ã‚‹ */
 			*(dstfont++) = 0;
 		}
-		/* ‚PƒLƒƒƒ‰ƒGƒ“ƒhƒ}[ƒN•t‚¯‚é */
+		/* ï¼‘ã‚­ãƒ£ãƒ©ã‚¨ãƒ³ãƒ‰ãƒãƒ¼ã‚¯ä»˜ã‘ã‚‹ */
 		*(dstfont++) = 0;
 	}
 
@@ -239,11 +239,11 @@ void update_scrn(void)
 
 		if (menu.machine == MACHINE_MZ700)
 		{
-			/* mz700ƒ‚[ƒh */
-			/* ƒ}ƒVƒ“ƒ‚[ƒh‚É‚æ‚Á‚Ä•`‰æ‚ğ‚í‚¯‚é */
+			/* mz700ãƒ¢ãƒ¼ãƒ‰ */
+			/* ãƒã‚·ãƒ³ãƒ¢ãƒ¼ãƒ‰ã«ã‚ˆã£ã¦æç”»ã‚’ã‚ã‘ã‚‹ */
 			if (!menu.pcg700 || (hw700.pcg700_mode==8))
 			{
-				/* MZ-700mode Normal•`‰æ */
+				/* MZ-700mode Normalæç”» */
 				for(y=0;y<25;y++)
 				{
 					for(x=0;x<40;x++,ptr++,oldptr++)
@@ -261,7 +261,7 @@ void update_scrn(void)
 			}
 			else
 			{
-				/* MZ-700mode PCG700•`‰æ */
+				/* MZ-700mode PCG700æç”» */
 				for(y=0;y<25;y++)
 				{
 					for(x=0;x<40;x++,ptr++,oldptr++)
@@ -282,8 +282,8 @@ void update_scrn(void)
 		}
 		else
 		{
-			/* mz1500ƒ‚[ƒh */
-			/* TEXT ”wŒiF•`‰æ */
+			/* mz1500ãƒ¢ãƒ¼ãƒ‰ */
+			/* TEXT èƒŒæ™¯è‰²æç”» */
 			for(y=0;y<25;y++)
 			{
 				for(x=0;x<40;x++,ptr++,oldptr++)
@@ -292,7 +292,7 @@ void update_scrn(void)
 					switch (hw1500.prty & 3)
 					{
 					case 0:
-						/* PCG–³‚µ */
+						/* PCGç„¡ã— */
 						mz_chr_put(x,y,c,ptr[2048]);
 						*oldptr = c;
 						oldptr[2048] = ptr[2048];
@@ -302,19 +302,19 @@ void update_scrn(void)
 						/* TEXT>PCG>BACKCOLOR */
 						if (ptr[3072] & 8)
 						{
-							/* PCG‰ºEƒeƒLƒXƒgã */
+							/* PCGä¸‹ãƒ»ãƒ†ã‚­ã‚¹ãƒˆä¸Š */
 							mz_pcg1500_put(x,y,ptr[1024],ptr[3072],ptr[2048]);
 							mz_text_overlay(x,y,c,ptr[2048]);
 						}
 						else
 						{
-							/* PCG–³‚µ */
+							/* PCGç„¡ã— */
 							mz_chr_put(x,y,c,ptr[2048]);
 						}
 						break;
 						
 					case 2:
-						/* PCG–³‚µ */
+						/* PCGç„¡ã— */
 						mz_chr_put(x,y,c,ptr[2048]);
 						break;
 						
@@ -335,7 +335,7 @@ void update_scrn(void)
 			refresh_screen&=(~REFSC_VRAM);
 		}
 		
-		/* ‰æ–Ê‚ğƒEƒBƒ“ƒhƒE‚É”½‰f */
+		/* ç”»é¢ã‚’ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã«åæ˜  */
 		if (refresh_screen&REFSC_BLT)
 		{
 			update_winscr();
@@ -349,7 +349,7 @@ void update_scrn(void)
 #ifndef __BORLANDC__
 
 /*
-  MZ‚Ì‰æ–Ê‚ÉƒeƒLƒXƒg•¶š‚ğ•\¦
+  MZã®ç”»é¢ã«ãƒ†ã‚­ã‚¹ãƒˆæ–‡å­—ã‚’è¡¨ç¤º
   
   In:	x = chr.X
 		y = chr.Y
@@ -366,7 +366,7 @@ void mz_chr_put(int x,int y,int code,int color)
 		mov		edi,eax
 		and		eax,0x80
 		shl		eax,1
-		or		esi,eax													/* ecx=ƒLƒƒƒ‰ƒNƒ^ƒR[ƒh */
+		or		esi,eax													/* ecx=ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ã‚³ãƒ¼ãƒ‰ */
 		shl		esi,7
 		add		esi,offset fontbuf
 
@@ -395,7 +395,7 @@ void mz_chr_put(int x,int y,int code,int color)
 		add		edi,eax													/* edi=vram address */
 		add		edi,dword ptr[vptr]										/* +memory base */
 
-		xor		ecx,ecx													/* ‚±‚ê‚ªd—v‚¾‚Á‚½ */
+		xor		ecx,ecx													/* ã“ã‚ŒãŒé‡è¦ã ã£ãŸ */
 		/*	draw loop */
 		mov		ebx,8
 	cp_draw_loop:
@@ -419,7 +419,7 @@ void mz_chr_put(int x,int y,int code,int color)
 		rep		stosb
 		jmp		short cp_draw_loop
 
-		/* Ÿ‚Ìs‚Ö */	
+		/* æ¬¡ã®è¡Œã¸ */	
 	cp_draw_nextline:
 		add		edi,312
 		dec		ebx
@@ -431,7 +431,7 @@ void mz_chr_put(int x,int y,int code,int color)
 }
 
 /*
-  MZ‚Ì‰æ–Ê‚ÉPCG700•¶š‚ğ•\¦
+  MZã®ç”»é¢ã«PCG700æ–‡å­—ã‚’è¡¨ç¤º
   
   In:	x = chr.X
 		y = chr.Y
@@ -447,7 +447,7 @@ void mz_pcg700_put(int x,int y,int code,int color)
 		mov		eax,[color]
 		mov		edi,eax
 		and		eax,0x80
-		or		esi,eax													/* ecx=ƒLƒƒƒ‰ƒNƒ^ƒR[ƒh */
+		or		esi,eax													/* ecx=ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ã‚³ãƒ¼ãƒ‰ */
 		shl		esi,3													/* x8 */
 		add		esi,[pcg700_font]										/* esi=pcg700_font */
 
@@ -494,7 +494,7 @@ void mz_pcg700_put(int x,int y,int code,int color)
 		dec		bl	
 		jnz		pp_draw_loop_x
 
-		/* Ÿ‚Ìs‚Ö */	
+		/* æ¬¡ã®è¡Œã¸ */	
 		add		edi,312
 		loop	pp_draw_loop
 
@@ -505,7 +505,7 @@ void mz_pcg700_put(int x,int y,int code,int color)
 
 #if 0
 /*
-  MZ‚Ì‰æ–Ê‚ÉƒeƒLƒXƒg”wŒiF‚ğ•\¦
+  MZã®ç”»é¢ã«ãƒ†ã‚­ã‚¹ãƒˆèƒŒæ™¯è‰²ã‚’è¡¨ç¤º
   
   In:	x = chr.X
 		y = chr.Y
@@ -539,13 +539,13 @@ void mz_bgcolor_put(int x,int y,int color)
 		/*	draw loop */
 		mov		ecx,8
 	bp_draw_loop:
-		/* ‰¡‚É‚Wƒhƒbƒg */
+		/* æ¨ªã«ï¼˜ãƒ‰ãƒƒãƒˆ */
 		stosw
 		stosw
 		stosw
 		stosw
 
-		/* Ÿ‚Ìs‚Ö */	
+		/* æ¬¡ã®è¡Œã¸ */	
 		add		edi,edx
 		loop	bp_draw_loop
 
@@ -555,7 +555,7 @@ void mz_bgcolor_put(int x,int y,int color)
 #endif
 
 /*
-  MZ‚Ì‰æ–Ê‚ÉƒeƒLƒXƒg•¶š‚ğƒI[ƒo[ƒŒƒC•\¦
+  MZã®ç”»é¢ã«ãƒ†ã‚­ã‚¹ãƒˆæ–‡å­—ã‚’ã‚ªãƒ¼ãƒãƒ¼ãƒ¬ã‚¤è¡¨ç¤º
   
   In:	x = chr.X
 		y = chr.Y
@@ -572,7 +572,7 @@ void mz_text_overlay(int x,int y,int code,int color)
 		mov		edi,eax
 		and		eax,0x80
 		shl		eax,1
-		or		esi,eax													/* ecx=ƒLƒƒƒ‰ƒNƒ^ƒR[ƒh */
+		or		esi,eax													/* ecx=ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ã‚³ãƒ¼ãƒ‰ */
 		shl		esi,7
 		add		esi,offset fontbuf
 
@@ -595,7 +595,7 @@ void mz_text_overlay(int x,int y,int code,int color)
 		add		edi,eax													/* edi=vram address */
 		add		edi,dword ptr[vptr]										/* +memory base */
 
-		xor		ecx,ecx													/* ‚±‚ê‚ªd—v‚¾‚Á‚½ */
+		xor		ecx,ecx													/* ã“ã‚ŒãŒé‡è¦ã ã£ãŸ */
 		/*	draw loop */
 		mov		ebx,8
 	to_draw_loop:
@@ -617,7 +617,7 @@ void mz_text_overlay(int x,int y,int code,int color)
 		rep		stosb
 		jmp		short to_draw_loop
 
-		/* Ÿ‚Ìs‚Ö */	
+		/* æ¬¡ã®è¡Œã¸ */	
 	to_draw_nextline:
 		add		edi,312
 		dec		ebx
@@ -629,7 +629,7 @@ void mz_text_overlay(int x,int y,int code,int color)
 }
 
 /*
-  MZ‚Ì‰æ–Ê‚ÉPCG1500•¶š‚ğ•\¦
+  MZã®ç”»é¢ã«PCG1500æ–‡å­—ã‚’è¡¨ç¤º
   
   In:	x = chr.X
 		y = chr.Y
@@ -645,7 +645,7 @@ void mz_pcg1500_overlay(int x,int y,int code,int attr)
 		mov		eax,[attr]
 		and		eax,0xC0
 		shl		eax,2
-		or		esi,eax													/* ecx=ƒLƒƒƒ‰ƒNƒ^ƒR[ƒh */
+		or		esi,eax													/* ecx=ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ã‚³ãƒ¼ãƒ‰ */
 		shl		esi,3													/* x8 */
 
 		/* dest.address calc */
@@ -685,7 +685,7 @@ void mz_pcg1500_overlay(int x,int y,int code,int attr)
 		shl		dl,1													/* check blue */
 		adc		al,al
 			
-		/* “§–¾”wŒiƒ`ƒFƒbƒN */
+		/* é€æ˜èƒŒæ™¯ãƒã‚§ãƒƒã‚¯ */
 		or		al,al
 		jz		short po_draw_pcgnext
 
@@ -704,7 +704,7 @@ void mz_pcg1500_overlay(int x,int y,int code,int attr)
 }
 
 /*
-  MZ‚Ì‰æ–Ê‚ÉPCG1500•¶š‚ğ•\¦
+  MZã®ç”»é¢ã«PCG1500æ–‡å­—ã‚’è¡¨ç¤º
   
   In:	x = chr.X
 		y = chr.Y
@@ -721,7 +721,7 @@ void mz_pcg1500_put(int x,int y,int code,int attr,int bgcolor)
 		mov		eax,[attr]
 		and		eax,0xC0
 		shl		eax,2
-		or		esi,eax													/* ecx=ƒLƒƒƒ‰ƒNƒ^ƒR[ƒh */
+		or		esi,eax													/* ecx=ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ã‚³ãƒ¼ãƒ‰ */
 		shl		esi,3													/* x8 */
 
 		/* dest.address calc */
@@ -762,19 +762,19 @@ void mz_pcg1500_put(int x,int y,int code,int attr,int bgcolor)
 		shl		dl,1													/* check blue */
 		adc		al,al
 			
-		/* “§–¾”wŒiƒ`ƒFƒbƒN */
+		/* é€æ˜èƒŒæ™¯ãƒã‚§ãƒƒã‚¯ */
 		or		al,al
 		jnz		short p15_draw_pcgnext
 
-		mov		al,byte ptr[bgcolor]									/* ”wŒiF */
+		mov		al,byte ptr[bgcolor]									/* èƒŒæ™¯è‰² */
 		and		al,0x0F
 	p15_draw_pcgnext:		
-		mov		al,[mzcol_palet+eax]									/* ƒtƒHƒ“ƒgF */
+		mov		al,[mzcol_palet+eax]									/* ãƒ•ã‚©ãƒ³ãƒˆè‰² */
 		stosb															/* dot */
 		dec		bl	
 		jnz		p15_draw_loop_x
 
-		/* Ÿ‚Ìs‚Ö */	
+		/* æ¬¡ã®è¡Œã¸ */	
 		add		edi,312
 		loop	p15_draw_loop
 

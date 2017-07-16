@@ -1,4 +1,4 @@
-//----------------------------------------------------------------------------
+ï»¿//----------------------------------------------------------------------------
 // File:fileset.c
 //
 // mz700win:Set/Open Image File Module
@@ -26,25 +26,25 @@
 #include "MZscrn.h"
 
 //////////////////////////
-// ƒtƒ@ƒCƒ‹–¼•\¦—p•¶š—ñ
+// ãƒ•ã‚¡ã‚¤ãƒ«åè¡¨ç¤ºç”¨æ–‡å­—åˆ—
 //////////////////////////
 /* for Japanese */
 static const UINT8 /* *const */ mzascii_j[] =
 {
-	"@Ih”“•fij–{C|D^"\
-	"‚O‚P‚Q‚R‚S‚T‚U‚V‚W‚XFGƒ„H"\
-	"—‚`‚a‚b‚c‚d‚e‚f‚g‚h‚i‚j‚k‚l‚m‚n"\
-	"‚o‚p‚q‚r‚s‚t‚u‚v‚w‚x‚ym_nª©"\
-	"¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦"\
-	"“úŒ‰Î…–Ø‹à“y¶”N•ª•b‰~’¥"\
-	"«BuvADƒ’ƒ@ƒBƒDƒFƒHƒƒƒ…ƒ‡ƒb"\
-	"[ƒAƒCƒEƒGƒIƒJƒLƒNƒPƒRƒTƒVƒXƒZƒ\"\
-	"ƒ^ƒ`ƒcƒeƒgƒiƒjƒkƒlƒmƒnƒqƒtƒwƒzƒ}"\
-	"ƒ~ƒ€ƒƒ‚ƒ„ƒ†ƒˆƒ‰ƒŠƒ‹ƒŒƒƒƒ“JK"\
-	"¨¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦"\
-	"¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦"\
-	"¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦"\
-	"¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦ƒÎ"
+	"ã€€ï¼â€ï¼ƒï¼„ï¼…ï¼†â€™ï¼ˆï¼‰ï¼Šï¼‹ï¼Œï¼ï¼ï¼"\
+	"ï¼ï¼‘ï¼’ï¼“ï¼”ï¼•ï¼–ï¼—ï¼˜ï¼™ï¼šï¼›ï¼œï¼ï¼ï¼Ÿ"\
+	"ï¼ ï¼¡ï¼¢ï¼£ï¼¤ï¼¥ï¼¦ï¼§ï¼¨ï¼©ï¼ªï¼«ï¼¬ï¼­ï¼®ï¼¯"\
+	"ï¼°ï¼±ï¼²ï¼³ï¼´ï¼µï¼¶ï¼·ï¼¸ï¼¹ï¼ºï¼»ï¼¼ï¼½â†‘â†"\
+	"â€»â€»â€»â€»â€»â€»â€»â€»â€»â€»â€»â€»â€»â€»â€»â€»"\
+	"æ—¥æœˆç«æ°´æœ¨é‡‘åœŸç”Ÿå¹´æ™‚åˆ†ç§’å††ï¿¥ï¿¡â–¼"\
+	"â†“ã€‚ã€Œã€ã€ï¼ãƒ²ã‚¡ã‚£ã‚¥ã‚§ã‚©ãƒ£ãƒ¥ãƒ§ãƒƒ"\
+	"ãƒ¼ã‚¢ã‚¤ã‚¦ã‚¨ã‚ªã‚«ã‚­ã‚¯ã‚±ã‚³ã‚µã‚·ã‚¹ã‚»ã‚½"\
+	"ã‚¿ãƒãƒ„ãƒ†ãƒˆãƒŠãƒ‹ãƒŒãƒãƒãƒãƒ’ãƒ•ãƒ˜ãƒ›ãƒ"\
+	"ãƒŸãƒ ãƒ¡ãƒ¢ãƒ¤ãƒ¦ãƒ¨ãƒ©ãƒªãƒ«ãƒ¬ãƒ­ãƒ¯ãƒ³ã‚›ã‚œ"\
+	"â†’â€»â€»â€»â€»â€»â€»â€»â€»â€»â€»â€»â€»â€»â€»â€»"\
+	"â€»â€»â€»â€»â€»â€»â€»â€»â€»â€»â€»â€»â€»â€»â€»â€»"\
+	"â€»â€»â€»â€»â€»â€»â€»â€»â€»â€»â€»â€»â€»â€»â€»â€»"\
+	"â€»â€»â€»â€»â€»â€»â€»â€»â€»â€»â€»â€»â€»â€»â€»Ï€"
 
 };
 
@@ -91,7 +91,7 @@ void UpdateQDMenu(void);
 
 
 /**************************/
-/* ƒZ[ƒu—pƒCƒ[ƒW‚Ìw’è */
+/* ã‚»ãƒ¼ãƒ–ç”¨ã‚¤ãƒ¡ãƒ¼ã‚¸ã®æŒ‡å®š */
 /**************************/
 static BOOL setfile_forsave(LPCSTR ttlmsg, UINT8 *fnbuf, UINT8 *opendir,
 							LPCSTR askmsg,LPCSTR fltstr, LPCSTR extstr)
@@ -102,33 +102,33 @@ static BOOL setfile_forsave(LPCSTR ttlmsg, UINT8 *fnbuf, UINT8 *opendir,
 	UINT8 tempdir[MAX_PATH];
 	UINT8 msg[512];
 
-	/* ƒtƒ@ƒCƒ‹ƒI[ƒvƒ“ƒ_ƒCƒAƒƒO‚ğŠJ‚­ */
+	/* ãƒ•ã‚¡ã‚¤ãƒ«ã‚ªãƒ¼ãƒ—ãƒ³ãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã‚’é–‹ã */
 	ZeroMemory(&ofn,sizeof(OPENFILENAME));
-	ofn.lStructSize = sizeof(OPENFILENAME);								/* \‘¢‘ÌƒTƒCƒY */
-	ofn.hwndOwner = hwndApp;											/* ƒ_ƒCƒAƒƒO‚ÌƒI[ƒi[ */
+	ofn.lStructSize = sizeof(OPENFILENAME);								/* æ§‹é€ ä½“ã‚µã‚¤ã‚º */
+	ofn.hwndOwner = hwndApp;											/* ãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã®ã‚ªãƒ¼ãƒŠãƒ¼ */
 	ofn.Flags = OFN_LONGNAMES|OFN_HIDEREADONLY;
 	ofn.lpstrFilter = fltstr;
 	ofn.lpstrDefExt = extstr;
 	ofn.lpstrTitle = ttlmsg;
-	ofn.lpstrFile = filebuf;											/* ƒtƒ@ƒCƒ‹–¼ƒoƒbƒtƒ@ƒ|ƒCƒ“ƒ^ */
-	ofn.nMaxFile = sizeof(filebuf);										/* ƒtƒ@ƒCƒ‹–¼ƒoƒbƒtƒ@ƒTƒCƒY */
+	ofn.lpstrFile = filebuf;											/* ãƒ•ã‚¡ã‚¤ãƒ«åãƒãƒƒãƒ•ã‚¡ãƒã‚¤ãƒ³ã‚¿ */
+	ofn.nMaxFile = sizeof(filebuf);										/* ãƒ•ã‚¡ã‚¤ãƒ«åãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚º */
 
-	ZeroMemory(&filebuf,sizeof(filebuf));								/* ƒtƒ@ƒCƒ‹–¼“ü—Íƒoƒbƒtƒ@‰Šú‰» */
-	lstrcpy(filebuf, fnbuf);											/* ƒZ[ƒuƒtƒ@ƒCƒ‹–¼ */
+	ZeroMemory(&filebuf,sizeof(filebuf));								/* ãƒ•ã‚¡ã‚¤ãƒ«åå…¥åŠ›ãƒãƒƒãƒ•ã‚¡åˆæœŸåŒ– */
+	lstrcpy(filebuf, fnbuf);											/* ã‚»ãƒ¼ãƒ–ãƒ•ã‚¡ã‚¤ãƒ«å */
 
-	GetCurrentDirectory(sizeof(tempdir), tempdir);						/* ƒJƒŒƒ“ƒgƒfƒBƒŒƒNƒgƒŠæ“¾ */
-	ofn.lpstrInitialDir = opendir;									/* ƒJƒŒƒ“ƒgƒfƒBƒŒƒNƒgƒŠİ’è */
+	GetCurrentDirectory(sizeof(tempdir), tempdir);						/* ã‚«ãƒ¬ãƒ³ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªå–å¾— */
+	ofn.lpstrInitialDir = opendir;									/* ã‚«ãƒ¬ãƒ³ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªè¨­å®š */
 
 	if (!GetSaveFileName(&ofn))
 	{
 		ecode = CommDlgExtendedError();
-		SetCurrentDirectory(tempdir);								/* ƒJƒŒƒ“ƒgƒfƒBƒŒƒNƒgƒŠ•œ‹A */
-		return FALSE;												/* ƒLƒƒƒ“ƒZƒ‹ */
+		SetCurrentDirectory(tempdir);								/* ã‚«ãƒ¬ãƒ³ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªå¾©å¸° */
+		return FALSE;												/* ã‚­ãƒ£ãƒ³ã‚»ãƒ« */
 	}
 	
 	if (FileExists(ofn.lpstrFile))
 	{
-		// ƒtƒ@ƒCƒ‹‚ÍŠù‚É‘¶İ‚·‚é‚ª—Ç‚¢‚©–â‚¢‡‚í‚¹‚éƒƒbƒZ[ƒW
+		// ãƒ•ã‚¡ã‚¤ãƒ«ã¯æ—¢ã«å­˜åœ¨ã™ã‚‹ãŒè‰¯ã„ã‹å•ã„åˆã‚ã›ã‚‹ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸
 		wsprintf(msg, askmsg, ofn.lpstrFile);
 
 		if (MessageBox(hwndApp, msg , "MZ700WIN",MB_ICONQUESTION|MB_YESNO) != IDYES)
@@ -137,18 +137,18 @@ static BOOL setfile_forsave(LPCSTR ttlmsg, UINT8 *fnbuf, UINT8 *opendir,
 		}
 		
 	}
-	// path‚Íƒtƒ‹ƒpƒXBŠg’£q‚Ì•âŠ®‚ğ–Y‚ê‚¸‚É
+	// pathã¯ãƒ•ãƒ«ãƒ‘ã‚¹ã€‚æ‹¡å¼µå­ã®è£œå®Œã‚’å¿˜ã‚Œãšã«
 	// 
-	lstrcpy(fnbuf, ofn.lpstrFile);									/* ƒZ[ƒuƒtƒ@ƒCƒ‹–¼‚ğƒRƒs[ */
-	GetCurrentDirectory(IniFileStrBuf, opendir);					/* ƒJƒŒƒ“ƒgƒfƒBƒŒƒNƒgƒŠæ“¾ */
+	lstrcpy(fnbuf, ofn.lpstrFile);									/* ã‚»ãƒ¼ãƒ–ãƒ•ã‚¡ã‚¤ãƒ«åã‚’ã‚³ãƒ”ãƒ¼ */
+	GetCurrentDirectory(IniFileStrBuf, opendir);					/* ã‚«ãƒ¬ãƒ³ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªå–å¾— */
 	
-	SetCurrentDirectory(tempdir);									/* ƒJƒŒƒ“ƒgƒfƒBƒŒƒNƒgƒŠ•œ‹A */
+	SetCurrentDirectory(tempdir);									/* ã‚«ãƒ¬ãƒ³ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªå¾©å¸° */
 
 	return TRUE;
 }
 
 /****************************/
-/* ‚n‚‚…‚—pƒCƒ[ƒW‚Ìw’è */
+/* ï¼¯ï½ï½…ï½ç”¨ã‚¤ãƒ¡ãƒ¼ã‚¸ã®æŒ‡å®š */
 /****************************/
 static BOOL setfile_foropen(LPCSTR ttlmsg, UINT8 *fnbuf, UINT8 *opendir,
 							LPCSTR fltstr, LPCSTR extstr)
@@ -158,42 +158,42 @@ static BOOL setfile_foropen(LPCSTR ttlmsg, UINT8 *fnbuf, UINT8 *opendir,
 	UINT8 filebuf[MAX_PATH];
 	UINT8 tempdir[MAX_PATH];
 
-	// ƒtƒ@ƒCƒ‹ƒI[ƒvƒ“ƒ_ƒCƒAƒƒO‚ğŠJ‚­
+	// ãƒ•ã‚¡ã‚¤ãƒ«ã‚ªãƒ¼ãƒ—ãƒ³ãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã‚’é–‹ã
 	ZeroMemory(&ofn,sizeof(OPENFILENAME));
-	ofn.lStructSize = sizeof(OPENFILENAME);								/* \‘¢‘ÌƒTƒCƒY */
-	ofn.hwndOwner = hwndApp;											/* ƒ_ƒCƒAƒƒO‚ÌƒI[ƒi[ */
+	ofn.lStructSize = sizeof(OPENFILENAME);								/* æ§‹é€ ä½“ã‚µã‚¤ã‚º */
+	ofn.hwndOwner = hwndApp;											/* ãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã®ã‚ªãƒ¼ãƒŠãƒ¼ */
 	ofn.Flags = OFN_LONGNAMES|OFN_HIDEREADONLY|OFN_FILEMUSTEXIST|OFN_PATHMUSTEXIST;
 	ofn.lpstrFilter = fltstr;
 	ofn.lpstrDefExt = extstr;
 	ofn.lpstrTitle = ttlmsg;
-	ofn.lpstrFile = filebuf;											/* ƒtƒ@ƒCƒ‹–¼ƒoƒbƒtƒ@ƒ|ƒCƒ“ƒ^ */
-	ofn.nMaxFile = sizeof(filebuf);										/* ƒtƒ@ƒCƒ‹–¼ƒoƒbƒtƒ@ƒTƒCƒY */
+	ofn.lpstrFile = filebuf;											/* ãƒ•ã‚¡ã‚¤ãƒ«åãƒãƒƒãƒ•ã‚¡ãƒã‚¤ãƒ³ã‚¿ */
+	ofn.nMaxFile = sizeof(filebuf);										/* ãƒ•ã‚¡ã‚¤ãƒ«åãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚º */
 
-	ZeroMemory(&filebuf,sizeof(filebuf));								/* ƒtƒ@ƒCƒ‹–¼“ü—Íƒoƒbƒtƒ@‰Šú‰» */
-	lstrcpy(filebuf, fnbuf);											/* ƒZ[ƒuƒtƒ@ƒCƒ‹–¼ */
+	ZeroMemory(&filebuf,sizeof(filebuf));								/* ãƒ•ã‚¡ã‚¤ãƒ«åå…¥åŠ›ãƒãƒƒãƒ•ã‚¡åˆæœŸåŒ– */
+	lstrcpy(filebuf, fnbuf);											/* ã‚»ãƒ¼ãƒ–ãƒ•ã‚¡ã‚¤ãƒ«å */
 
-	GetCurrentDirectory(sizeof(tempdir), tempdir);						/* ƒJƒŒƒ“ƒgƒfƒBƒŒƒNƒgƒŠæ“¾ */
-	ofn.lpstrInitialDir = opendir;										/* ƒJƒŒƒ“ƒgƒfƒBƒŒƒNƒgƒŠİ’è */
+	GetCurrentDirectory(sizeof(tempdir), tempdir);						/* ã‚«ãƒ¬ãƒ³ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªå–å¾— */
+	ofn.lpstrInitialDir = opendir;										/* ã‚«ãƒ¬ãƒ³ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªè¨­å®š */
 
 	if (!GetOpenFileName(&ofn))
 	{
 		ecode = CommDlgExtendedError();
-		SetCurrentDirectory(tempdir);									/* ƒJƒŒƒ“ƒgƒfƒBƒŒƒNƒgƒŠ•œ‹A */
-		return FALSE;													/* ƒLƒƒƒ“ƒZƒ‹ */
+		SetCurrentDirectory(tempdir);									/* ã‚«ãƒ¬ãƒ³ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªå¾©å¸° */
+		return FALSE;													/* ã‚­ãƒ£ãƒ³ã‚»ãƒ« */
 	}
 	
-	// path‚Íƒtƒ‹ƒpƒXBŠg’£q‚Ì•âŠ®‚ğ–Y‚ê‚¸‚É
+	// pathã¯ãƒ•ãƒ«ãƒ‘ã‚¹ã€‚æ‹¡å¼µå­ã®è£œå®Œã‚’å¿˜ã‚Œãšã«
 	// 
-	lstrcpy(fnbuf, ofn.lpstrFile);										/* ƒZ[ƒuƒtƒ@ƒCƒ‹–¼‚ğƒRƒs[ */
-	GetCurrentDirectory(IniFileStrBuf, opendir);						/* ƒJƒŒƒ“ƒgƒfƒBƒŒƒNƒgƒŠæ“¾ */
+	lstrcpy(fnbuf, ofn.lpstrFile);										/* ã‚»ãƒ¼ãƒ–ãƒ•ã‚¡ã‚¤ãƒ«åã‚’ã‚³ãƒ”ãƒ¼ */
+	GetCurrentDirectory(IniFileStrBuf, opendir);						/* ã‚«ãƒ¬ãƒ³ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªå–å¾— */
 	
-	SetCurrentDirectory(tempdir);										/* ƒJƒŒƒ“ƒgƒfƒBƒŒƒNƒgƒŠ•œ‹A */
+	SetCurrentDirectory(tempdir);										/* ã‚«ãƒ¬ãƒ³ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªå¾©å¸° */
 
 	return TRUE;
 }
 
 //////////////////////////
-// CMOS‚Ìƒf[ƒ^‚ğ“Ç‚İ‚Ş
+// CMOSã®ãƒ‡ãƒ¼ã‚¿ã‚’èª­ã¿è¾¼ã‚€
 //////////////////////////
 void mz_load_cmos(void)
 {
@@ -238,7 +238,7 @@ void mz_save_cmos(void)
 }
 
 /*************************/
-/* mztƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‚Ş */
+/* mztãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿è¾¼ã‚€ */
 /*************************/
 BOOL load_mzt_file(char *filename)
 {
@@ -255,20 +255,20 @@ BOOL load_mzt_file(char *filename)
 	lstrcpy(tapefile,filename);
 	UpdateTapeMenu();
 
-	FILE_READ(fp,&m12hed,128);											/* ƒwƒbƒ_“Ç‚İ‚İ */
-	FILE_READ(fp,mem+RAM_START+m12hed.mz_topaddr,m12hed.mz_filesize);	/* –{‘Ì“Ç‚İ‚İ */
+	FILE_READ(fp,&m12hed,128);											/* ãƒ˜ãƒƒãƒ€èª­ã¿è¾¼ã¿ */
+	FILE_READ(fp,mem+RAM_START+m12hed.mz_topaddr,m12hed.mz_filesize);	/* æœ¬ä½“èª­ã¿è¾¼ã¿ */
 	FILE_CLOSE(fp);
 //	set_tapepos(128 + m12hed.mz_filesize);
 	set_tapepos(0);
 
-	/* ƒtƒ@ƒCƒ‹–¼•ÏŠ· */
+	/* ãƒ•ã‚¡ã‚¤ãƒ«åå¤‰æ› */
 	ptr=m12hed.mz_filename;
 
 	for (i=0;;)
 	{
 		if (menu.fontset==1)
 		{
-			/* “ú–{Œêƒtƒ@ƒCƒ‹ƒl[ƒ€ˆ— */
+			/* æ—¥æœ¬èªãƒ•ã‚¡ã‚¤ãƒ«ãƒãƒ¼ãƒ å‡¦ç† */
 			c=*(ptr++);
 			if (c==0x0D) break;
 			
@@ -283,7 +283,7 @@ BOOL load_mzt_file(char *filename)
 		}
 		else
 		{
-			/* ‰pŒêƒtƒ@ƒCƒ‹ƒl[ƒ€ˆ— */
+			/* è‹±èªãƒ•ã‚¡ã‚¤ãƒ«ãƒãƒ¼ãƒ å‡¦ç† */
 			c=*(ptr++);
 			if (c==0x0D) break;
 			
@@ -299,7 +299,7 @@ BOOL load_mzt_file(char *filename)
 	/* EOS */
 	strtmp2[i]=0;
 
-	/* ƒtƒ@ƒCƒ‹ƒCƒ“ƒtƒHƒ[ƒVƒ‡ƒ“•\¦ */
+	/* ãƒ•ã‚¡ã‚¤ãƒ«ã‚¤ãƒ³ãƒ•ã‚©ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³è¡¨ç¤º */
 	wsprintf(strtmp,"Filename:%s\n"\
 					"Top Addr :$%04X\n"\
 					"File Size:$%04X\n"\
@@ -322,7 +322,7 @@ BOOL load_mzt_file(char *filename)
 }
 
 /*********************************************/
-/* ƒe[ƒvƒCƒ[ƒW‚Æ‚µ‚Ämztƒtƒ@ƒCƒ‹‚ğ‚ğƒZƒbƒg */
+/* ãƒ†ãƒ¼ãƒ—ã‚¤ãƒ¡ãƒ¼ã‚¸ã¨ã—ã¦mztãƒ•ã‚¡ã‚¤ãƒ«ã‚’ã‚’ã‚»ãƒƒãƒˆ */
 /*********************************************/
 BOOL set_tape_file(char *filename)
 {
@@ -338,85 +338,85 @@ BOOL set_tape_file(char *filename)
 }
 
 /****************************/
-/* ƒtƒ@ƒCƒ‹ƒ_ƒCƒAƒƒO‚ğŠJ‚­ */
+/* ãƒ•ã‚¡ã‚¤ãƒ«ãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã‚’é–‹ã */
 /****************************/
 BOOL OpenFileImage(void)
 {
 	OPENFILENAME ofn;
 	UINT8 filebuf[MAX_PATH];
 
-	/* ƒtƒ@ƒCƒ‹ƒI[ƒvƒ“ƒ_ƒCƒAƒƒO‚ğŠJ‚­ */
+	/* ãƒ•ã‚¡ã‚¤ãƒ«ã‚ªãƒ¼ãƒ—ãƒ³ãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã‚’é–‹ã */
 	ZeroMemory(&ofn,sizeof(OPENFILENAME));
-	ofn.lStructSize = sizeof(OPENFILENAME);								/* \‘¢‘ÌƒTƒCƒY */
-	ofn.hwndOwner = hwndApp;											/* ƒ_ƒCƒAƒƒO‚ÌƒI[ƒi[ */
+	ofn.lStructSize = sizeof(OPENFILENAME);								/* æ§‹é€ ä½“ã‚µã‚¤ã‚º */
+	ofn.hwndOwner = hwndApp;											/* ãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã®ã‚ªãƒ¼ãƒŠãƒ¼ */
 	ofn.Flags = OFN_LONGNAMES|OFN_HIDEREADONLY|OFN_FILEMUSTEXIST|OFN_PATHMUSTEXIST;
 	ofn.lpstrFilter = MZT_filter;
 #if JAPANESE
-	ofn.lpstrTitle = "ƒtƒ@ƒCƒ‹‚Ìƒ[ƒh - Select File Image";
+	ofn.lpstrTitle = "ãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ­ãƒ¼ãƒ‰ - Select File Image";
 #else
 	ofn.lpstrTitle = "Load Program File - Select File Image";
 #endif	
-	ofn.lpstrFile = filebuf;											/* ƒtƒ@ƒCƒ‹–¼ƒoƒbƒtƒ@ƒ|ƒCƒ“ƒ^ */
-	ofn.nMaxFile = sizeof(filebuf);										/* ƒtƒ@ƒCƒ‹–¼ƒoƒbƒtƒ@ƒTƒCƒY */
+	ofn.lpstrFile = filebuf;											/* ãƒ•ã‚¡ã‚¤ãƒ«åãƒãƒƒãƒ•ã‚¡ãƒã‚¤ãƒ³ã‚¿ */
+	ofn.nMaxFile = sizeof(filebuf);										/* ãƒ•ã‚¡ã‚¤ãƒ«åãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚º */
 
-	ZeroMemory(&filebuf,sizeof(filebuf));								/* ƒtƒ@ƒCƒ‹–¼“ü—Íƒoƒbƒtƒ@‰Šú‰» */
-	ofn.lpstrInitialDir = LoadOpenDir;									/* ƒJƒŒƒ“ƒgƒfƒBƒŒƒNƒgƒŠİ’è */
+	ZeroMemory(&filebuf,sizeof(filebuf));								/* ãƒ•ã‚¡ã‚¤ãƒ«åå…¥åŠ›ãƒãƒƒãƒ•ã‚¡åˆæœŸåŒ– */
+	ofn.lpstrInitialDir = LoadOpenDir;									/* ã‚«ãƒ¬ãƒ³ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªè¨­å®š */
 	do
 	{
-		if (!GetOpenFileName(&ofn)) return FALSE;						/* ƒLƒƒƒ“ƒZƒ‹ */
-	} while (!load_mzt_file(ofn.lpstrFile));							/* ƒCƒ[ƒW“Ç‚İ‚İ */
+		if (!GetOpenFileName(&ofn)) return FALSE;						/* ã‚­ãƒ£ãƒ³ã‚»ãƒ« */
+	} while (!load_mzt_file(ofn.lpstrFile));							/* ã‚¤ãƒ¡ãƒ¼ã‚¸èª­ã¿è¾¼ã¿ */
 
-	GetCurrentDirectory(sizeof(LoadOpenDir), LoadOpenDir);				/* ƒJƒŒƒ“ƒgƒfƒBƒŒƒNƒgƒŠæ“¾ */
+	GetCurrentDirectory(sizeof(LoadOpenDir), LoadOpenDir);				/* ã‚«ãƒ¬ãƒ³ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªå–å¾— */
 	mz_reset();
 	
 	return TRUE;
 }
 
 /************************/
-/* ƒe[ƒvƒCƒ[ƒW‚ğİ’è */
+/* ãƒ†ãƒ¼ãƒ—ã‚¤ãƒ¡ãƒ¼ã‚¸ã‚’è¨­å®š */
 /************************/
 BOOL SetLoadFileImage(void)
 {
 	OPENFILENAME ofn;
 	UINT8 filebuf[MAX_PATH];
 
-	/* ƒtƒ@ƒCƒ‹ƒI[ƒvƒ“ƒ_ƒCƒAƒƒO‚ğŠJ‚­ */
+	/* ãƒ•ã‚¡ã‚¤ãƒ«ã‚ªãƒ¼ãƒ—ãƒ³ãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã‚’é–‹ã */
 	ZeroMemory(&ofn,sizeof(ofn));
-	ofn.lStructSize = sizeof(OPENFILENAME);								/* \‘¢‘ÌƒTƒCƒY */
-	ofn.hwndOwner = hwndApp;											/* ƒ_ƒCƒAƒƒO‚ÌƒI[ƒi[ */
+	ofn.lStructSize = sizeof(OPENFILENAME);								/* æ§‹é€ ä½“ã‚µã‚¤ã‚º */
+	ofn.hwndOwner = hwndApp;											/* ãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã®ã‚ªãƒ¼ãƒŠãƒ¼ */
 	ofn.Flags = OFN_LONGNAMES|OFN_HIDEREADONLY|OFN_FILEMUSTEXIST|OFN_PATHMUSTEXIST;
 	ofn.lpstrFilter = MZT_filter;
 #if JAPANESE
-	ofn.lpstrTitle = "ƒe[ƒv‚Ì“ü‚ê‘Ö‚¦ - Select File Image";
+	ofn.lpstrTitle = "ãƒ†ãƒ¼ãƒ—ã®å…¥ã‚Œæ›¿ãˆ - Select File Image";
 #else
 	ofn.lpstrTitle = "Set Tape file - Select File Image";
 #endif	
-	ofn.lpstrFile = filebuf;											/* ƒtƒ@ƒCƒ‹–¼ƒoƒbƒtƒ@ƒ|ƒCƒ“ƒ^ */
-	ofn.nMaxFile = sizeof(filebuf);										/* ƒtƒ@ƒCƒ‹–¼ƒoƒbƒtƒ@ƒTƒCƒY */
+	ofn.lpstrFile = filebuf;											/* ãƒ•ã‚¡ã‚¤ãƒ«åãƒãƒƒãƒ•ã‚¡ãƒã‚¤ãƒ³ã‚¿ */
+	ofn.nMaxFile = sizeof(filebuf);										/* ãƒ•ã‚¡ã‚¤ãƒ«åãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚º */
 
-	ZeroMemory(&filebuf,sizeof(filebuf));								/* ƒtƒ@ƒCƒ‹–¼“ü—Íƒoƒbƒtƒ@‰Šú‰» */
-	ofn.lpstrInitialDir = LoadOpenDir;									/* ƒJƒŒƒ“ƒgƒfƒBƒŒƒNƒgƒŠİ’è */
+	ZeroMemory(&filebuf,sizeof(filebuf));								/* ãƒ•ã‚¡ã‚¤ãƒ«åå…¥åŠ›ãƒãƒƒãƒ•ã‚¡åˆæœŸåŒ– */
+	ofn.lpstrInitialDir = LoadOpenDir;									/* ã‚«ãƒ¬ãƒ³ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªè¨­å®š */
 
 	do
 	{
-		if (!GetOpenFileName(&ofn)) return FALSE;						/* ƒLƒƒƒ“ƒZƒ‹ */
-	} while (!set_tape_file(ofn.lpstrFile));								/* ƒCƒ[ƒW“Ç‚İ‚İ */
+		if (!GetOpenFileName(&ofn)) return FALSE;						/* ã‚­ãƒ£ãƒ³ã‚»ãƒ« */
+	} while (!set_tape_file(ofn.lpstrFile));								/* ã‚¤ãƒ¡ãƒ¼ã‚¸èª­ã¿è¾¼ã¿ */
 	InvalidateRect(ofn.hwndOwner,NULL,TRUE);
 
-	GetCurrentDirectory(sizeof(LoadOpenDir), LoadOpenDir);				/* ƒJƒŒƒ“ƒgƒfƒBƒŒƒNƒgƒŠæ“¾ */
+	GetCurrentDirectory(sizeof(LoadOpenDir), LoadOpenDir);				/* ã‚«ãƒ¬ãƒ³ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªå–å¾— */
 	return TRUE;
 }
 
 /********************************/
-/* ƒZ[ƒu—pƒe[ƒvƒCƒ[ƒW‚ğİ’è */
+/* ã‚»ãƒ¼ãƒ–ç”¨ãƒ†ãƒ¼ãƒ—ã‚¤ãƒ¡ãƒ¼ã‚¸ã‚’è¨­å®š */
 /*******************************/
 BOOL SetSaveFileImage(void)
 {
 	BOOL result;
 
-	/* ƒtƒ@ƒCƒ‹ƒI[ƒvƒ“ƒ_ƒCƒAƒƒO‚ğŠJ‚­ */
+	/* ãƒ•ã‚¡ã‚¤ãƒ«ã‚ªãƒ¼ãƒ—ãƒ³ãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã‚’é–‹ã */
 #if JAPANESE
-	result = setfile_forsave("ƒe[ƒv—pƒZ[ƒuƒCƒ[ƒW‚Ìİ’è - Select File Image" , 
+	result = setfile_forsave("ãƒ†ãƒ¼ãƒ—ç”¨ã‚»ãƒ¼ãƒ–ã‚¤ãƒ¡ãƒ¼ã‚¸ã®è¨­å®š - Select File Image" , 
 								SaveTapeFile, SaveOpenDir,
 								APD_msg, MZT_filter, MZT_ext);
 #else
@@ -430,15 +430,15 @@ BOOL SetSaveFileImage(void)
 }
 
 /**********************/
-/* ‚p‚cƒCƒ[ƒW‚ğİ’è */
+/* ï¼±ï¼¤ã‚¤ãƒ¡ãƒ¼ã‚¸ã‚’è¨­å®š */
 /**********************/
 BOOL SetQDFileImage(void)
 {
 	BOOL result;
 
-	/* ƒtƒ@ƒCƒ‹ƒI[ƒvƒ“ƒ_ƒCƒAƒƒO‚ğŠJ‚­ */
+	/* ãƒ•ã‚¡ã‚¤ãƒ«ã‚ªãƒ¼ãƒ—ãƒ³ãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã‚’é–‹ã */
 #if JAPANESE
-	result = setfile_foropen("‚p‚cƒfƒBƒXƒNƒCƒ[ƒW‚Ìİ’è - Select File Image" ,
+	result = setfile_foropen("ï¼±ï¼¤ãƒ‡ã‚£ã‚¹ã‚¯ã‚¤ãƒ¡ãƒ¼ã‚¸ã®è¨­å®š - Select File Image" ,
 							qdfile, QDOpenDir,
 							MZT_filter, MZT_ext);
 #else
@@ -452,7 +452,7 @@ BOOL SetQDFileImage(void)
 }
 
 /**********************/
-/* ‚p‚cƒCƒ[ƒW‚ğ‰ğœ */
+/* ï¼±ï¼¤ã‚¤ãƒ¡ãƒ¼ã‚¸ã‚’è§£é™¤ */
 /**********************/
 void EjectQDFileImage(void)
 {
@@ -462,14 +462,14 @@ void EjectQDFileImage(void)
 }
 
 //---------------------------------
-// ‚q‚`‚lƒtƒ@ƒCƒ‹ƒCƒ[ƒW‚ğİ’è
+// ï¼²ï¼¡ï¼­ãƒ•ã‚¡ã‚¤ãƒ«ã‚¤ãƒ¡ãƒ¼ã‚¸ã‚’è¨­å®š
 //---------------------------------
 BOOL LoadRamFileImage(void)
 {
 	BOOL result;
 	UINT8 strtmp[512];
 
-	// ƒtƒ@ƒCƒ‹ƒI[ƒvƒ“ƒ_ƒCƒAƒƒO‚ğŠJ‚­
+	// ãƒ•ã‚¡ã‚¤ãƒ«ã‚ªãƒ¼ãƒ—ãƒ³ãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã‚’é–‹ã
 	result = setfile_foropen("Load RAM file - Select File Image",
 							ramfile, RAMOpenDir,
 							MZR_filter, MZR_ext);
@@ -497,7 +497,7 @@ BOOL LoadRamFileImage(void)
 }
 
 //---------------------------------
-// ‚q‚`‚lƒtƒ@ƒCƒ‹ƒCƒ[ƒW‚ğƒZ[ƒu
+// ï¼²ï¼¡ï¼­ãƒ•ã‚¡ã‚¤ãƒ«ã‚¤ãƒ¡ãƒ¼ã‚¸ã‚’ã‚»ãƒ¼ãƒ–
 //---------------------------------
 BOOL SaveRamFileImage(void)
 {
@@ -563,7 +563,7 @@ static void set_tapemenu(UINT id, LPSTR itemstr, LPSTR ifname)
 }
 
 ////////////////////////////////////////////
-// ƒe[ƒvƒCƒ[ƒWó‘Ô‚É‚æ‚Á‚Äƒƒjƒ…[‚ğXV
+// ãƒ†ãƒ¼ãƒ—ã‚¤ãƒ¡ãƒ¼ã‚¸çŠ¶æ…‹ã«ã‚ˆã£ã¦ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚’æ›´æ–°
 ////////////////////////////////////////////
 void UpdateTapeMenu(void)
 {
@@ -572,7 +572,7 @@ void UpdateTapeMenu(void)
 }
 
 ////////////////////////////////////////////
-// ‚p‚cƒCƒ[ƒWó‘Ô‚É‚æ‚Á‚Äƒƒjƒ…[‚ğXV
+// ï¼±ï¼¤ã‚¤ãƒ¡ãƒ¼ã‚¸çŠ¶æ…‹ã«ã‚ˆã£ã¦ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚’æ›´æ–°
 ////////////////////////////////////////////
 void UpdateQDMenu(void)
 {
@@ -602,16 +602,16 @@ void UpdateQDMenu(void)
 }
 
 /********************/
-/* ó‘ÔƒZ[ƒu‚Ìˆ— */
+/* çŠ¶æ…‹ã‚»ãƒ¼ãƒ–ã®å‡¦ç† */
 /********************/
 BOOL SaveStateFile(void)
 {
 	BOOL result;
 	UINT8 strtmp[512];
 
-	/* ƒtƒ@ƒCƒ‹ƒI[ƒvƒ“ƒ_ƒCƒAƒƒO‚ğŠJ‚­ */
+	/* ãƒ•ã‚¡ã‚¤ãƒ«ã‚ªãƒ¼ãƒ—ãƒ³ãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã‚’é–‹ã */
 #if JAPANESE
-	result = setfile_forsave("ó‘ÔƒZ[ƒu - Select State File" , 
+	result = setfile_forsave("çŠ¶æ…‹ã‚»ãƒ¼ãƒ– - Select State File" , 
 								statefile, StateOpenDir,
 								OVW_msg, MZS_filter, MZS_ext);
 #else
@@ -643,16 +643,16 @@ BOOL SaveStateFile(void)
 }
 
 /********************/
-/* ó‘Ôƒ[ƒh‚Ìˆ— */
+/* çŠ¶æ…‹ãƒ­ãƒ¼ãƒ‰ã®å‡¦ç† */
 /********************/
 BOOL LoadStateFile(void)
 {
 	BOOL result;
 	UINT8 strtmp[512];
 
-	/* ƒtƒ@ƒCƒ‹ƒI[ƒvƒ“ƒ_ƒCƒAƒƒO‚ğŠJ‚­ */
+	/* ãƒ•ã‚¡ã‚¤ãƒ«ã‚ªãƒ¼ãƒ—ãƒ³ãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã‚’é–‹ã */
 #if JAPANESE
-	result = setfile_foropen("ó‘Ôƒ[ƒh - Select State File", 
+	result = setfile_foropen("çŠ¶æ…‹ãƒ­ãƒ¼ãƒ‰ - Select State File", 
 							statefile, StateOpenDir,
 							MZS_filter, MZS_ext);
 #else

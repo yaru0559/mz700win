@@ -1,4 +1,4 @@
-// defkey.h
+ï»¿// defkey.h
 // Programmed by T.Maruyama
 
 #pragma once
@@ -13,8 +13,8 @@ extern "C"
 
 
 
-#define KEY_MATRIX_BANK_MAX		16										/* ƒL[ƒ}ƒgƒŠƒNƒX‚ÌÅ‘å’è‹`” */
-#define SECTION_NAME_MAX		64										/* ƒZƒNƒVƒ‡ƒ“–¼‚ÌÅ‘å’· */
+#define KEY_MATRIX_BANK_MAX		16										/* ã‚­ãƒ¼ãƒãƒˆãƒªã‚¯ã‚¹ã®æœ€å¤§å®šç¾©æ•° */
+#define SECTION_NAME_MAX		64										/* ã‚»ã‚¯ã‚·ãƒ§ãƒ³åã®æœ€å¤§é•· */
 
 typedef struct
 {

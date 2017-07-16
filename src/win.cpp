@@ -1,4 +1,4 @@
-//----------------------------------------------------------------------------
+ï»¿//----------------------------------------------------------------------------
 // File:win.cpp
 // MZ-700/1500 Emulator MZ700WIN for Windows9x/NT/2000
 //
@@ -38,31 +38,31 @@
 
 #include "defkey.h"
 
-// ƒXƒs[ƒh‚ª‰½“‚©•\¦İ’è	
+// ã‚¹ãƒ”ãƒ¼ãƒ‰ãŒä½•ï¼…ã‹è¡¨ç¤ºè¨­å®š	
 #define set_spd_text(v)	sprintf_s(strtmp, sizeof(strtmp), "Speed : %d%%", v); SetDlgItemText(hwnd, IDC_STATIC_SPD, (LPCSTR)strtmp);
 
 
 static const char szClassName[] = "MZ700WINClass";
 const char szAppName[] = "MZ-700 Emulator For Win32";
 
-static char		IniFileStr[IniFileStrBuf];						// ‚h‚m‚hƒtƒ@ƒCƒ‹–¼‚ğ‚µ‚Ü‚¤ƒoƒbƒtƒ@
-static char		FontFileStr[2][256];							// FONTƒtƒ@ƒCƒ‹–¼‚ğ‚µ‚Ü‚¤ƒoƒbƒtƒ@
+static char		IniFileStr[IniFileStrBuf];						// ï¼©ï¼®ï¼©ãƒ•ã‚¡ã‚¤ãƒ«åã‚’ã—ã¾ã†ãƒãƒƒãƒ•ã‚¡
+static char		FontFileStr[2][256];							// FONTãƒ•ã‚¡ã‚¤ãƒ«åã‚’ã—ã¾ã†ãƒãƒƒãƒ•ã‚¡
 
-char			RomFileDir[IniFileStrBuf];						// ROMƒtƒ@ƒCƒ‹‚ª‚ ‚éƒfƒBƒŒƒNƒgƒŠ–¼
+char			RomFileDir[IniFileStrBuf];						// ROMãƒ•ã‚¡ã‚¤ãƒ«ãŒã‚ã‚‹ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªå
 
-char	LoadOpenDir[IniFileStrBuf];             /* ÅŒã‚Éƒ[ƒh‚µ‚½ƒtƒHƒ‹ƒ_–¼‚ğ‚µ‚Ü‚¤ƒoƒbƒtƒ@ */
-char	SaveOpenDir[IniFileStrBuf];             /* ÅŒã‚ÉƒZ[ƒu‚µ‚½ƒtƒHƒ‹ƒ_–¼‚ğ‚µ‚Ü‚¤ƒoƒbƒtƒ@ */
-char	QDOpenDir[IniFileStrBuf];               /* ‚p‚cƒCƒ[ƒWƒtƒ@ƒCƒ‹‚ÌƒtƒHƒ‹ƒ_–¼‚ğ‚µ‚Ü‚¤ƒoƒbƒtƒ@ */
-char	RAMOpenDir[IniFileStrBuf];              /* ‚q‚`‚lƒtƒ@ƒCƒ‹ƒCƒ[ƒW‚ÌƒtƒHƒ‹ƒ_–¼‚ğ‚µ‚Ü‚¤ƒoƒbƒtƒ@ */
-char	SaveTapeFile[MAX_PATH];                 /* ƒZ[ƒu—pƒe[ƒvƒtƒ@ƒCƒ‹–¼ */
-char	StateOpenDir[IniFileStrBuf];            /* ÅŒã‚É‹L˜^‚µ‚½state fileƒtƒHƒ‹ƒ_–¼‚ğ‚µ‚Ü‚¤ƒoƒbƒtƒ@ */
-char	CmosFileStr[MAX_PATH];                  /* CMOS.RAM‚Ìƒtƒ‹ƒpƒX‚ğ‚µ‚Ü‚¤ƒoƒbƒtƒ@ */
+char	LoadOpenDir[IniFileStrBuf];             /* æœ€å¾Œã«ãƒ­ãƒ¼ãƒ‰ã—ãŸãƒ•ã‚©ãƒ«ãƒ€åã‚’ã—ã¾ã†ãƒãƒƒãƒ•ã‚¡ */
+char	SaveOpenDir[IniFileStrBuf];             /* æœ€å¾Œã«ã‚»ãƒ¼ãƒ–ã—ãŸãƒ•ã‚©ãƒ«ãƒ€åã‚’ã—ã¾ã†ãƒãƒƒãƒ•ã‚¡ */
+char	QDOpenDir[IniFileStrBuf];               /* ï¼±ï¼¤ã‚¤ãƒ¡ãƒ¼ã‚¸ãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ•ã‚©ãƒ«ãƒ€åã‚’ã—ã¾ã†ãƒãƒƒãƒ•ã‚¡ */
+char	RAMOpenDir[IniFileStrBuf];              /* ï¼²ï¼¡ï¼­ãƒ•ã‚¡ã‚¤ãƒ«ã‚¤ãƒ¡ãƒ¼ã‚¸ã®ãƒ•ã‚©ãƒ«ãƒ€åã‚’ã—ã¾ã†ãƒãƒƒãƒ•ã‚¡ */
+char	SaveTapeFile[MAX_PATH];                 /* ã‚»ãƒ¼ãƒ–ç”¨ãƒ†ãƒ¼ãƒ—ãƒ•ã‚¡ã‚¤ãƒ«å */
+char	StateOpenDir[IniFileStrBuf];            /* æœ€å¾Œã«è¨˜éŒ²ã—ãŸstate fileãƒ•ã‚©ãƒ«ãƒ€åã‚’ã—ã¾ã†ãƒãƒƒãƒ•ã‚¡ */
+char	CmosFileStr[MAX_PATH];                  /* CMOS.RAMã®ãƒ•ãƒ«ãƒ‘ã‚¹ã‚’ã—ã¾ã†ãƒãƒƒãƒ•ã‚¡ */
 
-char	statefile[MAX_PATH];					/* state ƒtƒ@ƒCƒ‹–¼ */
+char	statefile[MAX_PATH];					/* state ãƒ•ã‚¡ã‚¤ãƒ«å */
 
-char	qdfile[MAX_PATH];						/* ‚p‚cƒtƒ@ƒCƒ‹–¼ */
-char	tapefile[MAX_PATH];						/* ƒe[ƒvƒtƒ@ƒCƒ‹–¼ */
-char	ramfile[MAX_PATH];						/* ‚q‚`‚lƒtƒ@ƒCƒ‹–¼ */
+char	qdfile[MAX_PATH];						/* ï¼±ï¼¤ãƒ•ã‚¡ã‚¤ãƒ«å */
+char	tapefile[MAX_PATH];						/* ãƒ†ãƒ¼ãƒ—ãƒ•ã‚¡ã‚¤ãƒ«å */
+char	ramfile[MAX_PATH];						/* ï¼²ï¼¡ï¼­ãƒ•ã‚¡ã‚¤ãƒ«å */
 
 
 
@@ -82,18 +82,18 @@ static WNDPROC		oldLinkProc = NULL;
 static HCURSOR		hCurHand;
 static HWND			link_hwnd_bak;
 
-static TIMECAPS		tcaps;											// ƒ^ƒCƒ}[«”\
+static TIMECAPS		tcaps;											// ã‚¿ã‚¤ãƒãƒ¼æ€§èƒ½
 
 static HBITMAP		hmenuBitmap;
 
 static TBMPMENU		menu_work[MENU_WORK_MAX];
 
 static header    BufferHeader;
-static void      *pBuffer = NULL;			// WinGBitmapƒT[ƒtƒFƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
-HDC			      Buffer = 0;				// WinGBitmap‚ÌƒfƒoƒCƒXƒRƒ“ƒeƒLƒXƒg
+static void      *pBuffer = NULL;			// WinGBitmapã‚µãƒ¼ãƒ•ã‚§ã‚¹ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+HDC			      Buffer = 0;				// WinGBitmapã®ãƒ‡ãƒã‚¤ã‚¹ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆ
 static HBITMAP  gbmOldMonoBitmap = 0;
 
-static int			scrnmode;										// ƒXƒNƒŠ[ƒ“ƒ‚[ƒh 0:WINDOW 1:FULL
+static int			scrnmode;										// ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ãƒ¢ãƒ¼ãƒ‰ 0:WINDOW 1:FULL
 static int			win_sx,win_sy;
 static int			win_xpos,win_ypos;
 static int			win_xbak,win_ybak;
@@ -107,9 +107,9 @@ pal LogicalPalette =
 
 LRESULT CALLBACK LinkProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp);
 
-/* Disable IMEŠÖ˜A */
+/* Disable IMEé–¢é€£ */
 typedef BOOL (CALLBACK* LPFNDLLFUNC)(HWND,BOOL);
-static LPFNDLLFUNC ptr_WINNLSEnableIME = NULL;							/* WINNLSEnableIME‚Ìƒ|ƒCƒ“ƒ^ */
+static LPFNDLLFUNC ptr_WINNLSEnableIME = NULL;							/* WINNLSEnableIMEã®ãƒã‚¤ãƒ³ã‚¿ */
 static HMODULE hUSER32;
 
 static const RGBQUAD d8colors[8]=										/* blue,green,red */
@@ -128,13 +128,13 @@ static const RGBQUAD d8colors[8]=										/* blue,green,red */
 //--------------------
 // global   variables
 //--------------------
-TMENUVAL		menu;													/* menu—pƒ[ƒN */
+TMENUVAL		menu;													/* menuç”¨ãƒ¯ãƒ¼ã‚¯ */
 
-WORD	sound_di = 0;													/* ‚r‚d‹Ö~ƒ‚[ƒh */
-WORD	sound_md = 0;													/* ƒTƒEƒ“ƒhƒ‚[ƒh */
-//WORD	mz1500mode = 0;													/* MZ-1500ƒ‚[ƒh */
-WORD	key_patch = 0;													/* KeyTableƒpƒbƒ`‚ ‚Äƒtƒ‰ƒO */
-int		bk_color = 0;													/* ƒ‚ƒjƒ^‰æ–Ê”wŒiF */
+WORD	sound_di = 0;													/* ï¼³ï¼¥ç¦æ­¢ãƒ¢ãƒ¼ãƒ‰ */
+WORD	sound_md = 0;													/* ã‚µã‚¦ãƒ³ãƒ‰ãƒ¢ãƒ¼ãƒ‰ */
+//WORD	mz1500mode = 0;													/* MZ-1500ãƒ¢ãƒ¼ãƒ‰ */
+WORD	key_patch = 0;													/* KeyTableãƒ‘ãƒƒãƒã‚ã¦ãƒ•ãƒ©ã‚° */
+int		bk_color = 0;													/* ãƒ¢ãƒ‹ã‚¿ç”»é¢èƒŒæ™¯è‰² */
 WORD	use_cmos;														/* MZ-1R12 0:OFF 1:ON */
 
 // C++ Class
@@ -190,13 +190,13 @@ void InitMenuBitmaps(HWND hw)
 	HMENU   hmenu;
 	LONG    lCheckSize;
 
-	hmenu=GetMenu(hw);												/* ƒƒjƒ…[ƒnƒ“ƒhƒ‹ */
+	hmenu=GetMenu(hw);												/* ãƒ¡ãƒ‹ãƒ¥ãƒ¼ãƒãƒ³ãƒ‰ãƒ« */
 	lCheckSize=GetMenuCheckMarkDimensions();
 
 	hmenuBitmap = LoadBitmap(hInstApp,"TOOLBAR");
 
 #if 0
-	// ƒƒjƒ…[‚h‚c‚ÉƒI[ƒi[•`‰æ‚ğw’è
+	// ãƒ¡ãƒ‹ãƒ¥ãƒ¼ï¼©ï¼¤ã«ã‚ªãƒ¼ãƒŠãƒ¼æç”»ã‚’æŒ‡å®š
 	add_menu_bmp(hmenu, MENU_OPEN, 2);
 	add_menu_bmp(hmenu, MENU_SET, 0);
 	add_menu_bmp(hmenu, MENU_TAPESAVE, 0);
@@ -212,7 +212,7 @@ void InitMenuBitmaps(HWND hw)
 
 void EndMenuBitmaps(HWND hw)
 {
-	// Menuƒrƒbƒgƒ}ƒbƒv‚ÌÁ‹
+	// Menuãƒ“ãƒƒãƒˆãƒãƒƒãƒ—ã®æ¶ˆå»
 	DeleteObject(hmenuBitmap);
 }
 
@@ -269,11 +269,11 @@ void ClearSystemPalette(void)
 
 
 /*
-  ‰¼‘z‰æ–Ê‚ğì‚é
+  ä»®æƒ³ç”»é¢ã‚’ä½œã‚‹
  */
 UINT8 * CreateOffScreen(void)
 {
-	/* V‚µ‚¢ WinGDC ‚Æ 8-bit WinGBitmap‚ğì¬ */
+	/* æ–°ã—ã„ WinGDC ã¨ 8-bit WinGBitmapã‚’ä½œæˆ */
 	HBITMAP hbm;
 	int Counter;
 	HDC Screen;
@@ -346,7 +346,7 @@ UINT8 * CreateOffScreen(void)
 		LogicalPalette.aEntries[Counter].peFlags = PC_NOCOLLAPSE;
 	}
 	
-	/* ƒfƒWƒpƒ`ƒpƒŒƒbƒg’è‹` */
+	/* ãƒ‡ã‚¸ãƒ‘ãƒãƒ‘ãƒ¬ãƒƒãƒˆå®šç¾© */
 	for (Counter = 10;Counter < 18;Counter++)
 	{
 		/* copy from the original color table to the WinGBitmap's
@@ -386,14 +386,14 @@ UINT8 * CreateOffScreen(void)
 	/* Palette Set */
 	SelectPalette(Buffer, hpalApp, FALSE);
 	
-	/* ‰¼‘z‰æ–Ê‚ğ^‚Á•‚É */
+	/* ä»®æƒ³ç”»é¢ã‚’çœŸã£é»’ã« */
 	PatBlt(Buffer, 0,0,FORMWIDTH,FORMHEIGHT, BLACKNESS);
 
 	return (UINT8*)pBuffer;
 }
 
 /*
-  ‰¼‘z‰æ–Ê‚ÌŠJ•ú
+  ä»®æƒ³ç”»é¢ã®é–‹æ”¾
  */
 void FreeOffScreen(void)
 {
@@ -411,7 +411,7 @@ void FreeOffScreen(void)
 }
 
 /*
-  Às“r’†‚ÅƒEƒBƒ“ƒhƒE•Â‚¶‚ÄƒvƒƒOƒ‰ƒ€‚ğI—¹
+  å®Ÿè¡Œé€”ä¸­ã§ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦é–‰ã˜ã¦ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚’çµ‚äº†
  */
 void mz_exit(int code)
 {
@@ -433,7 +433,7 @@ void ShowInfo(void)
 	MessageBox(hwndApp, (LPCSTR)msg ,"Debug Information",MB_ICONINFORMATION|MB_OK);
 }
 
-/* INIƒtƒ@ƒCƒ‹“à‚ÌƒZƒNƒVƒ‡ƒ“‚É”’l‚ğİ’è */
+/* INIãƒ•ã‚¡ã‚¤ãƒ«å†…ã®ã‚»ã‚¯ã‚·ãƒ§ãƒ³ã«æ•°å€¤ã‚’è¨­å®š */
 BOOL WritePrivateProfileInt(LPCSTR  lpszSection,LPCSTR  lpszKey,int  val,LPCSTR  lpszFile)
 {
 	char strtmp[64];
@@ -446,74 +446,74 @@ BOOL WritePrivateProfileInt(LPCSTR  lpszSection,LPCSTR  lpszKey,int  val,LPCSTR 
 }
 
 /*
-   INIƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İ
+   INIãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿
  */
 void load_inifile(void)
 {
 	char current[MAX_PATH];
 
-	/* ƒJƒŒƒ“ƒgƒfƒBƒŒƒNƒgƒŠƒQƒbƒg */
+	/* ã‚«ãƒ¬ãƒ³ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚²ãƒƒãƒˆ */
 	GetCurrentDirectory(sizeof(current),current);
 
-	/* INIƒtƒ@ƒCƒ‹–¼‚ğì¬ */
+	/* INIãƒ•ã‚¡ã‚¤ãƒ«åã‚’ä½œæˆ */
 	GetCurrentDirectory(sizeof(IniFileStr),IniFileStr);
 	lstrcat(IniFileStr,IniFileName);									/* IniFileStr='MZ700WIN.INI' */
 
-	/* CMOSƒtƒ@ƒCƒ‹–¼‚ğì¬ */
+	/* CMOSãƒ•ã‚¡ã‚¤ãƒ«åã‚’ä½œæˆ */
 	GetCurrentDirectory(sizeof(CmosFileStr),CmosFileStr);
 	lstrcat(CmosFileStr,CmosFileName);								/* CmosFileStr='CMOS.DAT' */
 
-	/* ROMƒtƒ@ƒCƒ‹‚ª‚ ‚éƒfƒBƒŒƒNƒgƒŠ–¼‚ğì¬ */
+	/* ROMãƒ•ã‚¡ã‚¤ãƒ«ãŒã‚ã‚‹ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªåã‚’ä½œæˆ */
 	wsprintf(RomFileDir, "%s\\roms\\", current);
 
-	/* ‘I‘ğ‚³‚ê‚½‚q‚n‚l‚Ìæ“¾ */
+	/* é¸æŠã•ã‚ŒãŸï¼²ï¼¯ï¼­ã®å–å¾— */
 	menu.selrom = GetPrivateProfileInt(IniSection_Option,"ROM",
 									   0, IniFileStr);
 
-	/* SCREEN”{—¦‚ÌƒQƒbƒg */
+	/* SCREENå€ç‡ã®ã‚²ãƒƒãƒˆ */
 	menu.screen = GetPrivateProfileInt(IniSection_Option,"SCREEN",
 									   0, IniFileStr);
 
-	/* Às‘¬“x‚Ìæ“¾ */
+	/* å®Ÿè¡Œé€Ÿåº¦ã®å–å¾— */
 	menu.speed = GetPrivateProfileInt(IniSection_Option, "SPEED",
 									   100, IniFileStr);
 
-	/* ƒtƒŒ[ƒ€ƒXƒLƒbƒv‚ÌƒQƒbƒg */
+	/* ãƒ•ãƒ¬ãƒ¼ãƒ ã‚¹ã‚­ãƒƒãƒ—ã®ã‚²ãƒƒãƒˆ */
 	menu.scrn_freq = GetPrivateProfileInt(IniSection_Option,"FRAMESKIP",
 									   0, IniFileStr);
 
-	/* ƒL[ƒ{[ƒhƒ^ƒCƒv‚ÌƒQƒbƒg */
+	/* ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ã‚¿ã‚¤ãƒ—ã®ã‚²ãƒƒãƒˆ */
 	menu.keytype = GetPrivateProfileInt(IniSection_Option,"KEYBOARD",
 									   0, IniFileStr);
 #if 0
 #if JAPANESE										
-									   0, IniFileStr);					/* “ú–{”Å‚Ìê‡‚Í106‚ªƒfƒtƒH */
+									   0, IniFileStr);					/* æ—¥æœ¬ç‰ˆã®å ´åˆã¯106ãŒãƒ‡ãƒ•ã‚© */
 #else	
-									   1, IniFileStr);					/* ‘Û”Å‚Ìê‡‚Í101‚ªƒfƒtƒH */
+									   1, IniFileStr);					/* å›½éš›ç‰ˆã®å ´åˆã¯101ãŒãƒ‡ãƒ•ã‚© */
 #endif
 #endif
 
-	/* ƒtƒHƒ“ƒgƒZƒbƒgƒ^ƒCƒv‚ÌƒQƒbƒg */
+	/* ãƒ•ã‚©ãƒ³ãƒˆã‚»ãƒƒãƒˆã‚¿ã‚¤ãƒ—ã®ã‚²ãƒƒãƒˆ */
 	menu.fontset = GetPrivateProfileInt(IniSection_Option,"FONTSET",
 #if JAPANESE										
-									   1, IniFileStr);					/* “ú–{”Å‚Ìê‡‚Í“ú–{ŒêƒtƒHƒ“ƒg‚ªƒfƒtƒH */
+									   1, IniFileStr);					/* æ—¥æœ¬ç‰ˆã®å ´åˆã¯æ—¥æœ¬èªãƒ•ã‚©ãƒ³ãƒˆãŒãƒ‡ãƒ•ã‚© */
 #else	
-									   0, IniFileStr);					/* ‘Û”Å‚Ìê‡‚Íƒˆ[ƒƒbƒpƒtƒHƒ“ƒg‚ªƒfƒtƒH */
+									   0, IniFileStr);					/* å›½éš›ç‰ˆã®å ´åˆã¯ãƒ¨ãƒ¼ãƒ­ãƒƒãƒ‘ãƒ•ã‚©ãƒ³ãƒˆãŒãƒ‡ãƒ•ã‚© */
 #endif
 
-	/* ‚o‚b‚f‚V‚O‚OƒXƒCƒbƒ`‚ÌƒQƒbƒg */
+	/* ï¼°ï¼£ï¼§ï¼—ï¼ï¼ã‚¹ã‚¤ãƒƒãƒã®ã‚²ãƒƒãƒˆ */
 	menu.pcg700 = GetPrivateProfileInt(IniSection_Option,"PCG700",
 									   0, IniFileStr);
-	/* ƒTƒEƒ“ƒhˆ—ƒ‚[ƒhƒQƒbƒg */
+	/* ã‚µã‚¦ãƒ³ãƒ‰å‡¦ç†ãƒ¢ãƒ¼ãƒ‰ã‚²ãƒƒãƒˆ */
 	sound_md = GetPrivateProfileInt(IniSection_Option,"SOUND",
 									   0, IniFileStr);
-	/* ƒEƒBƒ“ƒhƒEˆÊ’uƒQƒbƒg */
+	/* ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ä½ç½®ã‚²ãƒƒãƒˆ */
 	win_xpos = GetPrivateProfileInt(IniSection_Window,"XPOS",
 									   -99999, IniFileStr);
 	win_ypos = GetPrivateProfileInt(IniSection_Window,"YPOS",
 									   -99999, IniFileStr);
 
-	/* ƒtƒHƒ‹ƒ_ˆÊ’uƒQƒbƒg */
+	/* ãƒ•ã‚©ãƒ«ãƒ€ä½ç½®ã‚²ãƒƒãƒˆ */
 	GetPrivateProfileString(IniSection_Folder,"LOAD",
 		current, LoadOpenDir,sizeof(LoadOpenDir), IniFileStr);
 
@@ -529,7 +529,7 @@ void load_inifile(void)
 	GetPrivateProfileString(IniSection_Folder,"STATES",
 		current, StateOpenDir,sizeof(StateOpenDir), IniFileStr);
 
-	/* ƒZ[ƒu—pƒe[ƒvƒtƒ@ƒCƒ‹–¼@‰¼İ’è */
+	/* ã‚»ãƒ¼ãƒ–ç”¨ãƒ†ãƒ¼ãƒ—ãƒ•ã‚¡ã‚¤ãƒ«åã€€ä»®è¨­å®š */
 	wsprintf( current, "%s\\$cmt$.mzt", SaveOpenDir);	
 
 	GetPrivateProfileString(IniSection_Folder,"SAVETAPE",
@@ -537,31 +537,31 @@ void load_inifile(void)
 }
 
 /*
-  ƒAƒvƒŠŠJn‚Ì‚Ìˆ—
+  ã‚¢ãƒ—ãƒªé–‹å§‹ã®æ™‚ã®å‡¦ç†
 */
 BOOL AppInit(void)
 {
 	int errflg = 0;
 
-	/* ƒL[ƒ}ƒgƒŠƒNƒX‚Ì’è‹`ƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İ */
+	/* ã‚­ãƒ¼ãƒãƒˆãƒªã‚¯ã‚¹ã®å®šç¾©ãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿ */
 	errflg = read_defkey();
 	if (errflg) return FALSE;
 
-	/* ƒGƒ~ƒ…ƒŒ[ƒ^‚Åg‚¤ƒƒ‚ƒŠ‚ÌŠm•Û */
+	/* ã‚¨ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚¿ã§ä½¿ã†ãƒ¡ãƒ¢ãƒªã®ç¢ºä¿ */
 	errflg = mz_alloc_mem();
 	if (errflg) return FALSE;
 
-	/* screenƒƒjƒ…[‚Ìİ’è’l‚ğƒZƒbƒg */
+	/* screenãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®è¨­å®šå€¤ã‚’ã‚»ãƒƒãƒˆ */
 	set_screen_menu(menu.screen);
-	/* fullscreenƒƒjƒ…[‚Ìİ’è’l‚ğƒZƒbƒg */
+	/* fullscreenãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®è¨­å®šå€¤ã‚’ã‚»ãƒƒãƒˆ */
 	set_fullscreen_menu(scrnmode);
-	/* ƒŠƒtƒŒƒbƒVƒ… */
+	/* ãƒªãƒ•ãƒ¬ãƒƒã‚·ãƒ¥ */
 	set_select_chk(MENU_REFRESH_EVERY,4,menu.scrn_freq);
-	/* keytypeƒƒjƒ…[‚Ìİ’è’l‚ğƒZƒbƒg */
+	/* keytypeãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®è¨­å®šå€¤ã‚’ã‚»ãƒƒãƒˆ */
 	set_keytype_menu(menu.keytype);
-	/* fontsetƒƒjƒ…[‚Ìİ’è’l‚ğƒZƒbƒg */
+	/* fontsetãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®è¨­å®šå€¤ã‚’ã‚»ãƒƒãƒˆ */
 	set_fontset_menu(menu.fontset);
-	/* pcg700-sw‚Ìİ’è’l‚ğƒZƒbƒg */
+	/* pcg700-swã®è¨­å®šå€¤ã‚’ã‚»ãƒƒãƒˆ */
 	set_pcg700_menu(menu.pcg700);
 	
 	/* CMOS.RAM load */
@@ -570,39 +570,39 @@ BOOL AppInit(void)
 	return TRUE;
 }
 /*
-  ƒAƒvƒŠI—¹‚Ì‚Ìˆ—
+  ã‚¢ãƒ—ãƒªçµ‚äº†ã®æ™‚ã®å‡¦ç†
  */
 void AppExit(void)
 {
 	BOOL fSuccess;
 
-	/* C-MOS“à—e‚ÌƒZ[ƒu */
+	/* C-MOSå†…å®¹ã®ã‚»ãƒ¼ãƒ– */
 	mz_save_cmos();
 
-	/* ƒŠƒ\[ƒXŠJ•ú */
+	/* ãƒªã‚½ãƒ¼ã‚¹é–‹æ”¾ */
 	free_resource();
 
-	/* ‘I‘ğ‚³‚ê‚½‚q‚n‚l */
+	/* é¸æŠã•ã‚ŒãŸï¼²ï¼¯ï¼­ */
 	fSuccess=WritePrivateProfileInt(IniSection_Option,"ROM",menu.selrom, IniFileStr);
-	/* SCREEN”{—¦‚ÌƒZ[ƒu */
+	/* SCREENå€ç‡ã®ã‚»ãƒ¼ãƒ– */
 	fSuccess=WritePrivateProfileInt(IniSection_Option,"SCREEN",menu.screen, IniFileStr);
-	/* Às‘¬“x‚ÌƒZ[ƒu */
+	/* å®Ÿè¡Œé€Ÿåº¦ã®ã‚»ãƒ¼ãƒ– */
 	fSuccess=WritePrivateProfileInt(IniSection_Option,"SPEED",menu.speed, IniFileStr);
-	/* ƒtƒŒ[ƒ€ƒXƒLƒbƒv‚ÌƒZ[ƒu */
+	/* ãƒ•ãƒ¬ãƒ¼ãƒ ã‚¹ã‚­ãƒƒãƒ—ã®ã‚»ãƒ¼ãƒ– */
 	fSuccess=WritePrivateProfileInt(IniSection_Option,"FRAMESKIP",menu.scrn_freq, IniFileStr);
-	/* ƒL[ƒ{[ƒhƒ^ƒCƒv‚ÌƒZ[ƒu */
+	/* ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ã‚¿ã‚¤ãƒ—ã®ã‚»ãƒ¼ãƒ– */
 	fSuccess=WritePrivateProfileInt(IniSection_Option,"KEYBOARD",menu.keytype, IniFileStr);
-	/* ƒL[ƒ{[ƒhƒ^ƒCƒv‚ÌƒZ[ƒu */
+	/* ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ã‚¿ã‚¤ãƒ—ã®ã‚»ãƒ¼ãƒ– */
 	fSuccess=WritePrivateProfileInt(IniSection_Option,"FONTSET",menu.fontset, IniFileStr);
-	/* ‚o‚b‚f‚V‚O‚O‚r‚v‚ÌƒZ[ƒu */
+	/* ï¼°ï¼£ï¼§ï¼—ï¼ï¼ï¼³ï¼·ã®ã‚»ãƒ¼ãƒ– */
 	fSuccess=WritePrivateProfileInt(IniSection_Option,"PCG700",menu.pcg700, IniFileStr);
-	/* ƒTƒEƒ“ƒhƒ‚[ƒh‚ÌƒZ[ƒu */
+	/* ã‚µã‚¦ãƒ³ãƒ‰ãƒ¢ãƒ¼ãƒ‰ã®ã‚»ãƒ¼ãƒ– */
 	fSuccess=WritePrivateProfileInt(IniSection_Option,"SOUND",sound_md, IniFileStr);
-	/* ƒEƒBƒ“ƒhƒEˆÊ’u‚ÌƒZ[ƒu */
+	/* ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ä½ç½®ã®ã‚»ãƒ¼ãƒ– */
 	fSuccess=WritePrivateProfileInt(IniSection_Window,"XPOS",win_xpos, IniFileStr);
 	fSuccess=WritePrivateProfileInt(IniSection_Window,"YPOS",win_ypos, IniFileStr);
 
-	/* ƒtƒHƒ‹ƒ_ˆÊ’u‚ÌƒZ[ƒu */
+	/* ãƒ•ã‚©ãƒ«ãƒ€ä½ç½®ã®ã‚»ãƒ¼ãƒ– */
 	WritePrivateProfileString(IniSection_Folder,"LOAD",
 		LoadOpenDir, IniFileStr);
 	WritePrivateProfileString(IniSection_Folder,"SAVE",
@@ -616,50 +616,50 @@ void AppExit(void)
 	WritePrivateProfileString(IniSection_Folder,"STATES",
 		StateOpenDir, IniFileStr);
 
-	/* ƒpƒŒƒbƒgíœ */
+	/* ãƒ‘ãƒ¬ãƒƒãƒˆå‰Šé™¤ */
 	if (hpalApp) {
 		DeleteObject(hpalApp);
 	}
 
-	/* ‰¼‘z‰æ–ÊŠJ•ú */
+	/* ä»®æƒ³ç”»é¢é–‹æ”¾ */
 	FreeOffScreen();
 
 }
 /*
-  ƒAƒvƒŠÀs‚Ì‚Ìˆ—
+  ã‚¢ãƒ—ãƒªå®Ÿè¡Œã®æ™‚ã®å‡¦ç†
  */
 void AppMain(void)
 {
-	/* ƒ^ƒCƒ}[‰Šú‰» */
+	/* ã‚¿ã‚¤ãƒãƒ¼åˆæœŸåŒ– */
 	create_mmtimer();
 
 	create_thread();
 
-	/* MZ-700 ÀsŠJn */
-	rom_check();				// ROMƒ‚ƒjƒ^‚Ì‘¶İƒ`ƒFƒbƒN
+	/* MZ-700 å®Ÿè¡Œé–‹å§‹ */
+	rom_check();				// ROMãƒ¢ãƒ‹ã‚¿ã®å­˜åœ¨ãƒã‚§ãƒƒã‚¯
 	mz_main();
 }
 
-// ƒ}ƒ‹ƒ`ƒƒfƒBƒAƒ^ƒCƒ} ‰ğ‘œ“xİ’è
+// ãƒãƒ«ãƒãƒ¡ãƒ‡ã‚£ã‚¢ã‚¿ã‚¤ãƒ è§£åƒåº¦è¨­å®š
 void create_mmtimer(void)
 {
 	int res;
 	
-	/* mmtimer ‰ğ‘œ“xİ’è */
+	/* mmtimer è§£åƒåº¦è¨­å®š */
 	timeGetDevCaps(&tcaps,sizeof(tcaps));
 	res=tcaps.wPeriodMin;
 
 	timeBeginPeriod(res);
 }
 
-// ƒ}ƒ‹ƒ`ƒƒfƒBƒAƒ^ƒCƒ}@Œãn––
+// ãƒãƒ«ãƒãƒ¡ãƒ‡ã‚£ã‚¢ã‚¿ã‚¤ãƒã€€å¾Œå§‹æœ«
 void free_mmtimer(void)
 {
 
 	timeEndPeriod(tcaps.wPeriodMin);
 }
 
-// ƒƒjƒ…[‚ÆƒLƒƒƒvƒVƒ‡ƒ“‚Ì‘å‚«‚³‚İ‚ÅƒTƒCƒY‚ğŒˆ’èB
+// ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã¨ã‚­ãƒ£ãƒ—ã‚·ãƒ§ãƒ³ã®å¤§ãã•è¾¼ã¿ã§ã‚µã‚¤ã‚ºã‚’æ±ºå®šã€‚
 void get_window_size(int m)
 {
 	// *ToDo* 20170512 
@@ -675,7 +675,7 @@ void get_window_size(int m)
 }
 
 // *ToDo* 20170512 
-// ƒNƒ‰ƒCƒAƒ“ƒg—Ìˆæ‚ÌƒTƒCƒY‚©‚çWindow‘S‘Ì‚ÌƒTƒCƒY‚ğİ’è
+// ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆé ˜åŸŸã®ã‚µã‚¤ã‚ºã‹ã‚‰Windowå…¨ä½“ã®ã‚µã‚¤ã‚ºã‚’è¨­å®š
 // ref: http://d.hatena.ne.jp/yus_iri/20110911/1315730376
 BOOL set_client_size(HWND hWnd, int width, int height)
 {
@@ -688,12 +688,12 @@ BOOL set_client_size(HWND hWnd, int width, int height)
 	int win_sy = (rw.bottom - rw.top) - (rc.bottom - rc.top) + height;
 #endif
 
-#if _MSC_VER >= 1900			// Visual Studio 2015 ˆÈ~‚¾‚Á‚½‚çWindowc‚ğL‚Î‚·
+#if _MSC_VER >= 1900			// Visual Studio 2015 ä»¥é™ã ã£ãŸã‚‰Windowç¸¦ã‚’ä¼¸ã°ã™
 	if (win_sy > FORMHEIGHT) {
-		win_sy += 10;			// 10 ‚¾‚Æ‰½ŒÌ‚©’ K‚ª‡‚¤
+		win_sy += 10;			// 10 ã ã¨ä½•æ•…ã‹å¸³å°»ãŒåˆã†
 	}
 	if (win_sx > FORMWIDTH) {
-		win_sx += 10;			// 10 ‚¾‚Æ‰½ŒÌ‚©’ K‚ª‡‚¤
+		win_sx += 10;			// 10 ã ã¨ä½•æ•…ã‹å¸³å°»ãŒåˆã†
 	}
 #endif
 
@@ -701,7 +701,7 @@ BOOL set_client_size(HWND hWnd, int width, int height)
 }
 
 
-// ƒƒjƒ…[ƒo[‚ª‚Q’i‚É‚È‚Á‚½ê‡A‰º‚ªØ‚ê‚éŒ»Û‚Ì‘Îô
+// ãƒ¡ãƒ‹ãƒ¥ãƒ¼ãƒãƒ¼ãŒï¼’æ®µã«ãªã£ãŸå ´åˆã€ä¸‹ãŒåˆ‡ã‚Œã‚‹ç¾è±¡ã®å¯¾ç­–
 void adjust_window_size(HWND hwnd)
 {
 	RECT rc;
@@ -719,17 +719,17 @@ void adjust_window_size(HWND hwnd)
 	}
 }
 
-/* ”Ä—pƒƒjƒ…[€–Úİ’è */
+/* æ±ç”¨ãƒ¡ãƒ‹ãƒ¥ãƒ¼é …ç›®è¨­å®š */
 /*
   In:	base=MENU_xxx
-		range=€–Ú”
-		idx  = ON‚É‚·‚é€–Ú
+		range=é …ç›®æ•°
+		idx  = ONã«ã™ã‚‹é …ç›®
  */
 void set_select_chk(int base,int range,int idx)
 {
 	int i;
 	
-	/* ƒƒjƒ…[‚Ìƒ`ƒFƒbƒNƒ}[ƒN‚ğ•t‚¯‚é */
+	/* ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®ãƒã‚§ãƒƒã‚¯ãƒãƒ¼ã‚¯ã‚’ä»˜ã‘ã‚‹ */
 	for (i=0;i<range;i++) {
 		CheckMenuItem(hmenuApp, base+i,
 					  MF_BYCOMMAND | MF_UNCHECKED);
@@ -740,7 +740,7 @@ void set_select_chk(int base,int range,int idx)
 
 }
 
-/* ƒƒjƒ…[‚ÌScreen‚ğİ’è */
+/* ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®Screenã‚’è¨­å®š */
 void set_screen_menu(int m)
 {
 	int xbak,ybak;
@@ -748,17 +748,17 @@ void set_screen_menu(int m)
 	xbak = win_xpos;
 	ybak = win_ypos;
 
-	/* ƒXƒNƒŠ[ƒ“ƒTƒCƒY‚Éƒ`ƒFƒbƒNƒ}[ƒN•t‚¯‚é */
+	/* ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ã‚µã‚¤ã‚ºã«ãƒã‚§ãƒƒã‚¯ãƒãƒ¼ã‚¯ä»˜ã‘ã‚‹ */
 	set_select_chk(MENU_SCREEN_1_1, 4, m);								// screen
 
-	/* ƒEƒBƒ“ƒhƒEƒTƒCƒY‚Ì•ÏX */
+	/* ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚µã‚¤ã‚ºã®å¤‰æ›´ */
 	get_window_size(m);
 	set_client_size(hwndApp, win_sx, win_sy);
 
 	MoveWindow(hwndApp,xbak,ybak,win_sx,win_sy,TRUE);
 }
 
-/* ƒƒjƒ…[‚Ìkeyboard‚ğİ’è */
+/* ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®keyboardã‚’è¨­å®š */
 void set_keytype_menu(int m)
 {
 	set_select_chk(MENU_KEYTYPE_BASE, get_keymat_max() ,m);				// keytype
@@ -768,13 +768,13 @@ void set_keytype_menu(int m)
 
 }
 
-/* ƒƒjƒ…[‚Ìfontset‚ğİ’è */
+/* ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®fontsetã‚’è¨­å®š */
 void set_fontset_menu(int m)
 {
 	set_select_chk(MENU_FONT_EUROPE,2,m);
 }
 
-/* ƒƒjƒ…[‚ÌPCG700-SW‚ğİ’è */
+/* ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®PCG700-SWã‚’è¨­å®š */
 void set_pcg700_menu(int m)
 {
 	CheckMenuItem(hmenuApp, MENU_PCG700,
@@ -782,7 +782,7 @@ void set_pcg700_menu(int m)
 
 }
 
-/* ƒƒjƒ…[‚ÌFULLSCREEN‚ğİ’è */
+/* ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®FULLSCREENã‚’è¨­å®š */
 void set_fullscreen_menu(int m)
 {
 #if USE_DDRAW
@@ -794,7 +794,7 @@ void set_fullscreen_menu(int m)
 }
 
 /**********************************/
-/* ƒ}ƒEƒXƒJ[ƒ\ƒ‹‚Ì•\¦‹–‰Â^‹Ö~ */
+/* ãƒã‚¦ã‚¹ã‚«ãƒ¼ã‚½ãƒ«ã®è¡¨ç¤ºè¨±å¯ï¼ç¦æ­¢ */
 /**********************************/
 void mouse_cursor(BOOL sw)
 {
@@ -874,9 +874,9 @@ BOOL AppPaint (HWND hwnd, HDC hdc)
 }
 
 //---------------------------------------------------------------------
-// AboutDialog : ƒ_ƒCƒAƒƒO ƒvƒƒV[ƒWƒƒ
+// AboutDialog : ãƒ€ã‚¤ã‚¢ãƒ­ã‚° ãƒ—ãƒ­ã‚·ãƒ¼ã‚¸ãƒ£
 //---------------------------------------------------------------------
-// ˆÈ‘O‚ÌƒŠƒ“ƒN‚ğÁ‹
+// ä»¥å‰ã®ãƒªãƒ³ã‚¯ã‚’æ¶ˆå»
 static void clr_link_str(HWND hwnd)
 {
 	HDC hdc;
@@ -888,7 +888,7 @@ static void clr_link_str(HWND hwnd)
 
 	hdc=GetDC(hwnd);
 	hFontbk = SelectObject(hdc, hFontOrg);
-	SetTextColor(hdc, RGB(0, 0, 255));	//Â
+	SetTextColor(hdc, RGB(0, 0, 255));	//é’
 	SetBkColor(hdc, GetSysColor(COLOR_BTNFACE));
 	SetBkMode(hdc, OPAQUE);
 	TextOut(hdc, 0, 0, strtmp, lstrlen(strtmp));
@@ -896,7 +896,7 @@ static void clr_link_str(HWND hwnd)
 	ReleaseDC(hwnd, hdc);
 }
 
-// ƒŠƒ“ƒN‚Ì‰ºü–³‚µ•\¦
+// ãƒªãƒ³ã‚¯ã®ä¸‹ç·šç„¡ã—è¡¨ç¤º
 LRESULT CALLBACK LinkProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp) {
 
 	PAINTSTRUCT	ps;
@@ -931,7 +931,7 @@ LRESULT CALLBACK LinkProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp) {
 			GetWindowText(hWnd, szTextTmp, sizeof(szTextTmp) );
 			hdc=BeginPaint(hWnd, &ps);
 			hFontbk = SelectObject(hdc, hFontOrg);
-			SetTextColor(hdc, RGB(0, 0, 255));	//Â
+			SetTextColor(hdc, RGB(0, 0, 255));	//é’
 			SetBkColor(hdc, GetSysColor(COLOR_BTNFACE));
 			SetBkMode(hdc, OPAQUE);
 			TextOut(hdc, 0, 0, szTextTmp, lstrlen(szTextTmp));
@@ -987,7 +987,7 @@ BOOL CALLBACK AppAbout(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 			break;
 		case IDC_MAILTO:
 			GetDlgItemText(hwnd, LOWORD(wParam), (LPSTR)strtmp, sizeof(strtmp) );
-			// ƒƒAƒh•”•ª‚Ìæ“¾
+			// ãƒ¡ã‚¢ãƒ‰éƒ¨åˆ†ã®å–å¾—
 			ptr = strstr(strtmp, (const char *)": ");
 			if (ptr != NULL) {
 				sprintf_s(strtmp2, sizeof(strtmp2)-1, "mailto:%s", ptr+2);
@@ -1004,13 +1004,13 @@ BOOL CALLBACK AppAbout(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 	case WM_SYSKEYDOWN:
 		if (wParam==VK_ESCAPE)
 		{
-			/* ESC Key‚Å”²‚¯‚é */
+			/* ESC Keyã§æŠœã‘ã‚‹ */
 			PostMessage(hwnd,WM_CLOSE,0,0L);
 		}
 		break;
 		
 	case WM_SETCURSOR:
-		// ˆÈ‘O‚ÌƒŠƒ“ƒN‚ğÁ‹
+		// ä»¥å‰ã®ãƒªãƒ³ã‚¯ã‚’æ¶ˆå»
 		if (link_hwnd_bak)
 		{
 			clr_link_str(link_hwnd_bak);
@@ -1061,18 +1061,18 @@ BOOL CALLBACK AppMonDialog(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 		switch (wp)
 		{
 		case IDOK:
-			menu.selrom = selCb;				// ‘I‘ğ‚³‚ê‚½‚q‚n‚l‚ğ”½‰f
-			// ƒ‰ƒWƒIƒ{ƒ^ƒ“‚Ìƒ`ƒFƒbƒN
+			menu.selrom = selCb;				// é¸æŠã•ã‚ŒãŸï¼²ï¼¯ï¼­ã‚’åæ˜ 
+			// ãƒ©ã‚¸ã‚ªãƒœã‚¿ãƒ³ã®ãƒã‚§ãƒƒã‚¯
 			tmp = SendMessage(hRb[0], BM_GETCHECK, 0, 0);
 			if (tmp == BST_CHECKED)
 				menu.machine = MACHINE_MZ700;
 
-			// 1500ƒ‚[ƒh‚©H
+			// 1500ãƒ¢ãƒ¼ãƒ‰ã‹ï¼Ÿ
 			tmp = SendMessage(hRb[1], BM_GETCHECK, 0, 0);
 			if (tmp == BST_CHECKED)
 				menu.machine = MACHINE_MZ1500;
 
-			// ƒ‚ƒjƒ^‘Î‰‹@í‚É‚æ‚èƒL[ƒ^ƒCƒv‚ğ©“®‘I‘ğ
+			// ãƒ¢ãƒ‹ã‚¿å¯¾å¿œæ©Ÿç¨®ã«ã‚ˆã‚Šã‚­ãƒ¼ã‚¿ã‚¤ãƒ—ã‚’è‡ªå‹•é¸æŠ
 			if (menu.keytype < 4)				// not GR key?
 			{
 				tmp = menu.selrom;
@@ -1101,11 +1101,11 @@ BOOL CALLBACK AppMonDialog(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 		case IDCANCEL:
 			PostMessage(hwnd,WM_CLOSE,0,0L);
 			break;
-		// ROMƒRƒ“ƒ{ƒ{ƒbƒNƒX
+		// ROMã‚³ãƒ³ãƒœãƒœãƒƒã‚¯ã‚¹
 		case IDC_COMBO_ROM:
 			switch( HIWORD(wParam) )
 			{
-				case CBN_SELCHANGE:	// ROM‚ª‘I‘ğ‚³‚ê‚½‚ç
+				case CBN_SELCHANGE:	// ROMãŒé¸æŠã•ã‚ŒãŸã‚‰
 					tmp = SendMessage( hCb, CB_GETCURSEL, 0, 0 );
 					selCb = SendMessage( hCb, CB_GETITEMDATA, tmp, 0 );
 					break;
@@ -1121,7 +1121,7 @@ BOOL CALLBACK AppMonDialog(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 	case WM_SYSKEYDOWN:
 		if (wParam==VK_ESCAPE)
 		{
-			/* ESC Key‚Å”²‚¯‚é */
+			/* ESC Keyã§æŠœã‘ã‚‹ */
 			PostMessage(hwnd,WM_CLOSE,0,0L);
 		}
 		break;
@@ -1130,10 +1130,10 @@ BOOL CALLBACK AppMonDialog(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 		if (scrnmode==SCRN_FULL) flip2gdi();
 		selCb = menu.selrom;
 
-		// ƒRƒ“ƒ{ƒ{ƒbƒNƒX‰Šú‰»
+		// ã‚³ãƒ³ãƒœãƒœãƒƒã‚¯ã‚¹åˆæœŸåŒ–
 		hCb = GetDlgItem( hwnd, IDC_COMBO_ROM );
-		init_rom_combo(hCb);							// ƒRƒ“ƒ{ƒ{ƒbƒNƒX‚Ì‰Šú‰»
-		// ƒ‰ƒWƒIƒ{ƒ^ƒ“‰Šú‰»
+		init_rom_combo(hCb);							// ã‚³ãƒ³ãƒœãƒœãƒƒã‚¯ã‚¹ã®åˆæœŸåŒ–
+		// ãƒ©ã‚¸ã‚ªãƒœã‚¿ãƒ³åˆæœŸåŒ–
 		hRb[0] = GetDlgItem( hwnd, IDC_RADIO_700 );
 		hRb[1] = GetDlgItem( hwnd, IDC_RADIO_1500 );
 		if (menu.machine == MACHINE_MZ700)
@@ -1167,20 +1167,20 @@ BOOL CALLBACK AppSpeedDialog(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 	switch (msg){
 	  case WM_COMMAND:
 		switch (wp) {
-			// OKƒ{ƒ^ƒ“
+			// OKãƒœã‚¿ãƒ³
 		  case IDOK:
-			// Às‘¬“x‚ğ”½‰f
+			// å®Ÿè¡Œé€Ÿåº¦ã‚’åæ˜ 
 			menu.speed = (int)SendMessage( hSld, TBM_GETPOS, 0, 0);
-			// Z80ƒRƒA‚É‘¬“x‚ğ”½‰f
+			// Z80ã‚³ã‚¢ã«é€Ÿåº¦ã‚’åæ˜ 
 			setup_cpuspeed(menu.speed);
 
-			// ƒ_ƒCƒAƒƒOƒNƒ[ƒY
+			// ãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã‚¯ãƒ­ãƒ¼ã‚º
 			PostMessage(hwnd,WM_CLOSE,0,0L);
 			break;
 
-			// ƒLƒƒƒ“ƒZƒ‹ƒ{ƒ^ƒ“
+			// ã‚­ãƒ£ãƒ³ã‚»ãƒ«ãƒœã‚¿ãƒ³
 		  case IDCANCEL:
-			// ƒ_ƒCƒAƒƒOƒNƒ[ƒY
+			// ãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã‚¯ãƒ­ãƒ¼ã‚º
 			PostMessage(hwnd,WM_CLOSE,0,0L);
 			break;
 		}
@@ -1200,22 +1200,22 @@ BOOL CALLBACK AppSpeedDialog(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 
 	  case WM_SYSKEYDOWN:
 		if (wParam==VK_ESCAPE) {
-			/* ESC Key‚Å”²‚¯‚é */
+			/* ESC Keyã§æŠœã‘ã‚‹ */
 			PostMessage(hwnd,WM_CLOSE,0,0L);
 		}
 		break;
 
 	  case WM_INITDIALOG:
-		/* ƒ_ƒCƒAƒƒO‰Šú‰» */
+		/* ãƒ€ã‚¤ã‚¢ãƒ­ã‚°åˆæœŸåŒ– */
 		if (scrnmode == SCRN_FULL) {
 			flip2gdi();
 		}
-		/*  ƒXƒ‰ƒCƒ_‚Ì‰Šúİ’è */
+		/*  ã‚¹ãƒ©ã‚¤ãƒ€ã®åˆæœŸè¨­å®š */
 		hSld = GetDlgItem( hwnd, IDC_SLIDER1 );
-		SendMessage( hSld, TBM_SETRANGE, (WPARAM)TRUE, (LPARAM)MAKELPARAM(10, 100) );    //  ”ÍˆÍ‚Í [0, 255]
-		SendMessage( hSld, TBM_SETPOS, (WPARAM)TRUE, (LPARAM)menu.speed );    //  ƒXƒ‰ƒCƒ_‚Ì‰ŠúˆÊ’u‚Í speed
-		SendMessage( hSld, TBM_SETTICFREQ, (WPARAM)10, (LPARAM)0 );    //  ƒƒ‚ƒŠ‚ÌŠÔŠu‚Í 10
-		set_spd_text(menu.speed);										// Static Text (SPEED) ”½‰f
+		SendMessage( hSld, TBM_SETRANGE, (WPARAM)TRUE, (LPARAM)MAKELPARAM(10, 100) );    //  ç¯„å›²ã¯ [0, 255]
+		SendMessage( hSld, TBM_SETPOS, (WPARAM)TRUE, (LPARAM)menu.speed );    //  ã‚¹ãƒ©ã‚¤ãƒ€ã®åˆæœŸä½ç½®ã¯ speed
+		SendMessage( hSld, TBM_SETTICFREQ, (WPARAM)10, (LPARAM)0 );    //  ãƒ¡ãƒ¢ãƒªã®é–“éš”ã¯ 10
+		set_spd_text(menu.speed);										// Static Text (SPEED) åæ˜ 
 		
 		return TRUE;
 	}
@@ -1425,7 +1425,7 @@ LONG AppCommand (HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 		i=LOWORD(wParam)-MENU_FONT_EUROPE;
 		if (i != menu.fontset)
 		{
-			// ‚±‚±‚Éƒ[ƒhƒ`ƒFƒbƒN‚ğ“ü‚ê‚é
+			// ã“ã“ã«ãƒ­ãƒ¼ãƒ‰ãƒã‚§ãƒƒã‚¯ã‚’å…¥ã‚Œã‚‹
 			if (!font_load(i))
 			{
 				menu.fontset=i;
@@ -1439,21 +1439,21 @@ LONG AppCommand (HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 }
 
 /******************/
-/* ƒVƒXƒeƒ€ƒ^ƒXƒN */
+/* ã‚·ã‚¹ãƒ†ãƒ ã‚¿ã‚¹ã‚¯ */
 /******************/
 BOOL SystemTask(void)
 {
     MSG msg;
 	HANDLE hProcess;
 
-	/* ƒƒbƒZ[ƒWˆ— */
+	/* ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸å‡¦ç† */
     if (PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE))
 	{
-		/* ƒAƒNƒZƒ‰ƒŒ[ƒ^ƒL[‚Ìˆ— */
+		/* ã‚¢ã‚¯ã‚»ãƒ©ãƒ¬ãƒ¼ã‚¿ã‚­ãƒ¼ã®å‡¦ç† */
 		if (hAccelApp)
 			TranslateAccelerator(hwndApp, hAccelApp, &msg);
 
-		/* Alt+Tab ‚ÅAƒ^ƒXƒNØ‚è‘Ö‚¦‚³‚ê‚½ */
+		/* Alt+Tab ã§ã€ã‚¿ã‚¹ã‚¯åˆ‡ã‚Šæ›¿ãˆã•ã‚ŒãŸæ™‚ */
 		if (msg.message == WM_SYSKEYDOWN)
 		{
 			if ((msg.wParam == VK_MENU)) 
@@ -1462,7 +1462,7 @@ BOOL SystemTask(void)
 				{
 					if (scrnmode == SCRN_FULL && (fAppActive) )
 					{
-						// ‘S‰æ–Ê‚Å‚ ‚ê‚ÎAƒvƒƒZƒX‚Ì—Dæ“x‚ğ’Êí‚É
+						// å…¨ç”»é¢ã§ã‚ã‚Œã°ã€ãƒ—ãƒ­ã‚»ã‚¹ã®å„ªå…ˆåº¦ã‚’é€šå¸¸ã«
 						hProcess = GetCurrentProcess();
 						if (hProcess)
 							SetPriorityClass(hProcess, NORMAL_PRIORITY_CLASS);
@@ -1471,11 +1471,11 @@ BOOL SystemTask(void)
 			}
 		}
 		
-		/* ’Êí‚ÌƒƒbƒZ[ƒWˆ— */
+		/* é€šå¸¸ã®ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸å‡¦ç† */
         if (!GetMessage(&msg, NULL, 0, 0))
 		{
-			/* ƒvƒƒOƒ‰ƒ€I—¹ */
-			AppExit();													/* ƒvƒƒOƒ‰ƒ€I—¹ */
+			/* ãƒ—ãƒ­ã‚°ãƒ©ãƒ çµ‚äº†æ™‚ */
+			AppExit();													/* ãƒ—ãƒ­ã‚°ãƒ©ãƒ çµ‚äº† */
 			exit(msg.wParam);
 		}
 
@@ -1486,13 +1486,13 @@ BOOL SystemTask(void)
     }
 	else
 	{
-		/* ƒƒbƒZ[ƒW‚ª–³‚¢‚Æ‚« */
-	    return FALSE;													/* ƒƒCƒ“ƒ^ƒXƒN‚Ö */
+		/* ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãŒç„¡ã„ã¨ã */
+	    return FALSE;													/* ãƒ¡ã‚¤ãƒ³ã‚¿ã‚¹ã‚¯ã¸ */
 	}
 }
 
 //-----------------------------------------------------
-// ƒƒjƒ…[—pƒrƒbƒgƒ}ƒbƒvƒ{ƒ^ƒ“‚Ì©‘O•`‰æ
+// ãƒ¡ãƒ‹ãƒ¥ãƒ¼ç”¨ãƒ“ãƒƒãƒˆãƒãƒƒãƒ—ãƒœã‚¿ãƒ³ã®è‡ªå‰æç”»
 //-----------------------------------------------------
 void putbutton(HDC hdc,int x,int y,int no,BOOL sw)
 {
@@ -1535,7 +1535,7 @@ void putbutton(HDC hdc,int x,int y,int no,BOOL sw)
 }
 
 //-----------------------------------------------------
-// ƒƒjƒ…[—pƒeƒLƒXƒg—p©‘O•`‰æ
+// ãƒ¡ãƒ‹ãƒ¥ãƒ¼ç”¨ãƒ†ã‚­ã‚¹ãƒˆç”¨è‡ªå‰æç”»
 //-----------------------------------------------------
 BOOL MENU_TextOut(HWND hwnd,HDC hdc, int x, int y,LPCTSTR string, int cbString)
 {
@@ -1633,7 +1633,7 @@ void MENU_GetTextExtentPoint(HDC hdc,LPCSTR string, int len, SIZE *szr)
 	int i,xt,yt;
 	UINT8 ch;
 
-	// &‚Ìíœ
+	// &ã®å‰Šé™¤
 	for (xt=0,i=0;i<len;i++)
 	{
 		if (string[i]<0x20) continue;
@@ -1701,7 +1701,7 @@ void MENU_GetTextExtentPoint(HDC hdc,LPCSTR string, int len, SIZE *szr)
 }
 
 
-/* ƒEƒBƒ“ƒhƒEƒvƒƒV[ƒWƒƒ */
+/* ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒ—ãƒ­ã‚·ãƒ¼ã‚¸ãƒ£ */
 LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	WPARAM wtmp;
@@ -1723,10 +1723,10 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 	switch (message)
     {
 	case WM_SYSCOMMAND:
-		/* ƒtƒ‹ƒXƒNƒŠ[ƒ“ƒ‚[ƒh‚Ì‚Ìˆ— */
+		/* ãƒ•ãƒ«ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ãƒ¢ãƒ¼ãƒ‰æ™‚ã®æ™‚ã®å‡¦ç† */
 		if (scrnmode == SCRN_FULL)
 		{
-			/* ‰½‚¾‚©‚±‚ê‚ÅƒXƒNƒŠ[ƒ“ƒZ[ƒo[‚ª“®‚©‚È‚¢‚æ‚¤‚É‚È‚é‚ç‚µ‚¢B */
+			/* ä½•ã ã‹ã“ã‚Œã§ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ã‚»ãƒ¼ãƒãƒ¼ãŒå‹•ã‹ãªã„ã‚ˆã†ã«ãªã‚‹ã‚‰ã—ã„ã€‚ */
 			if((wtmp==SC_SCREENSAVE || wtmp==SC_MONITORPOWER))
 				return FALSE;
 
@@ -1747,7 +1747,7 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 		return AppCommand(hwnd,message,wParam,lParam);
 
 	case WM_ENTERMENULOOP:
-		// [Alt]‚ğ‰Ÿ‚µ‚Ä‚éŠÔAƒTƒEƒ“ƒh‚ğƒIƒt‚É‚·‚é
+		// [Alt]ã‚’æŠ¼ã—ã¦ã‚‹é–“ã€ã‚µã‚¦ãƒ³ãƒ‰ã‚’ã‚ªãƒ•ã«ã™ã‚‹
 		DSound_Mute(TRUE);
 
 	case WM_ENTERIDLE:
@@ -1813,7 +1813,7 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 				putbutton(hdc,rc.left+1,rc.top+1,5, TRUE);
 
 		}
-		//MENU_TextOut(lpDI->hwndItem,hdc, rc.left+MENU_BMP_WIDTH+6, rc.top+4,(LPCSTR)"ŠJ‚­(&O)",lstrlen((LPCSTR)"ŠJ‚­(&O)"));
+		//MENU_TextOut(lpDI->hwndItem,hdc, rc.left+MENU_BMP_WIDTH+6, rc.top+4,(LPCSTR)"é–‹ã(&O)",lstrlen((LPCSTR)"é–‹ã(&O)"));
 
 //		GetMenuString(GetMenu(hwnd),lpDI->itemID,strmenu,sizeof(strmenu),MF_BYCOMMAND);
 //		GetMenuString(hmenuApp,MENU_OPEN,strmenu,sizeof(strmenu),MF_BYCOMMAND);
@@ -1876,7 +1876,7 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		return FALSE;
 
-		/* DirectInput‚ğ•œ‹A */
+		/* DirectInputã‚’å¾©å¸° */
 	case WM_ACTIVATE:
 //		ReacquireMouse();
 		break;
@@ -1918,7 +1918,7 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 			pwp = (WINDOWPOS *) lParam;
 			win_xpos = pwp->x;
 			win_ypos = pwp->y;
-			adjust_window_size(hwnd);			// ƒƒjƒ…[ƒo[‚ª‚Q’i‚É‚È‚Á‚½ê‡A‰º‚ªØ‚ê‚éŒ»Û‚Ì‘Îô
+			adjust_window_size(hwnd);			// ãƒ¡ãƒ‹ãƒ¥ãƒ¼ãƒãƒ¼ãŒï¼’æ®µã«ãªã£ãŸå ´åˆã€ä¸‹ãŒåˆ‡ã‚Œã‚‹ç¾è±¡ã®å¯¾ç­–
 		}
 		break;
 
@@ -1935,11 +1935,11 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 		init_menu_work();
 		InitMenuBitmaps(hwnd);
 
-		/* IMEg—p‹Ö~ */
+		/* IMEä½¿ç”¨ç¦æ­¢ */
 		if (ptr_WINNLSEnableIME) {
 			(*ptr_WINNLSEnableIME)( hwnd , FALSE );
 		}
-		/* ‰æ–Ê‰Šú‰» */
+		/* ç”»é¢åˆæœŸåŒ– */
 		mz_screen_init();
 
 		break;
@@ -1957,7 +1957,7 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 }
 
 /******************/
-/* Šeí‚ ‚Æ‚µ‚Ü‚Â */
+/* å„ç¨®ã‚ã¨ã—ã¾ã¤ */
 /******************/
 void free_resource(void)
 {
@@ -1965,26 +1965,26 @@ void free_resource(void)
 
 	XInput_Cleanup();
 
-	DSound_Cleanup();												// DirectSound ’â~
+	DSound_Cleanup();												// DirectSound åœæ­¢
 
 	sn76489an_cleanup();
 	mzbeep_clean();
 
 	end_thread();
-	free_mmtimer();													/* ƒ}ƒ‹ƒ`ƒƒfƒBƒAƒ^ƒCƒ}[I—¹ */
+	free_mmtimer();													/* ãƒãƒ«ãƒãƒ¡ãƒ‡ã‚£ã‚¢ã‚¿ã‚¤ãƒãƒ¼çµ‚äº† */
 
-	EndDirectDraw();												/* DirectDraw I—¹ */
-	mz_free_mem();													/* ƒGƒ~ƒ…ƒŒ[ƒ^—pƒƒ‚ƒŠ‚ÌŠJ•ú */
-	end_defkey();													/* ƒL[ƒ}ƒgƒŠƒNƒX•ÏŠ·I—¹ */
+	EndDirectDraw();												/* DirectDraw çµ‚äº† */
+	mz_free_mem();													/* ã‚¨ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚¿ç”¨ãƒ¡ãƒ¢ãƒªã®é–‹æ”¾ */
+	end_defkey();													/* ã‚­ãƒ¼ãƒãƒˆãƒªã‚¯ã‚¹å¤‰æ›çµ‚äº† */
 	
-	// ƒ^ƒXƒNƒo[‚É‹ó‚ÌƒAƒCƒRƒ“‚ªc‚é–‚ª‚ ‚éŒ»Û‚Ì‰ñ”ğ
-	// ‚Ì‚Â‚à‚è‚ª‚¢‚Ü‚¢‚¿‚¤‚Ü‚­‚¢‚©‚È‚¢EEE
+	// ã‚¿ã‚¹ã‚¯ãƒãƒ¼ã«ç©ºã®ã‚¢ã‚¤ã‚³ãƒ³ãŒæ®‹ã‚‹äº‹ãŒã‚ã‚‹ç¾è±¡ã®å›é¿
+	// ã®ã¤ã‚‚ã‚ŠãŒã„ã¾ã„ã¡ã†ã¾ãã„ã‹ãªã„ãƒ»ãƒ»ãƒ»
 	hDest=FindWindow((LPCSTR)szClassName, nullptr);
 	if (hDest) {
 		ShowWindow(hDest,SW_HIDE);
 	}
 	
-	// ‘S‰æ–Ê‚¾‚Á‚½‚çƒEƒBƒ“ƒhƒEˆÊ’ubkup‚ğ–ß‚·
+	// å…¨ç”»é¢ã ã£ãŸã‚‰ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ä½ç½®bkupã‚’æˆ»ã™
 	if (scrnmode==SCRN_FULL) {
 		win_xpos = win_xbak;
 		win_ypos = win_ybak;
@@ -1996,7 +1996,7 @@ void free_resource(void)
 
 }
 
-/* ‚v‚‰‚‚l‚‚‰‚ */
+/* ï¼·ï½‰ï½ï¼­ï½ï½‰ï½ */
 int APIENTRY WinMain (HINSTANCE hInstance, 
 	     HINSTANCE hPrevInstance,
 	     char * lpszCmdParam,
@@ -2006,12 +2006,12 @@ int APIENTRY WinMain (HINSTANCE hInstance,
 	HDC	  hdc;
 	HANDLE hPrevMutex;
 	WNDCLASS wndclass;
-	DWORD dwStyle;														/* ƒEƒBƒ“ƒhƒE ƒXƒ^ƒCƒ‹ */
+	DWORD dwStyle;														/* ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ ã‚¹ã‚¿ã‚¤ãƒ« */
 	RECT destrect;
 	int a,i;
 
 #ifndef NDEBUG
-	// ‚u‚bƒ‰ƒ“ƒ^ƒCƒ€ƒfƒoƒbƒOƒ‚[ƒh‚n‚m
+	// ï¼¶ï¼£ãƒ©ãƒ³ã‚¿ã‚¤ãƒ ãƒ‡ãƒãƒƒã‚°ãƒ¢ãƒ¼ãƒ‰ï¼¯ï¼®
 	int nFlag = _CrtSetDbgFlag(_CRTDBG_REPORT_FLAG);
 	nFlag &= ~(_CRTDBG_CHECK_ALWAYS_DF|_CRTDBG_DELAY_FREE_MEM_DF|_CRTDBG_LEAK_CHECK_DF|
 		_CRTDBG_CHECK_EVERY_16_DF|_CRTDBG_CHECK_EVERY_128_DF|_CRTDBG_CHECK_EVERY_1024_DF);
@@ -2020,15 +2020,15 @@ int APIENTRY WinMain (HINSTANCE hInstance,
 	_CrtSetDbgFlag(nFlag);
 #endif
 
-	/* ƒRƒ}ƒ“ƒhƒ‰ƒCƒ“ƒ`ƒFƒbƒN */
+	/* ã‚³ãƒãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³ãƒã‚§ãƒƒã‚¯ */
 	for (i=0;;i++) {
 		a = lpszCmdParam[i];
 		
-		if (a=='\x00') break;											// ƒRƒ}ƒ“ƒhƒ‰ƒCƒ“‚ÌI—¹ƒ`ƒFƒbƒN
-		if (a!='-' && a!='/') continue;									// [-|/] ƒ`ƒFƒbƒN
+		if (a=='\x00') break;											// ã‚³ãƒãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³ã®çµ‚äº†ãƒã‚§ãƒƒã‚¯
+		if (a!='-' && a!='/') continue;									// [-|/] ãƒã‚§ãƒƒã‚¯
 		
-		a = lpszCmdParam[++i];											// Ÿ‚Ì•¶š‚ğƒ`ƒFƒbƒN
-		if (a=='\x00') break;											// ƒRƒ}ƒ“ƒhƒ‰ƒCƒ“‚ÌI—¹ƒ`ƒFƒbƒN
+		a = lpszCmdParam[++i];											// æ¬¡ã®æ–‡å­—ã‚’ãƒã‚§ãƒƒã‚¯
+		if (a=='\x00') break;											// ã‚³ãƒãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³ã®çµ‚äº†ãƒã‚§ãƒƒã‚¯
 		switch (a) {
 		case 'c':
 			if (sscanf_s(lpszCmdParam + i + 1, "%2Ix", &bk_color) != 1)
@@ -2037,22 +2037,22 @@ int APIENTRY WinMain (HINSTANCE hInstance,
 				bk_color = 0x70;
 			}
 
-			// ŠÈˆÕMZ-80K/C/1200ƒ‚[ƒh
+			// ç°¡æ˜“MZ-80K/C/1200ãƒ¢ãƒ¼ãƒ‰
 			i+=2;
 			break;
 			
 	  case 's':
-		  /* ‹Ö~ƒ‚[ƒh”»’è */
+		  /* ç¦æ­¢ãƒ¢ãƒ¼ãƒ‰åˆ¤å®š */
 		  sound_di = 1;
 		  break;
 
 	  case '5':
-		  /* MZ-1500ƒ‚[ƒh‹–‰Â */
+		  /* MZ-1500ãƒ¢ãƒ¼ãƒ‰è¨±å¯ */
 		  menu.machine = MACHINE_MZ1500;
 		  break;
 
 	  case 'k':
-		  /* Key Table Patch‹–‰Â */
+		  /* Key Table Patchè¨±å¯ */
 		  key_patch = 1;
 		  break;
 		}
@@ -2062,9 +2062,9 @@ int APIENTRY WinMain (HINSTANCE hInstance,
 	/* Load accelerators */
 	hAccelApp = LoadAccelerators(hInstance, "AppMenu");
 
-	/* “ñd‹N“®ƒ`ƒFƒbƒN */
+	/* äºŒé‡èµ·å‹•ãƒã‚§ãƒƒã‚¯ */
 	hPrevMutex = OpenMutex(MUTEX_ALL_ACCESS,FALSE,(LPCSTR)szAppName);
-	/*‚à‚µAƒI[ƒvƒ“‚Å‚«‚ê‚ÎˆÈ‘O‚ÌƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚ª‹N“®‚µ‚Ä‚¢‚é */
+	/*ã‚‚ã—ã€ã‚ªãƒ¼ãƒ—ãƒ³ã§ãã‚Œã°ä»¥å‰ã®ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ãŒèµ·å‹•ã—ã¦ã„ã‚‹ */
 	if (hPrevMutex) {
 		CloseHandle(hPrevMutex);
 		return FALSE;
@@ -2072,7 +2072,7 @@ int APIENTRY WinMain (HINSTANCE hInstance,
 	
 	hMutex = CreateMutex(FALSE,0,(LPCSTR)szAppName);
 	
-	/* ƒEƒCƒ“ƒhƒEƒNƒ‰ƒX‚Ì¶¬ */
+	/* ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ */
 //	wndclass.style   = CS_BYTEALIGNCLIENT | CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS;
 	wndclass.style   = CS_BYTEALIGNCLIENT;
 	wndclass.lpfnWndProc   = WndProc;
@@ -2097,7 +2097,7 @@ int APIENTRY WinMain (HINSTANCE hInstance,
 	hUSER32 = GetModuleHandle("USER32.DLL");
 	if (hUSER32)
 	{
-		// WINNLSEnableIME‚ª‚ ‚é‚Ì‚ÍDouble-ByteŒ¾ŒêŒ—‚Ì‚İ
+		// WINNLSEnableIMEãŒã‚ã‚‹ã®ã¯Double-Byteè¨€èªåœã®ã¿
 		ptr_WINNLSEnableIME = (LPFNDLLFUNC) GetProcAddress(hUSER32, "WINNLSEnableIME");
 //		if (ptr_WINNLSEnableIME == NULL)
 //			MessageBox(hwndApp, "Error GetProcAddress" ,"Debug Information",MB_ICONINFORMATION|MB_OK);
@@ -2108,16 +2108,16 @@ int APIENTRY WinMain (HINSTANCE hInstance,
 		MessageBox(hwndApp, "Error GetModuleHandle" ,"Debug Information",MB_ICONINFORMATION|MB_OK);
 	}
 		
-	/* INIƒtƒ@ƒCƒ‹‚Ìİ’è‚ğ“Ç‚İ‚İ */
+	/* INIãƒ•ã‚¡ã‚¤ãƒ«ã®è¨­å®šã‚’èª­ã¿è¾¼ã¿ */
 	load_inifile();	
 	get_window_size(menu.screen);										/* win_sx,win_sy calc */
 
-	/* ƒXƒNƒŠ[ƒ“‚ÌL‚³‚ğ’²‚×‚é */
+	/* ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ã®åºƒã•ã‚’èª¿ã¹ã‚‹ */
 	GetClientRect(GetDesktopWindow(),&destrect);
 	if (win_xpos == -99999) win_xpos = (destrect.right-win_sx)>>1;
 	if (win_ypos == -99999) win_ypos = (destrect.bottom-win_sy)>>1;
 
-	/* Window‚Í‚İo‚µƒ`ƒFƒbƒN */
+	/* Windowã¯ã¿å‡ºã—ãƒã‚§ãƒƒã‚¯ */
 	if (win_xpos >= (destrect.right-2)) win_xpos = (destrect.right-win_sx)>>1; // destrect.right-2;
 	if (win_ypos >= (destrect.bottom-2)) win_xpos = (destrect.bottom-win_sy)>>1; // destrect.bottom-2;
 		
@@ -2126,13 +2126,13 @@ int APIENTRY WinMain (HINSTANCE hInstance,
 	
 	dwStyle = WS_OVERLAPPED|WS_CAPTION|WS_SYSMENU|WS_MINIMIZEBOX;
 
-	/* ƒL[ƒ}ƒgƒŠƒNƒXŠÖ˜A‚Ìƒ[ƒN‚ğ‰Šú‰» */
+	/* ã‚­ãƒ¼ãƒãƒˆãƒªã‚¯ã‚¹é–¢é€£ã®ãƒ¯ãƒ¼ã‚¯ã‚’åˆæœŸåŒ– */
 	init_defkey();
 
-	/* ƒOƒ[ƒoƒ‹‚ÈƒEƒBƒ“ƒhƒEŠÖ˜A‚Ì•Ï”‚ğƒZƒbƒg */
-	hInstApp=hInstance;													/* hInstApp=ƒAƒvƒŠ‚ÌƒCƒ“ƒXƒ^ƒ“ƒX */
+	/* ã‚°ãƒ­ãƒ¼ãƒãƒ«ãªã‚¦ã‚£ãƒ³ãƒ‰ã‚¦é–¢é€£ã®å¤‰æ•°ã‚’ã‚»ãƒƒãƒˆ */
+	hInstApp=hInstance;													/* hInstApp=ã‚¢ãƒ—ãƒªã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ */
 
-	/* ƒEƒCƒ“ƒhƒE‚Ì¶¬ */
+	/* ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦ã®ç”Ÿæˆ */
 	hwnd = CreateWindow ((LPCSTR)szClassName,							// Class
 						(LPCSTR)szAppName,								/* caption */
 						 dwStyle,										/* style */
@@ -2145,8 +2145,8 @@ int APIENTRY WinMain (HINSTANCE hInstance,
 						 hInstance,    
 						 nullptr);    
 
-	hwndApp=hwnd;														/* hwndApp=ƒAƒvƒŠ‚ÌƒEƒBƒ“ƒhƒEƒnƒ“ƒhƒ‹ */
-	hmenuApp=GetMenu(hwnd);												/* ƒƒjƒ…[ƒnƒ“ƒhƒ‹ */
+	hwndApp=hwnd;														/* hwndApp=ã‚¢ãƒ—ãƒªã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒãƒ³ãƒ‰ãƒ« */
+	hmenuApp=GetMenu(hwnd);												/* ãƒ¡ãƒ‹ãƒ¥ãƒ¼ãƒãƒ³ãƒ‰ãƒ« */
 
 	ShowWindow(hwnd, nCmdShow);
 	UpdateWindow(hwnd);
@@ -2154,29 +2154,29 @@ int APIENTRY WinMain (HINSTANCE hInstance,
 	// *ToDo* 20170512 
 //	set_client_size(hwndApp, win_sx, win_sy);
 
-	/* ƒ~ƒ…[ƒeƒNƒX‚ÌƒŠƒŠ[ƒX */
+	/* ãƒŸãƒ¥ãƒ¼ãƒ†ã‚¯ã‚¹ã®ãƒªãƒªãƒ¼ã‚¹ */
 //	ReleaseMutex(hMutex);
 
-	// rom_load()“à‚Åİ’è‚³‚ê‚é
-//	use_cmos = 1;														// 1R12 ƒIƒ“
+	// rom_load()å†…ã§è¨­å®šã•ã‚Œã‚‹
+//	use_cmos = 1;														// 1R12 ã‚ªãƒ³
 
-	/* ‰æ–Êƒ‚[ƒh‚ğ’²‚×‚é */
+	/* ç”»é¢ãƒ¢ãƒ¼ãƒ‰ã‚’èª¿ã¹ã‚‹ */
 	hdc = GetDC(hwnd);
     a = GetDeviceCaps(hdc, BITSPIXEL);
 	ReleaseDC(hwnd,hdc);
 	
 	SystemTask();
 
-	/* ƒEƒBƒ“ƒhƒEó‘Ô•Ï”‰Šú‰» */
+	/* ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦çŠ¶æ…‹å¤‰æ•°åˆæœŸåŒ– */
 	fAppActive = TRUE;
 
-	/* ‚Q‚Â‚ÌƒtƒHƒ“ƒgƒtƒ@ƒCƒ‹–¼ì¬ */
+	/* ï¼’ã¤ã®ãƒ•ã‚©ãƒ³ãƒˆãƒ•ã‚¡ã‚¤ãƒ«åä½œæˆ */
 	GetCurrentDirectory(sizeof(FontFileStr[0]),(LPSTR)FontFileStr[0]);
 	lstrcat((LPSTR)FontFileStr[0],"\\mz700fon.dat");
 	GetCurrentDirectory(sizeof(FontFileStr[1]),(LPSTR)FontFileStr[1]);
 	lstrcat((LPSTR)FontFileStr[1],"\\mz700fon.jp");
 
-	/* ƒtƒHƒ“ƒgƒƒjƒ…[‘I‘ğ‰Â”\‚©ƒ`ƒFƒbƒN */
+	/* ãƒ•ã‚©ãƒ³ãƒˆãƒ¡ãƒ‹ãƒ¥ãƒ¼é¸æŠå¯èƒ½ã‹ãƒã‚§ãƒƒã‚¯ */
 	/* EUROPE */
 	if (!FileExists(reinterpret_cast<LPCSTR>(FontFileStr[0])))
 	{
@@ -2187,13 +2187,13 @@ int APIENTRY WinMain (HINSTANCE hInstance,
 	/* JAPAN */
 	if (!FileExists(reinterpret_cast<LPCSTR>(FontFileStr[1])))
 	{
-		EnableMenuItem(hmenuApp, MENU_FONT_JAPAN, MF_BYCOMMAND | MF_GRAYED); // JAPAN‘I‘ğ•s”\
+		EnableMenuItem(hmenuApp, MENU_FONT_JAPAN, MF_BYCOMMAND | MF_GRAYED); // JAPANé¸æŠä¸èƒ½
 		if (menu.fontset==1) menu.fontset=0;
 	}
 	
 	fullsc_timer = 0;
 	
-	// ƒAƒvƒŠ‰Šú‰»‚ğŒÄ‚Ô
+	// ã‚¢ãƒ—ãƒªåˆæœŸåŒ–ã‚’å‘¼ã¶
 	if ( !AppInit() )
 	{
 		mz_exit(1);
@@ -2202,12 +2202,12 @@ int APIENTRY WinMain (HINSTANCE hInstance,
 
 	__try
 	{
-		// ƒƒCƒ“ƒ‹[ƒvŠJn
+		// ãƒ¡ã‚¤ãƒ³ãƒ«ãƒ¼ãƒ—é–‹å§‹
 		AppMain();
 	}
 	__finally
 	{
-		// ƒŠƒ\[ƒXŠJ•ú
+		// ãƒªã‚½ãƒ¼ã‚¹é–‹æ”¾
 		free_resource();
 	}
 	
@@ -2227,7 +2227,7 @@ int get_scrnmode(void)
 }
 
 //--------------------------------------------------------------
-// ƒtƒHƒ“ƒgƒf[ƒ^‚ğ“Ç‚İ‚Ş
+// ãƒ•ã‚©ãƒ³ãƒˆãƒ‡ãƒ¼ã‚¿ã‚’èª­ã¿è¾¼ã‚€
 //--------------------------------------------------------------
 /*
   In:	 0 = Europe
@@ -2240,7 +2240,7 @@ int font_load(int md)
 	int result = 0;
 	FILE_HDL fp;
 
-	/* ƒtƒHƒ“ƒgƒf[ƒ^‚ğ“Ç‚İ‚Ş */
+	/* ãƒ•ã‚©ãƒ³ãƒˆãƒ‡ãƒ¼ã‚¿ã‚’èª­ã¿è¾¼ã‚€ */
 	fp = FILE_ROPEN((LPCSTR)(FontFileStr[md]));
 	if (fp != FILE_VAL_ERROR) {
 		FILE_READ(fp, font, 4096);
@@ -2249,7 +2249,7 @@ int font_load(int md)
 	else
 		result = -1;
 	
-	// ‚‘¬•¶š•\¦‚Ì‚½‚ß‚Éˆ³k
+	// é«˜é€Ÿæ–‡å­—è¡¨ç¤ºã®ãŸã‚ã«åœ§ç¸®
 	compress_font();
 
 	// VRAM Rebuild & BLT

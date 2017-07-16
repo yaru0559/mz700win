@@ -1,4 +1,4 @@
-#ifndef __mzbeep_h__
+﻿#ifndef __mzbeep_h__
 #define __mzbeep_h__
 
 #include <windows.h>

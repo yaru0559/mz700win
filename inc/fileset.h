@@ -1,4 +1,4 @@
-// fileset.h
+﻿// fileset.h
 // $Id: fileset.h 20 2009-05-25 18:20:32Z maru $
 
 #pragma once

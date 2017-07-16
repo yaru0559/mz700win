@@ -1,4 +1,4 @@
-//----------------------------------------------------------------------------
+ï»¿//----------------------------------------------------------------------------
 // File:MZddraw.cpp
 //
 // mz700win:DirectDraw Module
@@ -25,23 +25,23 @@ static TSCRSIZE fullscrsize[] =
 
 #if USE_DDRAW
 
-/* DirectDraw\‘¢‘Ì */
-static LPDIRECTDRAW2           lpDD2 = NULL;           /* DirectDraw2ƒIƒuƒWƒFƒNƒg */
-static LPDIRECTDRAWSURFACE     lpFRONTBUFFER = NULL;   /* •\ƒoƒbƒtƒ@ */
-static LPDIRECTDRAWSURFACE     lpBACKBUFFER = NULL;    /* — ƒoƒbƒtƒ@ */
-static LPDIRECTDRAWSURFACE     lpBACKBUFFER2 = NULL;   /* — ƒoƒbƒtƒ@‚Q */
-static LPDIRECTDRAWSURFACE     lpBITMAP = NULL;        /* ƒpƒ^[ƒ“ */
-static LPDIRECTDRAWPALETTE     lpPALETTE = NULL;       /* ƒpƒŒƒbƒg */
-static LPDIRECTDRAWCLIPPER     lpCLIP = NULL;			/* ƒNƒŠƒbƒv */
+/* DirectDrawæ§‹é€ ä½“ */
+static LPDIRECTDRAW2           lpDD2 = NULL;           /* DirectDraw2ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ */
+static LPDIRECTDRAWSURFACE     lpFRONTBUFFER = NULL;   /* è¡¨ãƒãƒƒãƒ•ã‚¡ */
+static LPDIRECTDRAWSURFACE     lpBACKBUFFER = NULL;    /* è£ãƒãƒƒãƒ•ã‚¡ */
+static LPDIRECTDRAWSURFACE     lpBACKBUFFER2 = NULL;   /* è£ãƒãƒƒãƒ•ã‚¡ï¼’ */
+static LPDIRECTDRAWSURFACE     lpBITMAP = NULL;        /* ãƒ‘ã‚¿ãƒ¼ãƒ³ */
+static LPDIRECTDRAWPALETTE     lpPALETTE = NULL;       /* ãƒ‘ãƒ¬ãƒƒãƒˆ */
+static LPDIRECTDRAWCLIPPER     lpCLIP = NULL;			/* ã‚¯ãƒªãƒƒãƒ— */
 
 #endif //USE_DDRAW
 
-static DWORD	nowsynctime;							/* Œ»İ‚Ìƒ^ƒCƒ}[ */
-static DWORD	nextsynctime;							/* ŸƒtƒŠƒbƒv‚·‚éƒ^ƒCƒ}[’l */
+static DWORD	nowsynctime;							/* ç¾åœ¨ã®ã‚¿ã‚¤ãƒãƒ¼ */
+static DWORD	nextsynctime;							/* æ¬¡ãƒ•ãƒªãƒƒãƒ—ã™ã‚‹ã‚¿ã‚¤ãƒãƒ¼å€¤ */
 
 #if USE_DDRAW
 
-/* DirectDrawƒ[ƒN */
+/* DirectDrawãƒ¯ãƒ¼ã‚¯ */
 static DDSURFACEDESC	ddsd;
 static DDSCAPS			ddscaps;
 static DDBLTFX		    ddbltfx;	
@@ -50,16 +50,16 @@ static DDBLTFX			ddbltfx_cls;
 #endif //USE_DDRAW
 
 /********************/
-/* DirectDraw‚Ìì¬ */
+/* DirectDrawã®ä½œæˆ */
 /********************/
 BOOL CreateDirectDraw(HWND hwnd)
 {
 #if USE_DDRAW
 //	DDCAPS	DDDriverCaps;
 //	DDCAPS	DDHELCaps;
-	LPDIRECTDRAW lpDD = NULL;									/* DirectDrawƒIƒuƒWƒFƒNƒg */
+	LPDIRECTDRAW lpDD = NULL;									/* DirectDrawã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ */
 	
-    /* DirectDraw‚Ì‰Šú‰» */
+    /* DirectDrawã®åˆæœŸåŒ– */
     if (DirectDrawCreate(NULL, &lpDD, NULL) != DD_OK)
 	{
     	MessageBox(hwnd, "DirectDraw initialize failed !",
@@ -75,14 +75,14 @@ BOOL CreateDirectDraw(HWND hwnd)
 
 	if (lpDD != NULL) { lpDD->Release();lpDD=NULL; }
 
-	/* DDBLTFX—pƒ[ƒNì¬ */
+	/* DDBLTFXç”¨ãƒ¯ãƒ¼ã‚¯ä½œæˆ */
     ZeroMemory(&ddbltfx, sizeof(DDBLTFX));
     ddbltfx.dwSize = sizeof(DDBLTFX);
 
-    ZeroMemory(&ddbltfx_cls, sizeof(DDBLTFX));							/* ClearScreen—pƒ[ƒN */
+    ZeroMemory(&ddbltfx_cls, sizeof(DDBLTFX));							/* ClearScreenç”¨ãƒ¯ãƒ¼ã‚¯ */
 #endif
 
-	/* “¯Šúƒ^ƒCƒ}[‚Ì‰Šú‰» */
+	/* åŒæœŸã‚¿ã‚¤ãƒãƒ¼ã®åˆæœŸåŒ– */
 	nowsynctime = get_timer();
 	nextsynctime = nowsynctime + SyncTime;
 
@@ -90,7 +90,7 @@ BOOL CreateDirectDraw(HWND hwnd)
 }
 
 /****************************************/
-/* DirectDraw‚Ì‰Šú‰»iƒtƒ‹ƒXƒNƒŠ[ƒ“j */
+/* DirectDrawã®åˆæœŸåŒ–ï¼ˆãƒ•ãƒ«ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ï¼‰ */
 /****************************************/
 BOOL InitDirectDrawFull(HWND hwnd, int xsize, int ysize)
 {
@@ -114,7 +114,7 @@ BOOL InitDirectDrawFull(HWND hwnd, int xsize, int ysize)
 }
 
 /************************************/
-/* ƒtƒ‹ƒXƒNƒŠ[ƒ“—pƒT[ƒtƒFƒX‚Ìì¬ */
+/* ãƒ•ãƒ«ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ç”¨ã‚µãƒ¼ãƒ•ã‚§ã‚¹ã®ä½œæˆ */
 /************************************/
 BOOL MakeScreenSurface(void)
 {
@@ -123,7 +123,7 @@ BOOL MakeScreenSurface(void)
 	DDCAPS	DDDriverCaps;
 	DDCAPS	DDHELCaps;
 
-	/* DirectDrawƒhƒ‰ƒCƒo‚Ì”\—Í‚ğ‚f‚…‚” */
+	/* DirectDrawãƒ‰ãƒ©ã‚¤ãƒã®èƒ½åŠ›ã‚’ï¼§ï½…ï½” */
 	ZeroMemory(&DDDriverCaps,sizeof(DDDriverCaps));
 	DDDriverCaps.dwSize=sizeof(DDDriverCaps);
 	ZeroMemory(&DDHELCaps,sizeof(DDHELCaps));
@@ -131,21 +131,21 @@ BOOL MakeScreenSurface(void)
 	
 	lpDD2->GetCaps(&DDDriverCaps,&DDHELCaps);
 
-    /* •\ƒoƒbƒtƒ@‚Ì‰Šú‰» */
+    /* è¡¨ãƒãƒƒãƒ•ã‚¡ã®åˆæœŸåŒ– */
     ZeroMemory(&ddsd, sizeof(ddsd));
     ddsd.dwSize = sizeof(ddsd);
     ddsd.dwFlags = DDSD_CAPS|DDSD_BACKBUFFERCOUNT;
     ddsd.ddsCaps.dwCaps =
         DDSCAPS_PRIMARYSURFACE|DDSCAPS_FLIP|DDSCAPS_COMPLEX;
 	
-	/* ‚u‚q‚`‚l—e—Ê‚É‚æ‚Á‚ÄBack Buffer‚Ì”‚ğŒˆ‚ß‚é */
+	/* ï¼¶ï¼²ï¼¡ï¼­å®¹é‡ã«ã‚ˆã£ã¦Back Bufferã®æ•°ã‚’æ±ºã‚ã‚‹ */
     ddsd.dwBackBufferCount = 2;
 	if (DDDriverCaps.dwVidMemFree <= 0x200000) ddsd.dwBackBufferCount--;
 
-	/* ƒvƒ‰ƒCƒ}ƒŠƒT[ƒtƒFƒX‚Ìì¬ */
+	/* ãƒ—ãƒ©ã‚¤ãƒãƒªã‚µãƒ¼ãƒ•ã‚§ã‚¹ã®ä½œæˆ */
 	lpDD2->CreateSurface(&ddsd, &lpFRONTBUFFER, NULL);
 
-    /* — ƒoƒbƒtƒ@‚Ì‰Šú‰» */
+    /* è£ãƒãƒƒãƒ•ã‚¡ã®åˆæœŸåŒ– */
     ddscaps.dwCaps = DDSCAPS_BACKBUFFER;
     ddchk = lpFRONTBUFFER->GetAttachedSurface(&ddscaps, &lpBACKBUFFER);
 	if (ddchk != DD_OK)
@@ -155,19 +155,19 @@ BOOL MakeScreenSurface(void)
 		return FALSE;
 	}
 
-    /* ƒpƒŒƒbƒg‚Ì¶¬•ƒtƒƒ“ƒgƒoƒbƒtƒ@‚ÉŒ‹‚Ñ•t‚¯‚éB */
+    /* ãƒ‘ãƒ¬ãƒƒãƒˆã®ç”Ÿæˆï¼†ãƒ•ãƒ­ãƒ³ãƒˆãƒãƒƒãƒ•ã‚¡ã«çµã³ä»˜ã‘ã‚‹ã€‚ */
 	if (lpPALETTE) { lpPALETTE->Release(); lpPALETTE=NULL; }
     lpDD2->CreatePalette(DDPCAPS_8BIT, &LogicalPalette.aEntries[0], &lpPALETTE, NULL);
     lpFRONTBUFFER->SetPalette(lpPALETTE);
 
-	/* ‚Æ‚è‚ ‚¦‚¸ƒT[ƒtƒFƒX‚ğƒNƒŠƒA */
+	/* ã¨ã‚Šã‚ãˆãšã‚µãƒ¼ãƒ•ã‚§ã‚¹ã‚’ã‚¯ãƒªã‚¢ */
 	ClearScreen();
 #endif //USE_DDRAW	
 	return TRUE;
 }
 
 /**********************************************************/
-/* ƒXƒvƒ‰ƒCƒgƒT[ƒtƒFƒX‚Æƒtƒƒ“ƒgƒoƒbƒtƒ@‚ÆƒpƒŒƒbƒg‚ğ”jŠü */
+/* ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã‚µãƒ¼ãƒ•ã‚§ã‚¹ã¨ãƒ•ãƒ­ãƒ³ãƒˆãƒãƒƒãƒ•ã‚¡ã¨ãƒ‘ãƒ¬ãƒƒãƒˆã‚’ç ´æ£„ */
 /**********************************************************/
 void ReleaseDirectDraw(void)
 {
@@ -183,19 +183,19 @@ void ReleaseDirectDraw(void)
 }
 
 /********************/
-/* DirectDraw‚ÌI—¹ */
+/* DirectDrawã®çµ‚äº† */
 /********************/
 void EndDirectDraw(void)
 {
 	HANDLE hProcess = GetCurrentProcess();
 	
-	// ƒEƒBƒ“ƒhƒE‚Å‚ ‚ê‚ÎAƒvƒƒZƒX‚Ì—Dæ“x‚ğ’Êí‚É
+	// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã§ã‚ã‚Œã°ã€ãƒ—ãƒ­ã‚»ã‚¹ã®å„ªå…ˆåº¦ã‚’é€šå¸¸ã«
 	if (hProcess)
 	{
 		SetPriorityClass(hProcess, NORMAL_PRIORITY_CLASS);
 	}
 		
-	ReleaseDirectDraw();												/* ƒXƒvƒ‰ƒCƒgƒT[ƒtƒFƒX‚Æƒtƒƒ“ƒgƒoƒbƒtƒ@‚ÆƒpƒŒƒbƒg‚ğ”jŠü */
+	ReleaseDirectDraw();												/* ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã‚µãƒ¼ãƒ•ã‚§ã‚¹ã¨ãƒ•ãƒ­ãƒ³ãƒˆãƒãƒƒãƒ•ã‚¡ã¨ãƒ‘ãƒ¬ãƒƒãƒˆã‚’ç ´æ£„ */
 
 #if USE_DDRAW
     if (lpDD2 != NULL) { lpDD2->Release();lpDD2=NULL; }
@@ -203,7 +203,7 @@ void EndDirectDraw(void)
 }
 
 /**************/
-/* ‰æ–Ê‚ÌÁ‹ */
+/* ç”»é¢ã®æ¶ˆå» */
 /**************/
 void ClearScreen(void)
 {
@@ -216,7 +216,7 @@ void ClearScreen(void)
 }
 
 /****************/
-/* ‘S‰æ–Êƒ‚[ƒh */
+/* å…¨ç”»é¢ãƒ¢ãƒ¼ãƒ‰ */
 /****************/
 int ChangeToFullScreen(void)
 {
@@ -253,7 +253,7 @@ void redraw_win_frame(HWND hwnd)
 }
 
 /*******************************/
-/* GDI‚ÆDirectDraw‚Ì‚·‚è‡‚í‚¹ */
+/* GDIã¨DirectDrawã®ã™ã‚Šåˆã‚ã› */
 /*******************************/
 void flip2gdi(void)
 {
@@ -263,7 +263,7 @@ void flip2gdi(void)
 }
 
 /********************/
-/* ƒEƒBƒ“ƒhƒE‚É•`‰æ */
+/* ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã«æç”» */
 /********************/
 void update_winscr(void)
 {
@@ -289,7 +289,7 @@ void update_winscr(void)
 	else
 	{
 		// Full Screen
-		if (lpFRONTBUFFER==NULL) return;								/* BACKBUFFER‚ª–¢¶¬‚È‚çreturn */
+		if (lpFRONTBUFFER==NULL) return;								/* BACKBUFFERãŒæœªç”Ÿæˆãªã‚‰return */
 	
 		/* Full-Screen */
 		if (lpFRONTBUFFER->IsLost())
@@ -300,7 +300,7 @@ void update_winscr(void)
 			if (MakeScreenSurface())
 			{
 				mz_refresh_screen(REFSC_ALL);
-				// ƒvƒƒZƒX‚Ì—Dæ“x‚ğ—Dæ‚É–ß‚·
+				// ãƒ—ãƒ­ã‚»ã‚¹ã®å„ªå…ˆåº¦ã‚’å„ªå…ˆã«æˆ»ã™
 				HANDLE hProcess = GetCurrentProcess();
 				if (hProcess)
 				{
@@ -310,11 +310,11 @@ void update_winscr(void)
 			else return;
 		}
 
-		GetClientRect(hwndApp,&destrect);								/* ©•ª‚ÌƒEƒBƒ“ƒhƒE‚Ì‹éŒ` */
+		GetClientRect(hwndApp,&destrect);								/* è‡ªåˆ†ã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®çŸ©å½¢ */
 		pt.x = 0;
 		pt.y = 0;
 		ClientToScreen(hwndApp,&pt);
-		OffsetRect(&destrect,pt.x,pt.y);								/* destƒEƒBƒ“ƒhƒE‚Ì‹éŒ` */
+		OffsetRect(&destrect,pt.x,pt.y);								/* destã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®çŸ©å½¢ */
 
 		ddchk = lpFRONTBUFFER->GetDC(&hdc);
 		if (ddchk == DD_OK)

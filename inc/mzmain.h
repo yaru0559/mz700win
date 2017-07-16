@@ -1,4 +1,4 @@
-/*  $Id: mzmain.h 20 2009-05-25 18:20:32Z maru $ */
+﻿/*  $Id: mzmain.h 20 2009-05-25 18:20:32Z maru $ */
 
 #ifdef __cplusplus
 extern "C" {

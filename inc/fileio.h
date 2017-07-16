@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #ifndef __FILEIO_H__
 #define __FILEIO_H__
@@ -11,7 +11,7 @@ extern "C"
 typedef HANDLE FILE_HDL;
 
 #define FILE_VAL_ERROR 	INVALID_HANDLE_VALUE	// Win32:Error
-// SEEK�p
+// SEEK用
 #define FILE_SEEK_SET	FILE_BEGIN
 #define FILE_SEEK_CUR	FILE_CURRENT
 #define FILE_SEEK_END	FILE_END
