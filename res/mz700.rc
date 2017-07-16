@@ -30,7 +30,9 @@ LANGUAGE LANG_JAPANESE, SUBLANG_DEFAULT
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
 APPICON                 ICON                    "mzship.ico"
+
 MZICON                  ICON                    "mz.ico"
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -38,7 +40,9 @@ MZICON                  ICON                    "mz.ico"
 //
 
 IDC_CURHAND             CURSOR                  "hand.cur"
+
 IDC_CURSOR1             CURSOR                  "cursor1.cur"
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -127,8 +131,8 @@ END
 //
 
 VERSIONINFO_1 VERSIONINFO
- FILEVERSION 0,5,6,1
- PRODUCTVERSION 0,5,6,1
+ FILEVERSION 0,5,7,0
+ PRODUCTVERSION 0,5,7,0
  FILEFLAGSMASK 0x0L
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -145,13 +149,13 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "-"
             VALUE "FileDescription", "MZ-700/1500 Emulator For Win32"
-            VALUE "FileVersion", "0.5.6.1"
+            VALUE "FileVersion", "0.5.7.0"
             VALUE "InternalName", "mz700win"
-            VALUE "LegalCopyright", "(C) 1998-2009 Marukun 2009-2016 Marukun/Youkan"
+            VALUE "LegalCopyright", "(C) 1998-2009 Marukun 2009-2017 Marukun/Youkan"
             VALUE "LegalTrademarks", "-"
             VALUE "OriginalFilename", "MZ700WIN.EXE"
             VALUE "ProductName", "MZ700WIN"
-            VALUE "ProductVersion", "0.5.6.1"
+            VALUE "ProductVersion", "0.5.7.0"
         END
     END
     BLOCK "VarFileInfo"
@@ -175,7 +179,7 @@ BEGIN
     PUSHBUTTON      "OK",IDOK,70,105,36,14,BS_CENTER | BS_VCENTER
     LTEXT           "MZ-700 Emulator 'MZ700WIN'",-1,32,12,92,8,NOT WS_GROUP
     ICON            "AppIcon",-1,8,12,20,20
-    LTEXT           "Version 0.56a",-1,32,24,100,8,NOT WS_GROUP
+    LTEXT           "Version 0.57",-1,32,24,100,8,NOT WS_GROUP
     CONTROL         "",-1,"Static",SS_ETCHEDHORZ,28,36,140,1
     LTEXT           "Copyright (C) 1998-2017 Marukun/Youkan.",-1,32,39,139,8,NOT WS_GROUP
     LTEXT           "Based on Russell Marks's 'mz700em'.",-1,32,49,124,8,NOT WS_GROUP
@@ -278,6 +282,7 @@ END
 //
 
 TOOLBAR                 BITMAP                  "toolbar.bmp"
+
 #endif    // “ú–{Œê (“ú–{) resources
 /////////////////////////////////////////////////////////////////////////////
 

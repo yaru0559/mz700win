@@ -23,7 +23,7 @@ static short			sampleshift = 2;
 static DWORD			sending = FALSE;
 static DWORD			buffersize = 0;
 static DWORD			nextwrite = 0;
-static BYTE				DS_UIMode = 0;
+static BOOL				DS_MuteMode = FALSE;
 
 //extern	BYTE	OPM_SW;
 //extern	void FASTCALL PSG_Update(WORD* buf, DWORD length);
@@ -48,7 +48,7 @@ BOOL DSound_Init(DWORD rate, DWORD buflen)
 
 	buffer_length = buflen;
 	sampleshift = 2;
-	DS_UIMode = 0;
+	DS_MuteMode = 0;
 
 	buffersize = (rate * 4 * buffer_length / 1000) & ~7;
 
@@ -152,6 +152,14 @@ void CALLBACK DSound_TimeProc(unsigned int uid, unsigned int tmp, DWORD user, DW
 }
 
 // ---------------------------------------------------------------------------
+//  サウンドのミュート
+// ---------------------------------------------------------------------------
+void DSound_Mute(BOOL sw)
+{
+	DS_MuteMode = sw;
+}
+
+// ---------------------------------------------------------------------------
 //  タイマー時の本体
 // ---------------------------------------------------------------------------
 void DSound_Send(void)
@@ -194,22 +202,16 @@ void DSound_Send(void)
 			if (DS_OK != IDirectSoundBuffer_Lock(lpdsb, nextwrite, writelength,
 						 (void**) &a1, &al1, (void**) &a2, &al2, 0))
 				goto ret;
-/*
-			if (!DS_UIMode)	// メニューとか出てたら音を止める
-			{
-								// DSバッファに直接書き込む。ちと荒業か？ ^^;
-				if (a1) PSG_Update((WORD*)a1, al1 >> sampleshift);
-				if (a2) PSG_Update((WORD*)a2, al2 >> sampleshift);
 
-				if (OPM_SW)
-				{
-					if (a1) OPM_Update((WORD*)a1, al1 >> sampleshift);
-					if (a2) OPM_Update((WORD*)a2, al2 >> sampleshift);
-				}
+			if (DS_MuteMode)	// メニューとか出てたら音を止める
+			{
+				// DSバッファを無音で埋める
+				if (a1) ZeroMemory(a1, al1);
+				if (a2) ZeroMemory(a2, al2);
 			}
 			else
-	*/
 			{
+				// 通常の処理
 				if (a1) ZeroMemory(a1, al1);
 				if (a2) ZeroMemory(a2, al2);
 

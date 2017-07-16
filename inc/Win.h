@@ -3,6 +3,7 @@
 #ifndef __WIN_H__
 #define __WIN_H__
 
+//
 #ifdef __cplusplus
 extern "C"
 {
@@ -135,7 +136,7 @@ extern WORD		sound_di;												/* ＳＥ禁止モード */
 extern WORD		sound_md;												/* サウンドモード */
 //extern WORD		mz1500mode;												/* MZ-1500モード */
 extern WORD		key_patch;												/* KeyTableパッチあてフラグ */
-extern WORD		bk_color;												/* 簡易MZ-80K/C/1200パッチモード */
+extern int		bk_color;												/* 簡易MZ-80K/C/1200パッチモード */
 extern WORD		use_cmos;												/* MZ-1R12 0:OFF 1:ON */
 
 extern TMENUVAL	menu;

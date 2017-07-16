@@ -1,3 +1,5 @@
+#pragma once
+
 #ifndef mz700win_common_h
 #define mz700win_common_h
 

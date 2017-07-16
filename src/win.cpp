@@ -20,8 +20,9 @@
 #include "mz700win.h"
 #include "Z80.h"
 
-#include "dprintf.h"
 #include "win.h"
+#include "APPWIN.h"
+#include "dprintf.h"
 #include "fileio.h"
 #include "fileset.h"
 
@@ -133,8 +134,11 @@ WORD	sound_di = 0;													/* ＳＥ禁止モード */
 WORD	sound_md = 0;													/* サウンドモード */
 //WORD	mz1500mode = 0;													/* MZ-1500モード */
 WORD	key_patch = 0;													/* KeyTableパッチあてフラグ */
-WORD	bk_color = 0;													/* モニタ画面背景色 */
+int		bk_color = 0;													/* モニタ画面背景色 */
 WORD	use_cmos;														/* MZ-1R12 0:OFF 1:ON */
+
+// C++ Class
+APPWIN	appwin;
 
 //
 BOOL add_menu_bmp(HMENU hmenu, UINT id,UINT bmp)
@@ -687,6 +691,9 @@ BOOL set_client_size(HWND hWnd, int width, int height)
 #if _MSC_VER >= 1900			// Visual Studio 2015 以降だったらWindow縦を伸ばす
 	if (win_sy > FORMHEIGHT) {
 		win_sy += 10;			// 10 だと何故か帳尻が合う
+	}
+	if (win_sx > FORMWIDTH) {
+		win_sx += 10;			// 10 だと何故か帳尻が合う
 	}
 #endif
 
@@ -1739,8 +1746,11 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_COMMAND:
 		return AppCommand(hwnd,message,wParam,lParam);
 
-	case WM_ENTERIDLE:
 	case WM_ENTERMENULOOP:
+		// [Alt]を押してる間、サウンドをオフにする
+		DSound_Mute(TRUE);
+
+	case WM_ENTERIDLE:
 		fAppActive = FALSE;
 		break;
 
@@ -1819,6 +1829,7 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 		
 	case WM_EXITMENULOOP:
 		fAppActive = TRUE;
+		DSound_Mute(FALSE);
 		mz_keyport_init();
 		break;
 
@@ -2020,11 +2031,13 @@ int APIENTRY WinMain (HINSTANCE hInstance,
 		if (a=='\x00') break;											// コマンドラインの終了チェック
 		switch (a) {
 		case 'c':
-			if (sscanf_s(lpszCmdParam+i+1,"%2hx",&bk_color, sizeof(bk_color)) != 1)	{
+			if (sscanf_s(lpszCmdParam + i + 1, "%2Ix", &bk_color) != 1)
+//			if (sscanf_s(lpszCmdParam + i + 1, "%2x", &bk_color, sizeof(bk_color)) != 1)
+			{
 				bk_color = 0x70;
 			}
 
-			/* 簡易MZ-80K/C/1200モード */
+			// 簡易MZ-80K/C/1200モード
 			i+=2;
 			break;
 			
@@ -2180,7 +2193,7 @@ int APIENTRY WinMain (HINSTANCE hInstance,
 	
 	fullsc_timer = 0;
 	
-	/* アプリ初期化を呼ぶ */
+	// アプリ初期化を呼ぶ
 	if ( !AppInit() )
 	{
 		mz_exit(1);
@@ -2189,12 +2202,12 @@ int APIENTRY WinMain (HINSTANCE hInstance,
 
 	__try
 	{
-		/* メインループ開始 */
+		// メインループ開始
 		AppMain();
 	}
 	__finally
 	{
-		/* リソース開放 */
+		// リソース開放
 		free_resource();
 	}
 	

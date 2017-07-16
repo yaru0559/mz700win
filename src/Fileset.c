@@ -29,7 +29,7 @@
 // ファイル名表示用文字列
 //////////////////////////
 /* for Japanese */
-static const UINT8 mzascii_j[]=
+static const UINT8 /* *const */ mzascii_j[] =
 {
 	"　！”＃＄％＆’（）＊＋，－．／"\
 	"０１２３４５６７８９：；＜＝＞？"\
@@ -49,7 +49,7 @@ static const UINT8 mzascii_j[]=
 };
 
 /* for Europe */
-static const UINT8 mzascii_e[]=
+static const UINT8 /* *const */ mzascii_e[]=
 {
 	" !\x22#$%&\x27()*+,-./"											/* 20 */
 	"0123456789:;<=>?"													/* 30 */
@@ -158,7 +158,7 @@ static BOOL setfile_foropen(LPCSTR ttlmsg, UINT8 *fnbuf, UINT8 *opendir,
 	UINT8 filebuf[MAX_PATH];
 	UINT8 tempdir[MAX_PATH];
 
-	/* ファイルオープンダイアログを開く */
+	// ファイルオープンダイアログを開く
 	ZeroMemory(&ofn,sizeof(OPENFILENAME));
 	ofn.lStructSize = sizeof(OPENFILENAME);								/* 構造体サイズ */
 	ofn.hwndOwner = hwndApp;											/* ダイアログのオーナー */

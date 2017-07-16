@@ -164,6 +164,7 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\APPWIN.cpp" />
     <ClCompile Include="src\defkey.c">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -229,7 +230,7 @@
     </ClCompile>
     <ClCompile Include="src\MZXInput.cpp" />
     <ClCompile Include="src\sn76489an.c" />
-    <ClCompile Include="src\Win.cpp" />
+    <ClCompile Include="src\win.cpp" />
     <ClCompile Include="z80\z80.c">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -244,6 +245,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\APPWIN.h" />
     <ClInclude Include="inc\COMMON.H" />
     <ClInclude Include="inc\defkey.h" />
     <ClInclude Include="inc\dprintf.h" />
