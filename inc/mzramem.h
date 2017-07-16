@@ -1,5 +1,10 @@
 /* $Id: mzramem.h 1 2007-07-27 06:17:19Z maru $ */
 
+#pragma once
+
+#ifndef __MZRAMEM_H__
+#define __MZRAMEM_H__
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -22,11 +27,8 @@ void S_HUBAS_rddata(Z80_Regs *Regs);
 void S_HUBAS_wrinf(Z80_Regs *Regs);
 void S_HUBAS_wrdata(Z80_Regs *Regs);
 
-//	
-#ifndef MZRAMEM_H_ 
-#define MZRAMEM_H_
-#endif
-
 #ifdef __cplusplus
 }
 #endif 
+
+#endif	// __MZRAMEM_H__
