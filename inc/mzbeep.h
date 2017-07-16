@@ -1,4 +1,6 @@
-﻿#ifndef __mzbeep_h__
+﻿#pragma once
+
+#ifndef __mzbeep_h__
 #define __mzbeep_h__
 
 #include <windows.h>
@@ -7,11 +9,11 @@
 extern "C" {
 #endif
 
-void mzbeep_init(int freq);
-void mzbeep_clean();
-void mzbeep_stop();
-void mzbeep_setFreq(int arg);
-void mzbeep_update(short* ptr, int cou);
+void mz8253beep_init(int freq);
+void mz8253beep_clean();
+void mz8253beep_stop();
+void mz8253beep_setFreq(int arg);
+void mz8253beep_update(short* ptr, int cou);
 
 #ifdef __cplusplus
 }

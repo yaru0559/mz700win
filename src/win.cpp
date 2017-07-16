@@ -290,7 +290,6 @@ UINT8 * CreateOffScreen(void)
 	BufferHeader.Header.biClrImportant = 0;
 			
 	BufferHeader.Header.biWidth = FORMWIDTH;
-//	BufferHeader.Header.biHeight = FORMHEIGHT;							/* bottom-up DIB */
 	BufferHeader.Header.biHeight = -FORMHEIGHT;							/* top-down DIB */
 			
 	/*  create an identity palette from the DIB's color table */
@@ -409,15 +408,6 @@ void FreeOffScreen(void)
 		Buffer = NULL;
 	}
 }
-
-/*
-  実行途中でウィンドウ閉じてプログラムを終了
- */
-void mz_exit(int code)
-{
-	PostMessage(hwndApp,WM_CLOSE,0,0L);
-}
-
 
 /* */
 void ShowInfo(void)
@@ -543,30 +533,17 @@ BOOL AppInit(void)
 {
 	int errflg = 0;
 
-	/* キーマトリクスの定義ファイルの読み込み */
+	// キーマトリクスの定義ファイルの読み込み
 	errflg = read_defkey();
 	if (errflg) return FALSE;
 
-	/* エミュレータで使うメモリの確保 */
+	// エミュレータで使うメモリの確保
 	errflg = mz_alloc_mem();
 	if (errflg) return FALSE;
 
-	/* screenメニューの設定値をセット */
-	set_screen_menu(menu.screen);
-	/* fullscreenメニューの設定値をセット */
-	set_fullscreen_menu(scrnmode);
-	/* リフレッシュ */
-	set_select_chk(MENU_REFRESH_EVERY,4,menu.scrn_freq);
-	/* keytypeメニューの設定値をセット */
-	set_keytype_menu(menu.keytype);
-	/* fontsetメニューの設定値をセット */
-	set_fontset_menu(menu.fontset);
-	/* pcg700-swの設定値をセット */
-	set_pcg700_menu(menu.pcg700);
-	
-	/* CMOS.RAM load */
+	// CMOS.RAM load
 	mz_load_cmos();
-	
+
 	return TRUE;
 }
 /*
@@ -616,28 +593,14 @@ void AppExit(void)
 	WritePrivateProfileString(IniSection_Folder,"STATES",
 		StateOpenDir, IniFileStr);
 
-	/* パレット削除 */
+	// パレット削除
 	if (hpalApp) {
 		DeleteObject(hpalApp);
 	}
 
-	/* 仮想画面開放 */
+	// 仮想画面開放
 	FreeOffScreen();
 
-}
-/*
-  アプリ実行の時の処理
- */
-void AppMain(void)
-{
-	/* タイマー初期化 */
-	create_mmtimer();
-
-	create_thread();
-
-	/* MZ-700 実行開始 */
-	rom_check();				// ROMモニタの存在チェック
-	mz_main();
 }
 
 // マルチメディアタイマ 解像度設定
@@ -645,7 +608,7 @@ void create_mmtimer(void)
 {
 	int res;
 	
-	/* mmtimer 解像度設定 */
+	// mmtimer 解像度設定
 	timeGetDevCaps(&tcaps,sizeof(tcaps));
 	res=tcaps.wPeriodMin;
 
@@ -674,9 +637,7 @@ void get_window_size(int m)
 			  (GetSystemMetrics(SM_CXFIXEDFRAME)*2);
 }
 
-// *ToDo* 20170512 
 // クライアント領域のサイズからWindow全体のサイズを設定
-// ref: http://d.hatena.ne.jp/yus_iri/20110911/1315730376
 BOOL set_client_size(HWND hWnd, int width, int height)
 {
 #if 0
@@ -712,8 +673,7 @@ void adjust_window_size(HWND hwnd)
 	h = rc.bottom - rc.top;
 	menu_h = GetSystemMetrics(SM_CYMENU);
 
-	if (h < FORMHEIGHT)
-	{
+	if (h < FORMHEIGHT) {
 		win_sy += menu_h;
 		MoveWindow(hwnd,win_xpos,win_ypos,win_sx,win_sy,TRUE);
 	}
@@ -1968,7 +1928,7 @@ void free_resource(void)
 	DSound_Cleanup();												// DirectSound 停止
 
 	sn76489an_cleanup();
-	mzbeep_clean();
+	mz8253beep_clean();
 
 	end_thread();
 	free_mmtimer();													/* マルチメディアタイマー終了 */
@@ -2010,7 +1970,18 @@ int APIENTRY WinMain (HINSTANCE hInstance,
 	RECT destrect;
 	int a,i;
 
-#ifndef NDEBUG
+	// ref: https://msdn.microsoft.com/ja-jp/library/windows/desktop/ff485844(v=vs.85).aspx
+	// ウィンドウを作成するスレッドの場合は COINIT_APARTMENTTHREADED フラグを、その他のスレッドは COINIT_MULTITHREADED を使用するのが一般的です。
+	// 上記で説明したフラグに加えて、dwCoInit パラメーターに COINIT_DISABLE_OLE1DDE フラグを設定する方法も推奨されます。
+	// このフラグを設定することで、現在は使用されなくなった OLE (Object Linking and Embedding) 1.0 テクノロジに伴うオーバーヘッドの一部を回避できます。
+	HRESULT hr;
+	if (FAILED(hr = CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE)))
+	{
+		MessageBox(nullptr, "CoInitializeEx Init Error", "Error", MB_OK);
+		return FALSE;
+	}
+
+#ifdef _DEBUG
 	// ＶＣランタイムデバッグモードＯＮ
 	int nFlag = _CrtSetDbgFlag(_CRTDBG_REPORT_FLAG);
 	nFlag &= ~(_CRTDBG_CHECK_ALWAYS_DF|_CRTDBG_DELAY_FREE_MEM_DF|_CRTDBG_LEAK_CHECK_DF|
@@ -2059,12 +2030,12 @@ int APIENTRY WinMain (HINSTANCE hInstance,
 		
 	}
 	
-	/* Load accelerators */
+	// Load accelerators
 	hAccelApp = LoadAccelerators(hInstance, "AppMenu");
 
-	/* 二重起動チェック */
+	// 二重起動チェック
 	hPrevMutex = OpenMutex(MUTEX_ALL_ACCESS,FALSE,(LPCSTR)szAppName);
-	/*もし、オープンできれば以前のアプリケーションが起動している */
+	//もし、オープンできれば以前のアプリケーションが起動している
 	if (hPrevMutex) {
 		CloseHandle(hPrevMutex);
 		return FALSE;
@@ -2072,7 +2043,7 @@ int APIENTRY WinMain (HINSTANCE hInstance,
 	
 	hMutex = CreateMutex(FALSE,0,(LPCSTR)szAppName);
 	
-	/* ウインドウクラスの生成 */
+	// ウインドウクラスの生成
 //	wndclass.style   = CS_BYTEALIGNCLIENT | CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS;
 	wndclass.style   = CS_BYTEALIGNCLIENT;
 	wndclass.lpfnWndProc   = WndProc;
@@ -2093,22 +2064,27 @@ int APIENTRY WinMain (HINSTANCE hInstance,
 		return FALSE;
 	}
 
-	/* LoadLibrary */
+	// LoadLibrary
 	hUSER32 = GetModuleHandle("USER32.DLL");
 	if (hUSER32)
 	{
 		// WINNLSEnableIMEがあるのはDouble-Byte言語圏のみ
 		ptr_WINNLSEnableIME = (LPFNDLLFUNC) GetProcAddress(hUSER32, "WINNLSEnableIME");
-//		if (ptr_WINNLSEnableIME == NULL)
-//			MessageBox(hwndApp, "Error GetProcAddress" ,"Debug Information",MB_ICONINFORMATION|MB_OK);
+		if (ptr_WINNLSEnableIME == NULL) {
+#if 0
+			MessageBox(hwndApp, "Error GetProcAddress", "Debug Information", MB_ICONINFORMATION | MB_OK);
+			return FALSE;
+#endif
+		}
 		
 	}
 	else
 	{
 		MessageBox(hwndApp, "Error GetModuleHandle" ,"Debug Information",MB_ICONINFORMATION|MB_OK);
+		return FALSE;
 	}
 		
-	/* INIファイルの設定を読み込み */
+	// INIファイルの設定を読み込み
 	load_inifile();	
 	get_window_size(menu.screen);										/* win_sx,win_sy calc */
 
@@ -2151,40 +2127,34 @@ int APIENTRY WinMain (HINSTANCE hInstance,
 	ShowWindow(hwnd, nCmdShow);
 	UpdateWindow(hwnd);
 
-	// *ToDo* 20170512 
-//	set_client_size(hwndApp, win_sx, win_sy);
-
-	/* ミューテクスのリリース */
-//	ReleaseMutex(hMutex);
-
 	// rom_load()内で設定される
 //	use_cmos = 1;														// 1R12 オン
 
-	/* 画面モードを調べる */
+	// 画面モードを調べる
 	hdc = GetDC(hwnd);
     a = GetDeviceCaps(hdc, BITSPIXEL);
 	ReleaseDC(hwnd,hdc);
 	
 	SystemTask();
 
-	/* ウィンドウ状態変数初期化 */
+	// ウィンドウ状態変数初期化
 	fAppActive = TRUE;
 
-	/* ２つのフォントファイル名作成 */
+	// ２つのフォントファイル名作成
 	GetCurrentDirectory(sizeof(FontFileStr[0]),(LPSTR)FontFileStr[0]);
 	lstrcat((LPSTR)FontFileStr[0],"\\mz700fon.dat");
 	GetCurrentDirectory(sizeof(FontFileStr[1]),(LPSTR)FontFileStr[1]);
 	lstrcat((LPSTR)FontFileStr[1],"\\mz700fon.jp");
 
-	/* フォントメニュー選択可能かチェック */
-	/* EUROPE */
+	// フォントメニュー選択可能かチェック
+	// EUROPE
 	if (!FileExists(reinterpret_cast<LPCSTR>(FontFileStr[0])))
 	{
 		EnableMenuItem(hmenuApp, MENU_FONT_EUROPE, MF_BYCOMMAND | MF_GRAYED); // EUROPE
 		if (menu.fontset==0) menu.fontset=1;
 	}
 	
-	/* JAPAN */
+	// JAPAN
 	if (!FileExists(reinterpret_cast<LPCSTR>(FontFileStr[1])))
 	{
 		EnableMenuItem(hmenuApp, MENU_FONT_JAPAN, MF_BYCOMMAND | MF_GRAYED); // JAPAN選択不能
@@ -2192,25 +2162,62 @@ int APIENTRY WinMain (HINSTANCE hInstance,
 	}
 	
 	fullsc_timer = 0;
-	
+
+	// screenメニューの設定値をセット
+	set_screen_menu(menu.screen);
+	// fullscreenメニューの設定値をセット
+	set_fullscreen_menu(scrnmode);
+	// リフレッシュ
+	set_select_chk(MENU_REFRESH_EVERY, 4, menu.scrn_freq);
+	// keytypeメニューの設定値をセット
+	set_keytype_menu(menu.keytype);
+	// fontsetメニューの設定値をセット
+	set_fontset_menu(menu.fontset);
+	// pcg700-swの設定値をセット
+	set_pcg700_menu(menu.pcg700);
+
 	// アプリ初期化を呼ぶ
 	if ( !AppInit() )
 	{
-		mz_exit(1);
+		PostMessage(hwndApp, WM_CLOSE, 0, 0L);		// ウィンドウクローズ
 		return FALSE;
 	}
 
 	__try
 	{
 		// メインループ開始
-		AppMain();
+		// タイマー初期化
+		create_mmtimer();
+
+		create_thread();
+
+		// MZ-700 実行開始
+		rom_check();				// ROMモニタの存在チェック
+
+									// ＭＺのモニタのセットアップ
+		mz_mon_setup();
+
+		// カレントディレクトリ　設定
+		SetCurrentDirectory(LoadOpenDir);
+
+		// メインループ実行
+		mz_mainloop();
 	}
 	__finally
 	{
 		// リソース開放
 		free_resource();
 	}
-	
+
+_EXIT:
+	UnregisterClass(nullptr, hInstance);
+	// COM解放
+	CoUninitialize();
+
+#ifdef _DEBUG
+	OutputDebugString("**** Done. **** \n");
+#endif
+
 	return 0;
 }
 

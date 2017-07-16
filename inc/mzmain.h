@@ -93,7 +93,7 @@ BOOL load_ramfile(LPCSTR filename);
 BOOL save_state(LPCSTR filename);
 BOOL load_state(LPCSTR filename);
 
-void mainloop(void);
+void mz_mainloop(void);
 void setup_cpuspeed(int);
 
 int create_thread(void);

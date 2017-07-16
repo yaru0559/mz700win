@@ -161,10 +161,9 @@ void Z80_set_zero(Z80_Regs *, int);
 int Z80_get_zero(Z80_Regs *);
 
 //------------------
-void mzsnd_init(void);
+void mz8253snd_init(void);
 void mz_reset(void);
-void mz_main(void);
-void mz_psg_init(void);
+void mz_dcsg_init(void);
 
 void mz_keyport_init(void);
 void mz_keydown(WPARAM);
@@ -175,7 +174,6 @@ int pio_pitcount(void);
 int pitcount_job(int,int);
 
 void play8253(void);
-void playPSG(void);
 
 int pit_count(void);
 void vblnk_start(void);

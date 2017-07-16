@@ -310,7 +310,7 @@ int rom_load(unsigned char *x)
 	{
     	MessageBox(hwndApp, "Couldn't load font data.",
 				   "Error", MB_ICONEXCLAMATION|MB_OK);
-		mz_exit(1);
+		PostMessage(hwndApp, WM_CLOSE, 0, 0L);					// EXIT
 		return result;
 	}
 	
@@ -487,22 +487,6 @@ void mz_mon_setup(void)
 	// タイトルバー
 	wsprintf(strtmp, "%s %s",szAppName, machine_md_str[menu.machine]);
 	SetWindowText(hwndApp, strtmp);
-}
-
-//--------------------------------------------------------------
-// メイン部
-//--------------------------------------------------------------
-void mz_main(void)
-{
-	// ＭＺのモニタのセットアップ
-	mz_mon_setup();
-
-	// カレントディレクトリ　設定
-	SetCurrentDirectory(LoadOpenDir);
-
-	// メインループ実行
-	mainloop();
-
 }
 
 //-------------------------------------------------------------
@@ -882,7 +866,7 @@ BOOL load_state(LPCSTR filename)
 //-------------------------------------------------------------
 //  mz700win MAINLOOP
 //-------------------------------------------------------------
-void mainloop(void)
+void mz_mainloop(void)
 {
 	int _synctime = SyncTime;
 	int w;
@@ -893,11 +877,11 @@ void mainloop(void)
 	static DWORD Pad_bak;
 
 #ifdef ENABLE_FDC
-	UINT8 strtmp[MAX_PATH];
+	char strtmp[MAX_PATH];
 
 	// FDC 初期化
 	FDC_Init();
-	/* カレントディレクトリゲット */
+	// カレントディレクトリゲット
 	GetCurrentDirectory(sizeof(strtmp), strtmp);
 	strcat_s(strtmp, sizeof(strtmp), "\\test.D88");
 
@@ -905,15 +889,15 @@ void mainloop(void)
 	mz_set_fd(0, 0, strtmp);
 #endif
 
-	mzbeep_init(44100);
+	mz8253beep_init(44100);
 	sn76489an_init(44100, CPU_SPEED_BASE);
 
-	// DirectSound初期化
+	// DirectSoundの初期化。エラーでも続行（音源無しの場合）
 	if (!DSound_Init(44100, 50)) {
 		sound_di = TRUE;
 	}
-	// DirectSoundの初期化。エラーでも続行（音源無しの場合）
-	mzsnd_init();
+	// MZ700,1500 sound initiailze
+	mz8253snd_init();
 
 	// XInput初期化
 	XInput_Init();

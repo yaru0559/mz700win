@@ -672,9 +672,9 @@ BOOL LoadStateFile(void)
 			   "MZ700WIN", MB_ICONINFORMATION|MB_OK);
 
 			update_membank();
-			mz_psg_init();
+			mz_dcsg_init();
 			play8253();
-			playPSG();
+//			playPSG();
 			mz_refresh_screen(REFSC_ALL);
 		}
 		else

@@ -18,6 +18,8 @@ static	DWORD noise_md[2];
  */
 __inline int ADD_SATULATE_WAV(int mix, int val)
 {
+	// Visual C++ x86
+#if !defined(_M_AMD64) && defined(_MSC_VER)
 	__asm
 	{
 		mov eax,mix;
@@ -33,6 +35,13 @@ L01:
 L02:
 		mov mix,eax
 	}
+#else
+	// Others
+	mix += val;
+	if (mix < -32768) mix = -32768;
+	else
+	if (mix >  32767) mix = -32767;
+#endif
 	return mix;
 }
 
@@ -157,7 +166,6 @@ void sn76489an_update(int iNo, short* ptr, int cou) {
 			}
 			dat += (psgch->bPulse ? -psgch->vol: psgch->vol);
 		} // j
-//		ptr[i] += dat;
 		ptr[i] =ADD_SATULATE_WAV(ptr[i], dat);
 	
 	} //i

@@ -253,7 +253,7 @@ void mz_reset(void)
 	update_membank();
 
 	/* 1500ＰＳＧ初期化 */
-	mz_psg_init();
+	mz_dcsg_init();
 
 	/* キーポートの初期化 */
 	mz_keyport_init();
@@ -571,7 +571,7 @@ void play8253(void)
 	if ((!_8253_dat.beep_mask) ) {
 		if (_8253_dat.setsound)	{
 			_8253_dat.setsound = 0;
-			mzbeep_stop();
+			mz8253beep_stop();
 		}
 		return;
 	}
@@ -580,48 +580,36 @@ void play8253(void)
 	freqtmp = _8253_stat[0].counter_base;		
 	if (_8253_dat.makesound == 0) {
 	  _8253_dat.setsound = 0;
-		mzbeep_stop();
+		mz8253beep_stop();
 	}
 	else
 	if (freqtmp>=0) {
 		// play
 		freq2 = (895000 / freqtmp);
 		_8253_dat.setsound = 1;
-		mzbeep_setFreq(freq2);
+		mz8253beep_setFreq(freq2);
 	}
 	else
 	{
 		// stop
-		mzbeep_stop();
+		mz8253beep_stop();
 	}
 }
 
 ///////////////////////////////
 // MZ700,1500 sound initiailze
 ///////////////////////////////
-void mzsnd_init(void)
+void mz8253snd_init(void)
 {
-	mzbeep_stop();
+	mz8253beep_stop();
 }
 
-// PSG Initialize
-void mz_psg_init(void)
+// DCSG Initialize
+void mz_dcsg_init(void)
 {
 	if (sound_di) return;
 
 	sn76489an_reset();
-}
-
-// PSG Out
-void mz_psg_out(int port,int value)
-{
-	// No Use
-}
-
-// PSG Play
-void playPSG(void)
-{
-	// No Use
 }
 
 ////////////////////////////////////////////////////////////

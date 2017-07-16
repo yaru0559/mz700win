@@ -105,7 +105,6 @@ void DrawScreen(HDC,int);
 
 void update_winscr(void);
 
-void mz_exit(int);
 void free_resource(void);
 
 BOOL isAppActive(void);

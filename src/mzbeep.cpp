@@ -11,8 +11,7 @@ static	int pulse_vec;
 /*
  * コンストラクタ
  */
-void mzbeep_init(int freq) {
-//	dprintf("mzbeep()\n");
+void mz8253beep_init(int freq) {
 
 	hw_freq = freq;
 	bPlaying = false;
@@ -24,34 +23,30 @@ void mzbeep_init(int freq) {
 /*
  * デストラクタ
  */
-void mzbeep_clean() {
+void mz8253beep_clean() {
 	bPlaying = false;
-//	dprintf("~mzbeep()\n");
 }
 
 /*
  * 消音
  */
-void mzbeep_stop() {
+void mz8253beep_stop() {
 	bPlaying = false;
-//	dprintf("mzbeep::stop()\n");
 }
 
 /*
  * 周波数の設定
  */
-void mzbeep_setFreq(int arg) {
+void mz8253beep_setFreq(int arg) {
 	bPlaying = true;
 	freq = arg;
 	pulse_vec = (freq << 16) / hw_freq * 2;
-
-//	dprintf("mzbeep::setFreq(%d)\n",arg);
 }
 
 /*
  * 更新
  */
-void mzbeep_update(short* ptr, int cou) {
+void mz8253beep_update(short* ptr, int cou) {
 	int i;
 
 	short dat;
@@ -68,5 +63,5 @@ void mzbeep_update(short* ptr, int cou) {
 		dat = bPulse ? -0x2000 : 0x2000;
 		ptr[i] += dat;
 	}
-	
+
 }

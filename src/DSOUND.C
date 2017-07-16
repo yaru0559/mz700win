@@ -215,8 +215,8 @@ void DSound_Send(void)
 				if (a1) ZeroMemory(a1, al1);
 				if (a2) ZeroMemory(a2, al2);
 
-				if (a1) mzbeep_update((WORD*)a1, al1 >> sampleshift);
-				if (a2) mzbeep_update((WORD*)a2, al2 >> sampleshift);
+				if (a1) mz8253beep_update((WORD*)a1, al1 >> sampleshift);
+				if (a2) mz8253beep_update((WORD*)a2, al2 >> sampleshift);
 
 				if (a1) sn76489an_update(0, (WORD*)a1, al1 >> sampleshift);
 				if (a2) sn76489an_update(0, (WORD*)a2, al2 >> sampleshift);
