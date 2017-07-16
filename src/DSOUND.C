@@ -1,4 +1,10 @@
-﻿#include	<windows.h>
+﻿//
+#if _MSC_VER < 1900			// Visual Studio 2015 未満だったら DIRECTSOUNDVERSIONを0x0900に設定
+#define DIRECTSOUND_VERSION 0x0900  // Version 9.0
+#endif
+
+//
+#include	<windows.h>
 #include	<dsound.h>
 #include	"mz700win.h"
 #include	"DSOUND.H"
