@@ -1,5 +1,11 @@
 /* $Id: mz700win.h 20 2009-05-25 18:20:32Z maru $ */
 
+#pragma once
+
+#ifndef __MZ700WIN_H__
+#define __MZ700WIN_H__
+
+
 /* Typedef */
 typedef		unsigned int UINT32;
 typedef		unsigned short UINT16;
@@ -83,3 +89,7 @@ typedef struct
 	WORD addr;															/* patch addr */
 	unsigned short code;												/* em code */
 } TMONEMU;
+
+
+#endif //__MZ700WIN_H__
+

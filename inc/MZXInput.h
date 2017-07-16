@@ -4,11 +4,9 @@
 // now digital pad only....
 //
 
-//#pragma once
-// ˆÚA«‚Ì‚½‚ßApragma once ‚Íg‚í‚È‚¢‚±‚Æ‚É‚µ‚½
+#pragma once
 
 #ifndef __MZXINPUT_H__
-
 #define __MZXINPUT_H__
 
 //#define WIN32_LEAN_AND_MEAN             // Except the part which isn't used from windows header.

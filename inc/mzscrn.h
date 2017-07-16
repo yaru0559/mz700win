@@ -1,3 +1,7 @@
+#pragma once
+
+#ifndef __MZSCRN_H__
+#define __MZSCRN_H__
 
 /* 画面リフレッシュ関係のフラグ */
 #define REFSC_VRAM		0x0001											/* bit00:Render Vram */
@@ -41,4 +45,6 @@ extern UINT8		mzcol_palet[8];
 #ifdef __cplusplus
 }
 #endif 
+
+#endif //__MZSCRN_H__
 

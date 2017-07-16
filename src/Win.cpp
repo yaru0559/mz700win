@@ -1,13 +1,11 @@
 //----------------------------------------------------------------------------
-// File:win.c
+// File:win.cpp
 // MZ-700/1500 Emulator MZ700WIN for Windows9x/NT/2000
 //
 // mz700win:Window / Menu Module
 // ($Id: Win.c 20 2009-05-25 18:20:32Z maru $)
 // Programmed by Takeshi Maruyama
 //----------------------------------------------------------------------------
-
-//#define _MAIN_	1
 
 #include <stdio.h>
 #ifdef _DEBUG
