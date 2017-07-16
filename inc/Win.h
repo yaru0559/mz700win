@@ -1,3 +1,8 @@
+#pragma once
+
+#ifndef __WIN_H__
+#define __WIN_H__
+
 #ifdef __cplusplus
 extern "C"
 {
@@ -78,7 +83,7 @@ enum
 	MACHINE_MZ1500,
 };
 
-extern UINT8		RomFileDir[IniFileStrBuf];	// ROMファイルがあるディレクトリ名
+extern char			RomFileDir[IniFileStrBuf];	// ROMファイルがあるディレクトリ名
 
 // prototype....
 void InitMenuBitmaps(HWND);
@@ -120,9 +125,7 @@ void set_fontset_menu(int);
 void set_pcg700_menu(int);
 void set_fullscreen_menu(int);
 
-#ifndef _MAIN_
-
-extern const UINT8 szAppName[];
+extern const char szAppName[];
 
 extern HWND      hwndApp;
 extern HMENU     hmenuApp;
@@ -137,8 +140,21 @@ extern WORD		use_cmos;												/* MZ-1R12 0:OFF 1:ON */
 
 extern TMENUVAL	menu;
 
-#endif
+extern char		LoadOpenDir[IniFileStrBuf];
+extern char		SaveOpenDir[IniFileStrBuf];
+extern char		QDOpenDir[IniFileStrBuf];
+extern char		RAMOpenDir[IniFileStrBuf];
+extern char		SaveTapeFile[MAX_PATH];
+extern char		StateOpenDir[IniFileStrBuf];
+extern char		CmosFileStr[MAX_PATH];
+
+extern char		statefile[MAX_PATH];			// state ファイル名
+extern char		qdfile[MAX_PATH];				// ＱＤファイル名
+extern char		tapefile[MAX_PATH];				// テープファイル名
+extern char		ramfile[MAX_PATH];				// ＲＡＭファイル名
 
 #ifdef __cplusplus
 }
 #endif 
+
+#endif	//__WIN_H__

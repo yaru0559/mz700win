@@ -1,3 +1,10 @@
+#pragma once
+
+#ifdef __cplusplus
+extern "C"
+{
+#endif 
+
 #ifndef mz700win_dsound_h
 #define mz700win_dsound_h
 
@@ -10,3 +17,7 @@ void CALLBACK DSound_TimeProc(unsigned int uid, unsigned int tmp, DWORD user, DW
 void DSound_Send(void);
 
 #endif //mz700win_dsound_h
+
+#ifdef __cplusplus
+}
+#endif 

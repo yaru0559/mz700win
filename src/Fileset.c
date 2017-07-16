@@ -85,6 +85,11 @@ LPCSTR APD_msg = "The file %s\ralready exists. Append to existing file?";
 // for Overwrite
 LPCSTR OVW_msg = "The file %s\ralready exists. Overwrite ?";
 
+// forward
+void UpdateTapeMenu(void);
+void UpdateQDMenu(void);
+
+
 /**************************/
 /* セーブ用イメージの指定 */
 /**************************/
@@ -196,7 +201,7 @@ void mz_load_cmos(void)
 	DWORD rbytes;
 	int i;
 
-	fh = FILE_ROPEN(CmosFileStr);
+	fh = FILE_ROPEN((LPCSTR)CmosFileStr);
 	if (fh != FILE_VAL_ERROR)
 	{
 		rbytes = FILE_READ(fh, mz1r12_ptr, MZ1R12_SIZE);
@@ -244,7 +249,7 @@ BOOL load_mzt_file(char *filename)
 	UINT8 strtmp[256];
 	UINT8 strtmp2[64];
 
-	fp = FILE_ROPEN(filename);
+	fp = FILE_ROPEN((LPCSTR)filename);
 	if (fp == FILE_VAL_ERROR) return FALSE;
 
 	lstrcpy(tapefile,filename);

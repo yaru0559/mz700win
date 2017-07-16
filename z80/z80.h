@@ -8,8 +8,15 @@
 /***     You are not allowed to distribute this software commercially     ***/
 /***     Please, notify me, if you make any changes to this file          ***/
 /****************************************************************************/
+#pragma once
+
 #ifndef _Z80_H
 #define _Z80_H
+
+#ifdef __cplusplus
+extern "C"
+{
+#endif 
 
 /****************************************************************************/
 /*** Machine dependent definitions                                        ***/
@@ -148,9 +155,6 @@ void Z80_SetWaitStates (int n);    /* Set number of memory wait states.     */
 void Z80_Patch (Z80_Regs *Regs);   /* Called when ED FE occurs. Can be used */
                                    /* to emulate disk access etc.           */
 
-#ifdef __cplusplus
-extern "C" {
-#endif // __cplusplus
 int Z80_Interrupt(void);           /* This is called after IPeriod T-States */
                                    /* have been executed. It should return  */
                                    /* Z80_IGNORE_INT, Z80_NMI_INT or a byte */
@@ -158,9 +162,6 @@ int Z80_Interrupt(void);           /* This is called after IPeriod T-States */
                                    /* 0xFF)                                 */
 void Z80_Reti (void);              /* Called when RETI occurs               */
 void Z80_Retn (void);              /* Called when RETN occurs               */
-#ifdef __cplusplus
-}
-#endif // __cplusplus
 
 /****************************************************************************/
 /* Definitions of functions to read/write memory and I/O ports              */
@@ -168,4 +169,8 @@ void Z80_Retn (void);              /* Called when RETN occurs               */
 /****************************************************************************/
 #include "Z80IO.h"
 
-#endif /* _Z80_H */
+#ifdef __cplusplus
+}
+#endif 
+
+#endif // _Z80_H

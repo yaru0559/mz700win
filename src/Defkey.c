@@ -428,12 +428,12 @@ int read_defkey(void)
 	BYTE *tptr;
 	FILE_HDL fp;
 	int length, err;
-	UINT8 strtmp[512];
+	char strtmp[512];
 
 	hmenu = GetSubMenu(hmenuApp , 2);								/* Keyboard Menu */
 	
 	// 定義ファイルのサイズを調べる
-	fp = FILE_ROPEN( KeyFileStr );
+	fp = FILE_ROPEN( (LPCSTR)KeyFileStr );
 	if (fp == FILE_VAL_ERROR)
 	{
 #if _DEBUG

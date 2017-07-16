@@ -739,7 +739,7 @@ void rdinf_job(Z80_Regs *Regs, int mode)
 	 dprintf("rdinf_job()\n");
 
 	 //
-	tfp = FILE_ROPEN(tapefile);
+	tfp = FILE_ROPEN((LPCSTR)tapefile);
 	if (tfp != FILE_VAL_ERROR)
 	{
 		FILE_SEEK(tfp,tapepos,FILE_SEEK_SET);
@@ -832,7 +832,7 @@ void rddata_job(Z80_Regs *Regs, int mode)
 	}
 
 	//
-	 tfp = FILE_ROPEN(tapefile);
+	 tfp = FILE_ROPEN((LPCSTR)tapefile);
 	 if (tfp != FILE_VAL_ERROR)
 	 {
 		 FILE_SEEK(tfp,tapepos,FILE_SEEK_SET);

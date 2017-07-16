@@ -272,7 +272,7 @@ void MON_qdios(Z80_Regs *Regs)
 		// QDPC=ADDR
 		if (qfp == FILE_VAL_ERROR)
 		{
-			qfp = FILE_ROPEN(qdfile);
+			qfp = FILE_ROPEN((LPCSTR)qdfile);
 			if (qfp != FILE_VAL_ERROR)
 				FILE_SEEK(qfp,qdpos,FILE_SEEK_SET);
 		}
@@ -520,7 +520,7 @@ void MON_bas_qdios(Z80_Regs *Regs)
 		// QDPC=ADDR
 		if (qfp == FILE_VAL_ERROR)
 		{
-			qfp = FILE_ROPEN(qdfile);
+			qfp = FILE_ROPEN((LPCSTR)qdfile);
 			if (qfp != FILE_VAL_ERROR)
 				FILE_SEEK(qfp,qdpos,FILE_SEEK_SET);
 		}
