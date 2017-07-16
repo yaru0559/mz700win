@@ -1,5 +1,7 @@
 #include <windows.h>
 
+#pragma once
+
 #ifndef __sn76489an_h__
 #define __sn76489an_h__
 

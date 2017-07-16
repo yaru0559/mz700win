@@ -289,7 +289,7 @@ int rom_load(unsigned char *x)
 	if (menu.selrom == ROM_KIND_MZ1500)
 		romlen = 10240;
 
-	if((in=FILE_ROPEN(strtmp))!=FILE_VAL_ERROR)
+	if((in=FILE_ROPEN((LPCSTR)strtmp))!=FILE_VAL_ERROR)
 	{
 		FILE_READ(in, x, romlen);
 		FILE_CLOSE(in);
@@ -318,7 +318,7 @@ int rom_load(unsigned char *x)
 	/* äøéöROM, é´èëROMì«Ç›çûÇ› */
 	if (mz1r23_ptr == NULL) {
 		wsprintf(strtmp, "%sMZ1R23.ROM",RomFileDir);
-		if((in=FILE_ROPEN(strtmp))!=FILE_VAL_ERROR)
+		if((in=FILE_ROPEN((LPCSTR)strtmp))!=FILE_VAL_ERROR)
 		{
 			mz1r23_ptr = MEM_alloc(128 * 1024);
 			if (mz1r23_ptr != NULL) {
@@ -328,7 +328,7 @@ int rom_load(unsigned char *x)
 				/* äøéöROMÇì«ÇﬂÇΩÇÁÅAé´èëROMÇ‡ì«ÇÒÇ≈Ç›ÇÈ */
 				if (mz1r24_ptr == NULL) {
 					wsprintf(strtmp, "%sMZ1R24.ROM",RomFileDir);
-					if((in=FILE_ROPEN(strtmp))!=FILE_VAL_ERROR)
+					if((in=FILE_ROPEN((LPCSTR)strtmp))!=FILE_VAL_ERROR)
 					{
 						mz1r24_ptr = MEM_alloc(256 * 1024);
 						if (mz1r24_ptr != NULL) {

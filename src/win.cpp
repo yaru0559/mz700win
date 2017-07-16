@@ -1,5 +1,5 @@
 //----------------------------------------------------------------------------
-// File:win.c
+// File:win.cpp
 // MZ-700/1500 Emulator MZ700WIN for Windows9x/NT/2000
 //
 // mz700win:Window / Menu Module
@@ -7,12 +7,10 @@
 // Programmed by Takeshi Maruyama
 //----------------------------------------------------------------------------
 
-#define _MAIN_	1
-
 #include <stdio.h>
-#ifndef NDEBUG
+#ifdef _DEBUG
 #include <crtdbg.h>
-#endif //NDEBUG
+#endif //_DEBUG
 
 #include <windows.h>
 #include <commctrl.h>
@@ -22,8 +20,9 @@
 #include "mz700win.h"
 #include "Z80.h"
 
-#include "dprintf.h"
 #include "win.h"
+#include "APPWIN.h"
+#include "dprintf.h"
 #include "fileio.h"
 #include "fileset.h"
 
@@ -39,13 +38,33 @@
 
 #include "defkey.h"
 
-static const UINT8 szClassName[] = "MZ700WINClass";
-const UINT8 szAppName[] = "MZ-700 Emulator For Win32";
+// スピードが何％か表示設定	
+#define set_spd_text(v)	sprintf_s(strtmp, sizeof(strtmp), "Speed : %d%%", v); SetDlgItemText(hwnd, IDC_STATIC_SPD, (LPCSTR)strtmp);
 
-static UINT8		IniFileStr[IniFileStrBuf];						// ＩＮＩファイル名をしまうバッファ
-static UINT8		FontFileStr[2][256];							// FONTファイル名をしまうバッファ
 
-UINT8		RomFileDir[IniFileStrBuf];								// ROMファイルがあるディレクトリ名
+static const char szClassName[] = "MZ700WINClass";
+const char szAppName[] = "MZ-700 Emulator For Win32";
+
+static char		IniFileStr[IniFileStrBuf];						// ＩＮＩファイル名をしまうバッファ
+static char		FontFileStr[2][256];							// FONTファイル名をしまうバッファ
+
+char			RomFileDir[IniFileStrBuf];						// ROMファイルがあるディレクトリ名
+
+char	LoadOpenDir[IniFileStrBuf];             /* 最後にロードしたフォルダ名をしまうバッファ */
+char	SaveOpenDir[IniFileStrBuf];             /* 最後にセーブしたフォルダ名をしまうバッファ */
+char	QDOpenDir[IniFileStrBuf];               /* ＱＤイメージファイルのフォルダ名をしまうバッファ */
+char	RAMOpenDir[IniFileStrBuf];              /* ＲＡＭファイルイメージのフォルダ名をしまうバッファ */
+char	SaveTapeFile[MAX_PATH];                 /* セーブ用テープファイル名 */
+char	StateOpenDir[IniFileStrBuf];            /* 最後に記録したstate fileフォルダ名をしまうバッファ */
+char	CmosFileStr[MAX_PATH];                  /* CMOS.RAMのフルパスをしまうバッファ */
+
+char	statefile[MAX_PATH];					/* state ファイル名 */
+
+char	qdfile[MAX_PATH];						/* ＱＤファイル名 */
+char	tapefile[MAX_PATH];						/* テープファイル名 */
+char	ramfile[MAX_PATH];						/* ＲＡＭファイル名 */
+
+
 
 HWND      hwndApp;
 HMENU     hmenuApp;
@@ -86,7 +105,7 @@ pal LogicalPalette =
   256
 };
 
-LRESULT CALLBACK linkProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp);
+LRESULT CALLBACK LinkProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp);
 
 /* Disable IME関連 */
 typedef BOOL (CALLBACK* LPFNDLLFUNC)(HWND,BOOL);
@@ -115,8 +134,11 @@ WORD	sound_di = 0;													/* ＳＥ禁止モード */
 WORD	sound_md = 0;													/* サウンドモード */
 //WORD	mz1500mode = 0;													/* MZ-1500モード */
 WORD	key_patch = 0;													/* KeyTableパッチあてフラグ */
-WORD	bk_color = 0;													/* モニタ画面背景色 */
+int		bk_color = 0;													/* モニタ画面背景色 */
 WORD	use_cmos;														/* MZ-1R12 0:OFF 1:ON */
+
+// C++ Class
+APPWIN	appwin;
 
 //
 BOOL add_menu_bmp(HMENU hmenu, UINT id,UINT bmp)
@@ -367,7 +389,7 @@ UINT8 * CreateOffScreen(void)
 	/* 仮想画面を真っ黒に */
 	PatBlt(Buffer, 0,0,FORMWIDTH,FORMHEIGHT, BLACKNESS);
 
-	return pBuffer;
+	return (UINT8*)pBuffer;
 }
 
 /*
@@ -400,7 +422,7 @@ void mz_exit(int code)
 /* */
 void ShowInfo(void)
 {
-	UINT8 msg[128];
+	char msg[128];
 
 	wsprintf(msg,"TIMECAPS\r"\
 			     "wPeriodMin=%d\r"\
@@ -408,17 +430,17 @@ void ShowInfo(void)
 			     "Z80_IPeriod=%d",
 			 tcaps.wPeriodMin,tcaps.wPeriodMax,Z80_IPeriod);
 	
-	MessageBox(hwndApp, msg ,"Debug Information",MB_ICONINFORMATION|MB_OK);
+	MessageBox(hwndApp, (LPCSTR)msg ,"Debug Information",MB_ICONINFORMATION|MB_OK);
 }
 
 /* INIファイル内のセクションに数値を設定 */
 BOOL WritePrivateProfileInt(LPCSTR  lpszSection,LPCSTR  lpszKey,int  val,LPCSTR  lpszFile)
 {
-	UINT8 strtmp[64];
+	char strtmp[64];
 	BOOL fSuccess;
 
 	wsprintf(strtmp,"%d",val);
-	fSuccess=WritePrivateProfileString(lpszSection,lpszKey,strtmp,lpszFile);
+	fSuccess = WritePrivateProfileString(lpszSection,lpszKey,strtmp,lpszFile);
 	
 	return fSuccess;
 }
@@ -428,7 +450,7 @@ BOOL WritePrivateProfileInt(LPCSTR  lpszSection,LPCSTR  lpszKey,int  val,LPCSTR 
  */
 void load_inifile(void)
 {
-	UINT8 current[MAX_PATH];
+	char current[MAX_PATH];
 
 	/* カレントディレクトリゲット */
 	GetCurrentDirectory(sizeof(current),current);
@@ -640,13 +662,44 @@ void free_mmtimer(void)
 // メニューとキャプションの大きさ込みでサイズを決定。
 void get_window_size(int m)
 {
+	// *ToDo* 20170512 
+//	set_client_size(hwndApp, FORMWIDTH * (m + 1), FORMHEIGHT * (m + 1));
+
 	win_sx = FORMWIDTH * (m+1);
 	win_sy = FORMHEIGHT * (m+1);
+
 	win_sx += (GetSystemMetrics(SM_CXFIXEDFRAME)*2);
 	win_sy += GetSystemMetrics(SM_CYCAPTION)+
 			  GetSystemMetrics(SM_CYMENU)+
 			  (GetSystemMetrics(SM_CXFIXEDFRAME)*2);
 }
+
+// *ToDo* 20170512 
+// クライアント領域のサイズからWindow全体のサイズを設定
+// ref: http://d.hatena.ne.jp/yus_iri/20110911/1315730376
+BOOL set_client_size(HWND hWnd, int width, int height)
+{
+#if 0
+	RECT rw, rc;
+	GetWindowRect(hWnd, &rw);
+	GetClientRect(hWnd, &rc);
+
+	int win_sx = (rw.right - rw.left) - (rc.right - rc.left) + width;
+	int win_sy = (rw.bottom - rw.top) - (rc.bottom - rc.top) + height;
+#endif
+
+#if _MSC_VER >= 1900			// Visual Studio 2015 以降だったらWindow縦を伸ばす
+	if (win_sy > FORMHEIGHT) {
+		win_sy += 10;			// 10 だと何故か帳尻が合う
+	}
+	if (win_sx > FORMWIDTH) {
+		win_sx += 10;			// 10 だと何故か帳尻が合う
+	}
+#endif
+
+	return SetWindowPos(hWnd, NULL, 0, 0, win_sx, win_sy, SWP_NOMOVE | SWP_NOZORDER);
+}
+
 
 // メニューバーが２段になった場合、下が切れる現象の対策
 void adjust_window_size(HWND hwnd)
@@ -700,6 +753,7 @@ void set_screen_menu(int m)
 
 	/* ウィンドウサイズの変更 */
 	get_window_size(m);
+	set_client_size(hwndApp, win_sx, win_sy);
 
 	MoveWindow(hwndApp,xbak,ybak,win_sx,win_sy,TRUE);
 }
@@ -827,7 +881,7 @@ static void clr_link_str(HWND hwnd)
 {
 	HDC hdc;
 	HGDIOBJ hFontbk;
-	UINT8 strtmp[128];
+	char strtmp[128];
 
 	GetWindowText(hwnd, strtmp, sizeof(strtmp) );
 	lstrcat(strtmp, " ");
@@ -848,7 +902,7 @@ LRESULT CALLBACK LinkProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp) {
 	PAINTSTRUCT	ps;
 	HDC			hdc;
 	HGDIOBJ		hFontbk;
-	UINT8		szTextTmp[128];
+	char		szTextTmp[128];
 
 	switch(msg) 
 	{
@@ -911,9 +965,9 @@ LRESULT CALLBACK LinkProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp) {
 BOOL CALLBACK AppAbout(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 {
 	LOGFONT logfont;
-	UINT8 *ptr;
-	UINT8 strtmp[128];
-	UINT8 strtmp2[128];
+	char *ptr;
+	char strtmp[128];
+	char strtmp2[128];
 
 	WPARAM wp;
 
@@ -928,16 +982,16 @@ BOOL CALLBACK AppAbout(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 			PostMessage(hwnd,WM_CLOSE,0,0L);
 			break;
 		case IDC_WWW:
-			GetDlgItemText(hwnd, LOWORD(wParam), strtmp, sizeof(strtmp) );
-			ShellExecute(hwnd, NULL, strtmp, NULL, NULL, SW_SHOW);
+			GetDlgItemText(hwnd, LOWORD(wParam), (LPSTR)strtmp, sizeof(strtmp) );
+			ShellExecute(hwnd, NULL, (LPCSTR)strtmp, NULL, NULL, SW_SHOW);
 			break;
 		case IDC_MAILTO:
-			GetDlgItemText(hwnd, LOWORD(wParam), strtmp, sizeof(strtmp) );
+			GetDlgItemText(hwnd, LOWORD(wParam), (LPSTR)strtmp, sizeof(strtmp) );
 			// メアド部分の取得
-			ptr = strstr(strtmp, ": ");
+			ptr = strstr(strtmp, (const char *)": ");
 			if (ptr != NULL) {
 				sprintf_s(strtmp2, sizeof(strtmp2)-1, "mailto:%s", ptr+2);
-				ShellExecute(hwnd, NULL, strtmp2, NULL, NULL, SW_SHOW);
+				ShellExecute(hwnd, NULL, (LPCSTR)strtmp2, NULL, NULL, SW_SHOW);
 			}
 			break;
 		}
@@ -1103,14 +1157,11 @@ BOOL CALLBACK AppMonDialog(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 //------------------------------------------------------------------------------------
 BOOL CALLBACK AppSpeedDialog(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 {
-	UINT8 strtmp[128];
+	char strtmp[128];
 	WPARAM wp;
 	static HWND hSld = NULL;
 	int tmp;
 
-// スピードが何％か表示設定	
-#define set_spd_text(v)	sprintf_s(strtmp, sizeof(strtmp), "Speed : %d%%", v); SetDlgItemText(hwnd, IDC_STATIC_SPD, strtmp);
-	
 	wp = LOWORD(wParam);
 
 	switch (msg){
@@ -1501,11 +1552,11 @@ BOOL MENU_TextOut(HWND hwnd,HDC hdc, int x, int y,LPCTSTR string, int cbString)
 	under = FALSE;
 
 	//
-	hfdummy = GetStockObject(DEFAULT_GUI_FONT);
-	if (hfdummy == NULL)
-		hfdummy = GetStockObject(DEVICE_DEFAULT_FONT);
+	hfdummy = (HFONT)GetStockObject(DEFAULT_GUI_FONT);
+	if (hfdummy == nullptr)
+		hfdummy = (HFONT)GetStockObject(DEVICE_DEFAULT_FONT);
 
-	hfont = SelectObject(hdc,hfdummy);
+	hfont = (HFONT)SelectObject(hdc,hfdummy);
 	GetObject(hfont, sizeof(logfont), &logfont);
 	logfont.lfUnderline = TRUE;
 	hfont_u = CreateFontIndirect(&logfont);
@@ -1528,7 +1579,7 @@ BOOL MENU_TextOut(HWND hwnd,HDC hdc, int x, int y,LPCTSTR string, int cbString)
 		else
 		{
 			if (under)
-				hfontBK = SelectObject(hdc, hfont_u);
+				hfontBK = (HFONT)SelectObject(hdc, hfont_u);
 
 			// TAB
 			if (tab)
@@ -1595,13 +1646,13 @@ void MENU_GetTextExtentPoint(HDC hdc,LPCSTR string, int len, SIZE *szr)
 	xt = yt = 0;
 
 	//
-	hfdummy = GetStockObject(DEFAULT_GUI_FONT);
-	if (hfdummy == NULL)
-		hfdummy = GetStockObject(DEVICE_DEFAULT_FONT);
+	hfdummy = (HFONT)GetStockObject(DEFAULT_GUI_FONT);
+	if (hfdummy == nullptr)
+		hfdummy = (HFONT)GetStockObject(DEVICE_DEFAULT_FONT);
 
-	hfont = SelectObject(hdc,hfdummy);
+	hfont = (HFONT)SelectObject(hdc,hfdummy);
 
-	GetTextExtentPoint32(hdc,strtmp,lstrlen(strtmp),szr);
+	GetTextExtentPoint32(hdc,(LPCSTR)strtmp,lstrlen((LPCSTR)strtmp),szr);
 	SelectObject(hdc,hfdummy);
 	return;
 	
@@ -1610,7 +1661,7 @@ void MENU_GetTextExtentPoint(HDC hdc,LPCSTR string, int len, SIZE *szr)
 	hfont_u = CreateFontIndirect(&logfont);
 
 	//
-	len2 = lstrlen(strtmp);
+	len2 = lstrlen((LPCSTR)strtmp);
 	for (i=0; i<len2; i++)
 	{
 		ch = strtmp[i];
@@ -1625,13 +1676,13 @@ void MENU_GetTextExtentPoint(HDC hdc,LPCSTR string, int len, SIZE *szr)
 			if (IsDBCSLeadByte(strtmp[i]))
 			{
 				// DBCS
-				GetTextExtentPoint32(hdc,strtmp+i,2,&sz);
+				GetTextExtentPoint32(hdc,(LPCSTR)strtmp+i,2,&sz);
 				i++;
 			}
 			else
 			{
 				// ANSI
-				GetTextExtentPoint32(hdc,strtmp+i,1,&sz);
+				GetTextExtentPoint32(hdc,(LPCSTR)strtmp+i,1,&sz);
 			}
 
 		xt += sz.cx;
@@ -1695,8 +1746,11 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_COMMAND:
 		return AppCommand(hwnd,message,wParam,lParam);
 
-	case WM_ENTERIDLE:
 	case WM_ENTERMENULOOP:
+		// [Alt]を押してる間、サウンドをオフにする
+		DSound_Mute(TRUE);
+
+	case WM_ENTERIDLE:
 		fAppActive = FALSE;
 		break;
 
@@ -1775,6 +1829,7 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 		
 	case WM_EXITMENULOOP:
 		fAppActive = TRUE;
+		DSound_Mute(FALSE);
 		mz_keyport_init();
 		break;
 
@@ -1924,7 +1979,7 @@ void free_resource(void)
 	
 	// タスクバーに空のアイコンが残る事がある現象の回避
 	// のつもりがいまいちうまくいかない・・・
-	hDest=FindWindow(szClassName, NULL);
+	hDest=FindWindow((LPCSTR)szClassName, nullptr);
 	if (hDest) {
 		ShowWindow(hDest,SW_HIDE);
 	}
@@ -1976,11 +2031,13 @@ int APIENTRY WinMain (HINSTANCE hInstance,
 		if (a=='\x00') break;											// コマンドラインの終了チェック
 		switch (a) {
 		case 'c':
-			if (sscanf_s(lpszCmdParam+i+1,"%2hx",&bk_color, sizeof(bk_color)) != 1)	{
+			if (sscanf_s(lpszCmdParam + i + 1, "%2Ix", &bk_color) != 1)
+//			if (sscanf_s(lpszCmdParam + i + 1, "%2x", &bk_color, sizeof(bk_color)) != 1)
+			{
 				bk_color = 0x70;
 			}
 
-			/* 簡易MZ-80K/C/1200モード */
+			// 簡易MZ-80K/C/1200モード
 			i+=2;
 			break;
 			
@@ -2006,15 +2063,14 @@ int APIENTRY WinMain (HINSTANCE hInstance,
 	hAccelApp = LoadAccelerators(hInstance, "AppMenu");
 
 	/* 二重起動チェック */
-	hPrevMutex = OpenMutex(MUTEX_ALL_ACCESS,FALSE,szAppName);
+	hPrevMutex = OpenMutex(MUTEX_ALL_ACCESS,FALSE,(LPCSTR)szAppName);
 	/*もし、オープンできれば以前のアプリケーションが起動している */
-	if (hPrevMutex)
-	{
+	if (hPrevMutex) {
 		CloseHandle(hPrevMutex);
 		return FALSE;
 	}
 	
-	hMutex = CreateMutex(FALSE,0,szAppName);
+	hMutex = CreateMutex(FALSE,0,(LPCSTR)szAppName);
 	
 	/* ウインドウクラスの生成 */
 //	wndclass.style   = CS_BYTEALIGNCLIENT | CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS;
@@ -2025,15 +2081,14 @@ int APIENTRY WinMain (HINSTANCE hInstance,
 	wndclass.hInstance  = hInstance;
 	wndclass.hIcon   = LoadIcon (hInstance, "AppIcon");
 	wndclass.hCursor    = LoadCursor (NULL, IDC_ARROW);
-	wndclass.hbrBackground = GetStockObject (BLACK_BRUSH);
+	wndclass.hbrBackground = (HBRUSH)GetStockObject (BLACK_BRUSH);
 	wndclass.lpszMenuName  = "AppMenu";
-	wndclass.lpszClassName = szClassName;
+	wndclass.lpszClassName = (LPCSTR)szClassName;
 	
 	/* Get Hand-Cursor */
 	hCurHand = LoadCursor(hInstance, MAKEINTRESOURCE(IDC_CURHAND));
 
-	if (!RegisterClass (&wndclass))
-	{
+	if (!RegisterClass (&wndclass)) {
 // 		ReleaseMutex(hMutex);
 		return FALSE;
 	}
@@ -2056,7 +2111,7 @@ int APIENTRY WinMain (HINSTANCE hInstance,
 	/* INIファイルの設定を読み込み */
 	load_inifile();	
 	get_window_size(menu.screen);										/* win_sx,win_sy calc */
-	
+
 	/* スクリーンの広さを調べる */
 	GetClientRect(GetDesktopWindow(),&destrect);
 	if (win_xpos == -99999) win_xpos = (destrect.right-win_sx)>>1;
@@ -2078,23 +2133,26 @@ int APIENTRY WinMain (HINSTANCE hInstance,
 	hInstApp=hInstance;													/* hInstApp=アプリのインスタンス */
 
 	/* ウインドウの生成 */
-	hwnd = CreateWindow (szClassName,									/* Class */
-						 szAppName,										/* caption */
+	hwnd = CreateWindow ((LPCSTR)szClassName,							// Class
+						(LPCSTR)szAppName,								/* caption */
 						 dwStyle,										/* style */
 						 win_xpos,										/* XPos: */
 						 win_ypos,										/* Ypos: */
 						 win_sx,										/* Window Xsize */
 						 win_sy,										/* Window YSize */
-						 NULL,      
-						 NULL,      
+						 nullptr,      
+						 nullptr,      
 						 hInstance,    
-						 NULL) ;    
+						 nullptr);    
 
 	hwndApp=hwnd;														/* hwndApp=アプリのウィンドウハンドル */
 	hmenuApp=GetMenu(hwnd);												/* メニューハンドル */
 
 	ShowWindow(hwnd, nCmdShow);
 	UpdateWindow(hwnd);
+
+	// *ToDo* 20170512 
+//	set_client_size(hwndApp, win_sx, win_sy);
 
 	/* ミューテクスのリリース */
 //	ReleaseMutex(hMutex);
@@ -2113,21 +2171,21 @@ int APIENTRY WinMain (HINSTANCE hInstance,
 	fAppActive = TRUE;
 
 	/* ２つのフォントファイル名作成 */
-	GetCurrentDirectory(sizeof(FontFileStr[0]),FontFileStr[0]);
-	lstrcat(FontFileStr[0],"\\mz700fon.dat");
-	GetCurrentDirectory(sizeof(FontFileStr[1]),FontFileStr[1]);
-	lstrcat(FontFileStr[1],"\\mz700fon.jp");
+	GetCurrentDirectory(sizeof(FontFileStr[0]),(LPSTR)FontFileStr[0]);
+	lstrcat((LPSTR)FontFileStr[0],"\\mz700fon.dat");
+	GetCurrentDirectory(sizeof(FontFileStr[1]),(LPSTR)FontFileStr[1]);
+	lstrcat((LPSTR)FontFileStr[1],"\\mz700fon.jp");
 
 	/* フォントメニュー選択可能かチェック */
 	/* EUROPE */
-	if (!FileExists(FontFileStr[0]))
+	if (!FileExists(reinterpret_cast<LPCSTR>(FontFileStr[0])))
 	{
 		EnableMenuItem(hmenuApp, MENU_FONT_EUROPE, MF_BYCOMMAND | MF_GRAYED); // EUROPE
 		if (menu.fontset==0) menu.fontset=1;
 	}
 	
 	/* JAPAN */
-	if (!FileExists(FontFileStr[1]))
+	if (!FileExists(reinterpret_cast<LPCSTR>(FontFileStr[1])))
 	{
 		EnableMenuItem(hmenuApp, MENU_FONT_JAPAN, MF_BYCOMMAND | MF_GRAYED); // JAPAN選択不能
 		if (menu.fontset==1) menu.fontset=0;
@@ -2135,7 +2193,7 @@ int APIENTRY WinMain (HINSTANCE hInstance,
 	
 	fullsc_timer = 0;
 	
-	/* アプリ初期化を呼ぶ */
+	// アプリ初期化を呼ぶ
 	if ( !AppInit() )
 	{
 		mz_exit(1);
@@ -2144,12 +2202,12 @@ int APIENTRY WinMain (HINSTANCE hInstance,
 
 	__try
 	{
-		/* メインループ開始 */
+		// メインループ開始
 		AppMain();
 	}
 	__finally
 	{
-		/* リソース開放 */
+		// リソース開放
 		free_resource();
 	}
 	
@@ -2183,9 +2241,8 @@ int font_load(int md)
 	FILE_HDL fp;
 
 	/* フォントデータを読み込む */
-	fp = FILE_ROPEN(FontFileStr[md]);
-	if (fp != FILE_VAL_ERROR)
-	{
+	fp = FILE_ROPEN((LPCSTR)(FontFileStr[md]));
+	if (fp != FILE_VAL_ERROR) {
 		FILE_READ(fp, font, 4096);
 		FILE_CLOSE(fp);
 	}

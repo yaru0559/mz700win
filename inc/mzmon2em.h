@@ -1,5 +1,10 @@
 /* $Id: mzmon2em.h 1 2007-07-27 06:17:19Z maru $ */
 
+#pragma once
+
+#ifndef __MZMON2EM_H__
+#define __MZMON2EM_H__
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -84,15 +89,10 @@ void MON_bas_qdios(Z80_Regs *Regs);
 
 
 	
-//	
-#ifndef MZMONEM2_H_ 
-#define MZMONEM2_H_
-
-
-	
-#endif
 
 #ifdef __cplusplus
 }
 #endif 
 	
+
+#endif //__MZMON2EM_H__

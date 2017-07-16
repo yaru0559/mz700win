@@ -29,7 +29,7 @@
 // ファイル名表示用文字列
 //////////////////////////
 /* for Japanese */
-static const UINT8 mzascii_j[]=
+static const UINT8 /* *const */ mzascii_j[] =
 {
 	"　！”＃＄％＆’（）＊＋，－．／"\
 	"０１２３４５６７８９：；＜＝＞？"\
@@ -49,7 +49,7 @@ static const UINT8 mzascii_j[]=
 };
 
 /* for Europe */
-static const UINT8 mzascii_e[]=
+static const UINT8 /* *const */ mzascii_e[]=
 {
 	" !\x22#$%&\x27()*+,-./"											/* 20 */
 	"0123456789:;<=>?"													/* 30 */
@@ -84,6 +84,11 @@ LPCSTR MZS_ext = "mzs";
 LPCSTR APD_msg = "The file %s\ralready exists. Append to existing file?";
 // for Overwrite
 LPCSTR OVW_msg = "The file %s\ralready exists. Overwrite ?";
+
+// forward
+void UpdateTapeMenu(void);
+void UpdateQDMenu(void);
+
 
 /**************************/
 /* セーブ用イメージの指定 */
@@ -153,7 +158,7 @@ static BOOL setfile_foropen(LPCSTR ttlmsg, UINT8 *fnbuf, UINT8 *opendir,
 	UINT8 filebuf[MAX_PATH];
 	UINT8 tempdir[MAX_PATH];
 
-	/* ファイルオープンダイアログを開く */
+	// ファイルオープンダイアログを開く
 	ZeroMemory(&ofn,sizeof(OPENFILENAME));
 	ofn.lStructSize = sizeof(OPENFILENAME);								/* 構造体サイズ */
 	ofn.hwndOwner = hwndApp;											/* ダイアログのオーナー */
@@ -196,7 +201,7 @@ void mz_load_cmos(void)
 	DWORD rbytes;
 	int i;
 
-	fh = FILE_ROPEN(CmosFileStr);
+	fh = FILE_ROPEN((LPCSTR)CmosFileStr);
 	if (fh != FILE_VAL_ERROR)
 	{
 		rbytes = FILE_READ(fh, mz1r12_ptr, MZ1R12_SIZE);
@@ -244,7 +249,7 @@ BOOL load_mzt_file(char *filename)
 	UINT8 strtmp[256];
 	UINT8 strtmp2[64];
 
-	fp = FILE_ROPEN(filename);
+	fp = FILE_ROPEN((LPCSTR)filename);
 	if (fp == FILE_VAL_ERROR) return FALSE;
 
 	lstrcpy(tapefile,filename);

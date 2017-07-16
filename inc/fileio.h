@@ -1,3 +1,13 @@
+#pragma once
+
+#ifndef __FILEIO_H__
+#define __FILEIO_H__
+
+#ifdef __cplusplus
+extern "C"
+{
+#endif 
+
 typedef HANDLE FILE_HDL;
 
 #define FILE_VAL_ERROR 	INVALID_HANDLE_VALUE	// Win32:Error
@@ -20,3 +30,8 @@ int FILE_SEEK(FILE_HDL fh, long pointer, int mode);
 BOOL FileExists(LPCSTR filename);
 short FILE_ATTR(LPCSTR filename);
 
+#ifdef __cplusplus
+}
+#endif 
+
+#endif	//__FILEIO_H__

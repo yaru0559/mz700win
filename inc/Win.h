@@ -1,3 +1,9 @@
+#pragma once
+
+#ifndef __WIN_H__
+#define __WIN_H__
+
+//
 #ifdef __cplusplus
 extern "C"
 {
@@ -78,7 +84,7 @@ enum
 	MACHINE_MZ1500,
 };
 
-extern UINT8		RomFileDir[IniFileStrBuf];	// ROMファイルがあるディレクトリ名
+extern char			RomFileDir[IniFileStrBuf];	// ROMファイルがあるディレクトリ名
 
 // prototype....
 void InitMenuBitmaps(HWND);
@@ -112,6 +118,7 @@ void mouse_cursor(BOOL);
 void create_mmtimer(void);
 void free_mmtimer(void);
 void get_window_size(int);
+BOOL set_client_size(HWND hWnd, int width, int height);
 void set_select_chk(int,int,int);
 void set_screen_menu(int);
 void set_keytype_menu(int);
@@ -119,9 +126,7 @@ void set_fontset_menu(int);
 void set_pcg700_menu(int);
 void set_fullscreen_menu(int);
 
-#ifndef _MAIN_
-
-extern const UINT8 szAppName[];
+extern const char szAppName[];
 
 extern HWND      hwndApp;
 extern HMENU     hmenuApp;
@@ -131,13 +136,26 @@ extern WORD		sound_di;												/* ＳＥ禁止モード */
 extern WORD		sound_md;												/* サウンドモード */
 //extern WORD		mz1500mode;												/* MZ-1500モード */
 extern WORD		key_patch;												/* KeyTableパッチあてフラグ */
-extern WORD		bk_color;												/* 簡易MZ-80K/C/1200パッチモード */
+extern int		bk_color;												/* 簡易MZ-80K/C/1200パッチモード */
 extern WORD		use_cmos;												/* MZ-1R12 0:OFF 1:ON */
 
 extern TMENUVAL	menu;
 
-#endif
+extern char		LoadOpenDir[IniFileStrBuf];
+extern char		SaveOpenDir[IniFileStrBuf];
+extern char		QDOpenDir[IniFileStrBuf];
+extern char		RAMOpenDir[IniFileStrBuf];
+extern char		SaveTapeFile[MAX_PATH];
+extern char		StateOpenDir[IniFileStrBuf];
+extern char		CmosFileStr[MAX_PATH];
+
+extern char		statefile[MAX_PATH];			// state ファイル名
+extern char		qdfile[MAX_PATH];				// ＱＤファイル名
+extern char		tapefile[MAX_PATH];				// テープファイル名
+extern char		ramfile[MAX_PATH];				// ＲＡＭファイル名
 
 #ifdef __cplusplus
 }
 #endif 
+
+#endif	//__WIN_H__

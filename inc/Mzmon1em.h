@@ -1,5 +1,11 @@
 /* $Id: Mzmon1em.h 1 2007-07-27 06:17:19Z maru $ */
 
+#pragma once
+
+#ifndef __MZMON1EM_H__
+#define __MZMON1EM_H__
+
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -308,16 +314,8 @@ void MON_dsp03(Z80_Regs *);
 #define MIO_KEYPC	0xE002
 
 
-
-//	
-#ifndef MZMON1EM_H_ 
-#define MZMON1EM_H_
-
-
-	
-#endif
-
 #ifdef __cplusplus
 }
 #endif 
 	
+#endif //__MZMON1EM_H__
