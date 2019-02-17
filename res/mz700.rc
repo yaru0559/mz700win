@@ -72,7 +72,7 @@ BEGIN
         MENUITEM "Eject QD",                    MENU_EJECTQD
         MENUITEM SEPARATOR
         MENUITEM "Set &Load Tape",              MENU_SET
-        MENUITEM "Set &Save Tape",              MENU_TAPESAVE
+	    MENUITEM "Set &Save Tape",              MENU_TAPESAVE
         MENUITEM SEPARATOR
         MENUITEM "Load RamFile",                MENU_LOADRAMFILE
         MENUITEM "Save RamFile",                MENU_SAVERAMFILE
@@ -112,6 +112,8 @@ BEGIN
     POPUP "&Hardware"
     BEGIN
         MENUITEM "&PCG700-Sw\tF11",             MENU_PCG700
+        MENUITEM "MZ-1P01",                     MENU_MZ1P01
+        MENUITEM "Eject Paper",                 MENU_EJECTPAPER
         MENUITEM SEPARATOR
         MENUITEM "&Load State...",              MENU_LOAD_STATE
         MENUITEM "&Save State...",              MENU_SAVE_STATE

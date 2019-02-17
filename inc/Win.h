@@ -75,6 +75,7 @@ typedef struct
 	int		keytype;							// キーボードタイプ
 	int		fontset;							// フォントタイプ 0:Europe / 1:Japan
 	int		pcg700;								// PCG700 0:OFF 1:ON
+	int		mz1p01;								// MZ-1P01 0:Disconnected  1:Connected 
 } TMENUVAL;
 
 // menuセッティングのmachineメンバ用
@@ -124,6 +125,7 @@ void set_screen_menu(int);
 void set_keytype_menu(int);
 void set_fontset_menu(int);
 void set_pcg700_menu(int);
+void set_mz1p01_menu(int);
 void set_fullscreen_menu(int);
 
 extern const char szAppName[];

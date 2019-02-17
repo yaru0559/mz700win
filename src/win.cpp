@@ -504,6 +504,11 @@ void load_inifile(void)
 	/* ＰＣＧ７００スイッチのゲット */
 	menu.pcg700 = GetPrivateProfileInt(IniSection_Option,"PCG700",
 									   0, IniFileStr);
+
+	/* MZ-1P01接続状態のゲット */
+	menu.mz1p01 = GetPrivateProfileInt(IniSection_Option, "MZ1P01",
+		0, IniFileStr);
+
 	/* サウンド処理モードゲット */
 	sound_md = GetPrivateProfileInt(IniSection_Option,"SOUND",
 									   0, IniFileStr);
@@ -563,7 +568,9 @@ BOOL AppInit(void)
 	set_fontset_menu(menu.fontset);
 	/* pcg700-swの設定値をセット */
 	set_pcg700_menu(menu.pcg700);
-	
+	/* mz-1P01の設定値をセット */
+	set_mz1p01_menu(menu.mz1p01);
+
 	/* CMOS.RAM load */
 	mz_load_cmos();
 	
@@ -596,6 +603,8 @@ void AppExit(void)
 	fSuccess=WritePrivateProfileInt(IniSection_Option,"FONTSET",menu.fontset, IniFileStr);
 	/* ＰＣＧ７００ＳＷのセーブ */
 	fSuccess=WritePrivateProfileInt(IniSection_Option,"PCG700",menu.pcg700, IniFileStr);
+	/* MZ1P01接続状態のセーブ */
+	fSuccess = WritePrivateProfileInt(IniSection_Option, "MZ1P01", menu.mz1p01, IniFileStr);
 	/* サウンドモードのセーブ */
 	fSuccess=WritePrivateProfileInt(IniSection_Option,"SOUND",sound_md, IniFileStr);
 	/* ウィンドウ位置のセーブ */
@@ -780,6 +789,15 @@ void set_pcg700_menu(int m)
 	CheckMenuItem(hmenuApp, MENU_PCG700,
 						MF_BYCOMMAND | (m ? MF_CHECKED : MF_UNCHECKED));
 
+}
+
+/* メニューのMZ-1P01を設定 */
+void set_mz1p01_menu(int m)
+{
+	CheckMenuItem(hmenuApp, MENU_MZ1P01,
+		MF_BYCOMMAND | (m ? MF_CHECKED : MF_UNCHECKED));
+	EnableMenuItem(hmenuApp, MENU_EJECTPAPER,
+		MF_BYCOMMAND | (m ? MF_ENABLED : MF_DISABLED));
 }
 
 /* メニューのFULLSCREENを設定 */
@@ -1310,6 +1328,12 @@ LONG AppCommand (HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 		menu.pcg700^=1;
 		set_pcg700_menu(menu.pcg700);
 		mz_refresh_screen(REFSC_VRAM);
+		DrawMenuBar(hwnd);
+		break;
+
+	case MENU_MZ1P01:
+		menu.mz1p01 ^= 1;
+		set_mz1p01_menu(menu.mz1p01);
 		DrawMenuBar(hwnd);
 		break;
 		

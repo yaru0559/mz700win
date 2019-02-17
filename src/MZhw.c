@@ -37,6 +37,8 @@
 #include "mzbeep.h"
 #include "sn76489an.h"
 
+#include "mz1p01.h"
+
 #define TEMPO_STROBE_TIME		14								/* テンポビット生成間隔 */
 #define PIT_DEBUG 0
 
@@ -437,8 +439,13 @@ void mz_z80pio_ctrl(int port,int value)
 // Z80 PIO Data Register
 void mz_z80pio_data(int port,int value)
 {
-
-
+	if (menu.mz1p01) {
+		if (0 == port) {
+			MZPSendCtrl(value);
+			return;
+		}
+		MZPSendData(value);
+	}
 }
 
 // Z80PIO 割込み処理実行
@@ -1073,6 +1080,9 @@ byte Z80_In (word Port)
 //		r = 0x20;														/* int1からのわりこみ？ */
 		r = Z80PIO_stat[0].pin;
 		Z80PIO_stat[0].pin = 0xC0;										/* 読み込まれるデータの初期化 */
+		if (menu.mz1p01) {
+			Z80PIO_stat[0].pin += MZPGetStatus();
+		}
 		break;
 	case 0xff:
 		/* z80 pio Port-B DATA Reg.*/
@@ -1332,8 +1342,9 @@ void Z80_Out(word Port,word Value)
 		mz_z80pio_ctrl(((iPort&0xFF)-0xfc),iVal);
 		break;
 	case 0xfe:
+	case 0xff:
 		// z80 pio Port-A DATA Reg.
-		mz_z80pio_data(0,iVal);
+		mz_z80pio_data(((iPort & 0xFF) - 0xfe), iVal);
 		break;
 	}
 	

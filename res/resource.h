@@ -34,6 +34,8 @@
 #define MENU_LOAD_STATE		601
 #define MENU_SAVE_STATE		602
 #define MENU_RESET			603
+#define MENU_MZ1P01			604
+#define MENU_EJECTPAPER		605
 
 #define MENU_ROM            700
 #define MENU_SPEED			701

@@ -150,6 +150,7 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\APPWIN.cpp" />
     <ClCompile Include="src\defkey.c">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -170,6 +171,7 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <ClCompile Include="src\mz1p01.cpp" />
     <ClCompile Include="src\mzbeep.cpp" />
     <ClCompile Include="src\mzddraw.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -215,7 +217,7 @@
     </ClCompile>
     <ClCompile Include="src\MZXInput.cpp" />
     <ClCompile Include="src\sn76489an.c" />
-    <ClCompile Include="src\win.c">
+    <ClCompile Include="src\win.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -238,6 +240,7 @@
     <ClInclude Include="inc\COMMON.H" />
     <ClInclude Include="inc\defkey.h" />
     <ClInclude Include="inc\dprintf.h" />
+    <ClInclude Include="inc\mz1p01.h" />
     <ClInclude Include="inc\MZXInput.h" />
     <ClInclude Include="src\DSOUND.H" />
     <ClInclude Include="inc\fileio.h" />
