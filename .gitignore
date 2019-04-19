@@ -179,3 +179,10 @@ pip-log.txt
 
 # Mac crap
 .DS_Store
+/ROMS/README.txt
+/Tapes
+/DUMP.dat
+/DUMP_Command.dat
+/DUMP_Command_bak.dat
+/MZ700WIN.INI
+/TPDFLTest.pdf

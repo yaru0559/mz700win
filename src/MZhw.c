@@ -287,6 +287,11 @@ void mz_reset(void)
 	/* サウンド(8253#0)の初期化 */
 	_8253_dat.beep_mask=1;
 	_8253_dat.int_mask=4;
+
+	/* MZ-1P01のリセット */
+	if (menu.mz1p01) {
+		MZPReset();
+	}
 	
 	hw1500.e5_bak = -1;
 	
@@ -1081,7 +1086,7 @@ byte Z80_In (word Port)
 		r = Z80PIO_stat[0].pin;
 		Z80PIO_stat[0].pin = 0xC0;										/* 読み込まれるデータの初期化 */
 		if (menu.mz1p01) {
-			Z80PIO_stat[0].pin += MZPGetStatus();
+			Z80PIO_stat[0].pin += MZPGetFlag();
 		}
 		break;
 	case 0xff:

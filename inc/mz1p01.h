@@ -3,7 +3,8 @@
 #include <windows.h>
 
 /* Global interfaces for C caller */
-UINT8	MZPGetStatus();
+UINT8	MZPGetFlag();
 void	MZPSendCtrl(int value);
 void	MZPSendData(int value);
-void	MZPPaperCut();
+void	MZPEjectPaper();
+void	MZPReset();

@@ -7,6 +7,9 @@ extern "C" {
 /* MZ-1R23,1R24サポート */
 #define KANJIROM
 
+/* MZ-1P01 疑似用紙排出操作をメニューから呼び出すための宣言 */
+extern void MZPEjectPaper();
+
 //
 enum
 {

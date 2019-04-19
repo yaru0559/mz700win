@@ -1336,6 +1336,10 @@ LONG AppCommand (HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 		set_mz1p01_menu(menu.mz1p01);
 		DrawMenuBar(hwnd);
 		break;
+
+	case MENU_EJECTPAPER:
+		MZPEjectPaper();
+		break;
 		
 	case MENU_RESET:
 		mz_reset();
