@@ -1,4 +1,6 @@
 /// MZ-1P01 simulator implementation
+// Copyright(C) AOKI Yasuharu 2019 
+
 #include <windows.h>
 #include <fstream>
 #include <string>
@@ -88,7 +90,6 @@ private:
 	int m_linesPerPage;
 	int m_scale;
 	int m_textRotate;		// 0:0 deg.  1: 90 deg. clockwize  2: 180 deg.  3:270 deg. clockwize
-	int m_pcolor;			// 0:Black  1:Blue  2:Green  3:Red
 	int m_relx;				// relative position of the pen from home
 	int m_rely;				// relative position of the pen from home
 	int m_homex;			// absolute position of the home
@@ -216,11 +217,13 @@ void MZ1P01::SendData(int value)
 void MZ1P01::Eject()
 {
 	m_plotter.CloseFile();
+	m_homex = m_homey = 0;
 }
 
 void MZ1P01::Reset()
 {
 	m_plotter.CloseFile();
+	m_plotter.SetPenColor(0);
 	ResetStatus();
 }
 
@@ -351,7 +354,6 @@ void MZ1P01::ResetStatus()
 	m_linesPerPage = 66;
 	m_scale = 1;
 	m_textRotate = 0;
-	m_pcolor = 0;
 	m_relx = 0;
 	m_rely = 0;
 	m_homex = 0;
@@ -397,7 +399,7 @@ void MZ1P01::Handle0D()
 	}
 	else if (IStatGettingNumber == m_interpretStatus) {
 		int i;
-		sscanf(m_bufferingStr.c_str(), "%d", &i); 
+		sscanf_s(m_bufferingStr.c_str(), "%d", &i); 
 		i %= 1000;
 		m_bufferingNums.push_back(i);
 		std::vector<int>::iterator it = m_bufferingNums.begin();
@@ -476,7 +478,7 @@ void MZ1P01::HandleComma()
 {
 	if (IStatGettingNumber == m_interpretStatus) {
 		int i;
-		sscanf(m_bufferingStr.c_str(), "%d", &i);
+		sscanf_s(m_bufferingStr.c_str(), "%d", &i);
 		i %= 1000;
 		m_bufferingNums.push_back(i);
 		std::vector<int>::iterator it = m_bufferingNums.begin();
@@ -613,6 +615,7 @@ void MZ1P01::TextCode()
 	m_scale = 1;
 	m_textRotate = 0;
 	m_homex = 0;
+	m_relx = m_plotter.PenX();
 }
 
 void MZ1P01::GraphicCode()
@@ -632,7 +635,8 @@ void MZ1P01::LineUp()
 #if DUMP
 	m_ofs2 << "Line Up" << std::endl;
 #endif
-	// Not implemented
+	m_plotter.SetPenY(m_plotter.PenY() + 12 * (m_scale + 1));
+	if (0 < m_lineCounter) m_lineCounter--;
 }
 
 void MZ1P01::PenTest()
@@ -673,7 +677,13 @@ void MZ1P01::LineFeed()
 #if DUMP
 	m_ofs2 << "\n";
 #endif
-	// Not implemented
+	if (++m_lineCounter < m_linesPerPage) {
+		m_plotter.SetPenY(m_plotter.PenY() - 12 * (m_scale + 1));
+	}
+	else {
+		m_plotter.EndPage();
+		m_lineCounter = 0;
+	}
 }
 
 void MZ1P01::MagnifyScale()
@@ -697,15 +707,26 @@ void MZ1P01::CarriageReturn()
 #if DUMP
 	m_ofs2 << "\r";
 #endif
-
+	if (!m_bufferingStr.empty()) {
+		m_plotter.Print(m_bufferingStr.c_str(), m_scale, 0);
+		m_bufferingStr.clear();
+	}
+	m_relx = 0;
+	m_plotter.SetPenX(0);
+	LineFeed();
 }
 
 void MZ1P01::BackSpace()
 {
 #if DUMP
-		m_ofs2 << "Back Space" << std::endl;
+	m_ofs2 << "Back Space" << std::endl;
 #endif
-
+	if (!m_bufferingStr.empty()) {
+		m_plotter.Print(m_bufferingStr.c_str(), m_scale, 0);
+		m_bufferingStr.clear();
+	}
+	int penX = m_plotter.PenX() - 6 * (m_scale + 1);
+	m_plotter.SetPenX(0 < penX ? penX : 0);
 }
 
 void MZ1P01::FormFeed()
@@ -713,7 +734,10 @@ void MZ1P01::FormFeed()
 #if DUMP
 	m_ofs2 << "Form Feed" << std::endl;
 #endif
-
+	int linesToFeed = m_linesPerPage - m_lineCounter - 1;
+	int y = m_plotter.PenY() - 12 * (m_scale + 1) * linesToFeed;
+	m_plotter.Move(0, y);
+	m_plotter.EndPage();
 }
 
 void MZ1P01::NextColor()
@@ -721,7 +745,8 @@ void MZ1P01::NextColor()
 #if DUMP
 	m_ofs2 << "Next Color" << std::endl;
 #endif
-
+	int nextColor = (m_plotter.PenColor() + 1) % 4;
+	m_plotter.SetPenColor(nextColor);
 }
 
 void MZ1P01::TextPrint(int value)
@@ -730,7 +755,15 @@ void MZ1P01::TextPrint(int value)
 #if DUMP
 		m_ofs2 << word;
 #endif
-
+	int textWidth = 6 * (m_scale + 1);
+	if (0 == m_plotter.CharProperty(word)) {
+		textWidth *= 2;
+	}
+	if (m_relx + textWidth > 480) {
+		CarriageReturn();
+	}
+	m_bufferingStr.append(1, word);
+	m_relx += textWidth;
 }
 
 void MZ1P01::LineType(int value)
@@ -817,7 +850,6 @@ void MZ1P01::ColorChange(int value)
 #if DUMP
 	m_ofs2 << "COLOR CHANGE " << value << std::endl;
 #endif
-	m_pcolor = value;
 	m_plotter.SetPenColor(value);
 }
 
@@ -850,6 +882,6 @@ void MZ1P01::Axis(int p, int q, int r)
 #if DUMP
 	m_ofs2 << "AXIS " << p << ", " << q << ", " << r << std::endl;
 #endif
-
+	m_plotter.Axis((0 == p), q, r);
 }
 

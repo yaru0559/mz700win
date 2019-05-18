@@ -1,3 +1,5 @@
+// Copyright(C) AOKI Yasuharu 2019 
+
 #include "Object.h"
 #include "ObjMgr.h"
 #include "Value.h"

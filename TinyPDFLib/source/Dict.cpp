@@ -1,3 +1,5 @@
+// Copyright(C) AOKI Yasuharu 2019 
+
 #include "Dict.h"
 #include "ErrorCode.h"
 #include "ObjMgr.h"
